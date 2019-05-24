@@ -1,20 +1,29 @@
 import React, { Component } from 'react';
-import { Route } from 'react-router';
-import { Layout } from './components/Layout';
-import { Home } from './components/Home';
-import { FetchData } from './components/FetchData';
-import { Counter } from './components/Counter';
+import { LoginWrapper as Login } from './components/LoginWrapper';
+import { BrowserRouter as Router, Route, Switch, withRouter } from "react-router-dom";
+import AuthMethods from './Helpers/AuthMethods';
+import PrivateComponent from './components/PrivateComponent'
+import { UserProfile } from './components/UserProfile';
 
-export default class App extends Component {
-  static displayName = App.name;
+class App extends Component {
 
-  render () {
-    return (
-      <Layout>
-        <Route exact path='/' component={Home} />
-        <Route path='/counter' component={Counter} />
-        <Route path='/fetch-data' component={FetchData} />
-      </Layout>
-    );
-  }
+    Auth = new AuthMethods();
+
+    handleLogout = () => {
+        this.Auth.logout();
+        this.setActiveUser({});
+        this.props.history.push('/login');
+    }
+
+    render() {
+        return (
+            <Router>
+                <Switch>
+                    <Route exac path="/login" component={Login} />
+                    <PrivateComponent path="/" component={UserProfile} logOut={this.handleLogout} />
+                </Switch>
+            </Router>
+        );
+    }
 }
+export default withRouter(App);
