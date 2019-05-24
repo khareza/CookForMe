@@ -23,9 +23,12 @@ class OrdersList extends Component {
             });
     }
 
+    editOrder = (orderToEdit) => {
+        this.props.editOrder(orderToEdit);
+    }
 
     deleteOrder = (id) => {
-        this.Auth.orderUser(id)
+        this.Auth.deleteOrder(id)
             .then(() => { this.getOrders() })
             .catch(err => { console.log(err) });
     }
@@ -35,10 +38,7 @@ class OrdersList extends Component {
             return (
                 <OrdersDetails key={order.id}
                     deleteOrder={this.deleteOrder}
-                    editOrder={
-                        (orderToEdit) => {
-                            this.props.orderToEdit(orderToEdit)
-                        }}
+                    editOrder={this.editOrder}
                     order={order} />
             )
         })

@@ -34,6 +34,21 @@ export default class AuthMethods {
         return axios.post(`${this.authorizationApiUrl}/Register`, registerFormData);
     }
 
+    createOrder = (newOrderFormData) => {
+        console.log(newOrderFormData);
+
+        axios.defaults.headers.common['Authorization'] =
+            'Bearer ' + this.getToken();
+        return axios.post(`${this.userApiUrl}/CreateOrder`, newOrderFormData);
+    }
+    uploadOrderPhoto = (orderPhoto) => {
+        console.log(orderPhoto);
+
+        axios.defaults.headers.common['Authorization'] =
+            'Bearer ' + this.getToken();
+        return axios.post(`${this.userApiUrl}/UploadOrderPhoto`, orderPhoto);
+    }
+
     isTokenExpired = token => {
 
         try {
@@ -74,10 +89,14 @@ export default class AuthMethods {
         console.log(id);
         return axios.delete(`${this.userApiUrl}/DeleteOrder/` + id);
     }
-    getUsers = () => {
+    getOrders = () => {
         axios.defaults.headers.common['Authorization'] =
             'Bearer ' + this.getToken();
         return axios.get(`${this.userApiUrl}/GetOrders`);
+    }
+    getUserId = () => {
+        const decoded = decode(this.getToken());
+        return decoded.UserID;
     }
 
 }

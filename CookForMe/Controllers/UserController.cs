@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using CookForMe.AppSettings;
@@ -44,38 +45,56 @@ namespace CookForMe.Controllers
 
         [HttpPost]
         [Route("CreateOrder")]
-        public ActionResult CreateOrder(OrderFormData formData)
+        public async Task<IActionResult> CreateOrder(OrderFormData formData)
         {
             var founder = _userManager.Users
                 .FirstOrDefault(u => u.Id == formData.FounderId);
 
-            if (!ModelState.IsValid || founder==null)
+            if (!ModelState.IsValid || founder == null)
             {
                 return BadRequest();
             }
-            //Dodać mapper
+            //////Dodać mapper
             Order newOrder = new Order();
             newOrder.Founder = founder;
-            newOrder.Deadline = formData.Deadline;
-            newOrder.IngredientsPhoto = formData.IngredientsPhoto;
-            newOrder.IngredientsAvaiableList = formData.IngredientsAvaiableList;
+            newOrder.IngredientsAvaiable = formData.IngredientsAvaiableList;
             newOrder.Description = formData.Description;
             newOrder.CreationDate = DateTime.Now;
             newOrder.OrderStatus = OrderStatus.Active;
             newOrder.Responses = new List<Response>();
+            newOrder.IngredientsPhotoUrl = formData.PhotoUrl;
 
-            //dodać layer do bazy danych
             _context.Orders.Add(newOrder);
             _context.SaveChanges();
-
-            return Ok(newOrder);
+            return Ok();
         }
 
+        //[HttpPost]
+        //[Route("UploadOrderPhoto")]
+        //public IActionResult UploadOrderPhoto(IFormCollection formData)
+        //{
+        //    int orderId = int.Parse(formData["orderId"].First());
+        //    var order = _context.Orders.First(o => o.Id == orderId);
+
+        //    if (formData != null && formData.Files.First().Length != 0)
+        //    {
+        //        using (var stream = formData.Files.First().OpenReadStream())
+        //        using (var memoryStream = new MemoryStream())
+        //        {
+        //            stream.CopyTo(memoryStream);
+        //            order.IngredientsPhoto = memoryStream.ToArray();
+        //        }
+        //    }
+        //    _context.SaveChanges();
+          
+        //    return Ok(order);
+        //}
+
         [HttpDelete]
-        [Route("DeleteOrder")]
-        public ActionResult DeleteOrder(int OrderId)
+        [Route("DeleteOrder/{orderId}")]
+        public ActionResult DeleteOrder(int orderId)
         {
-            var orderToDelete = _context.Orders.FirstOrDefault(o=>o.Id == OrderId);
+            var orderToDelete = _context.Orders.FirstOrDefault(o=>o.Id == orderId);
             if (orderToDelete == null)
             {
                 return BadRequest();
@@ -89,7 +108,7 @@ namespace CookForMe.Controllers
 
         [HttpDelete]
         [Route("EditOrder")]
-        public ActionResult EditOrder(OrderFormData formData)
+        public async Task<IActionResult> EditOrder(OrderFormData formData)
         {
 
             var order = _context.Orders.FirstOrDefault(o => o.Id == formData.OrderId);
@@ -100,9 +119,14 @@ namespace CookForMe.Controllers
                 //use object mapper here :)
 
                 order.Deadline = formData.Deadline;
-                order.IngredientsPhoto = formData.IngredientsPhoto;
-                order.IngredientsAvaiableList = formData.IngredientsAvaiableList;
+                order.IngredientsAvaiable = formData.IngredientsAvaiableList;
                 order.Description = formData.Description;
+                order.IngredientsPhotoUrl = formData.PhotoUrl;
+                //using (var memoryStream = new MemoryStream())
+                //{
+                //    //await formData.IngredientsPhoto.Files.First().CopyToAsync(memoryStream);
+                //    order.IngredientsPhoto = memoryStream.ToArray();
+                //}
                 _context.SaveChanges();
                 return Ok(order);
             }

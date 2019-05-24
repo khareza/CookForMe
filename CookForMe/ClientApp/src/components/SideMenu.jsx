@@ -23,7 +23,7 @@ export class SideMenu extends Component {
         return (
             <header className="header" role="banner">
                 <h1 className="logo">
-                    <a href="/profile">Your <span>Voter</span></a>
+                    <a href="/profile">Cook for <span>Me</span></a>
                 </h1>
                 <div className="nav-wrap">
                     <nav className="main-nav">

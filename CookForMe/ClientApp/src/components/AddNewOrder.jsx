@@ -1,15 +1,17 @@
 ﻿import React, { Component } from 'react';
 import AuthMethods from '../Helpers/AuthMethods';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
-export class RegisterNewOrder extends Component {
+
+export class AddNewOrder extends Component {
     constructor(props) {
         super(props);
 
         this.Auth = new AuthMethods();
         this.state = {
-            founderId: '',
-            deadline: '',
-            ingredientPhoto: '',
+            deadline: new Date(),
+            ingredientsPhoto: '',
             ingredientsAvaiableList: '',
             description: '',
             isSubmitDisabled: false
@@ -18,20 +20,15 @@ export class RegisterNewOrder extends Component {
 
     handleSubmit = (event) => {
         event.preventDefault();
-        let { founderId, deadline, ingredientPhoto, ingredientsAvaiableList, description } = this.state;
+        let { deadline, ingredientsPhoto, ingredientsAvaiableList, description } = this.state;
+        console.log(ingredientsPhoto);
 
-        this.Auth.register(
-            { founderId, deadline, ingredientPhoto, ingredientsAvaiableList, description }
-        );
+        this.Auth.createOrder(
+            { founderId: this.Auth.getUserId(), photoUrl: ingredientsPhoto.name, deadline, ingredientsAvaiableList, description }
+        ).then((res) => {
 
-        this.setState({
-            founderId: '',
-            deadline: '',
-            ingredientPhoto: '',
-            ingredientsAvaiableList: '',
-            description: '',
-            isSubmitDisabled: false
-        });
+            this.props.history.push('/orders')
+        })       
     }
 
     handleInputChange = (event) => {
@@ -39,37 +36,40 @@ export class RegisterNewOrder extends Component {
        // this.checkIfFormDataIsValid();
     }
 
-    //checkIfFormDataIsValid = () => {
-    //    if (this.state.userName.length > 0 && this.state.password.length > 0) {
-    //        this.setState({ isSubmitDisabled: false });
-    //    }
-    //    else {
-    //        this.setState({ isSubmitDisabled: true });
-    //    }
-    //}
+    handleFileChange = (event) => {
+        this.setState({ ingredientsPhoto: event.target.files[0] });
+        // this.checkIfFormDataIsValid();
+    }
+
+    handleDateChange = (date) => {
+        this.setState({ deadline: date});
+    }
 
     render() {
         return (
             <div>
-                <form onSubmit={this.handleSubmit} autoComplete="off">
+                <form onSubmit={this.handleSubmit} autoComplete="off" encType="multipart/form-data">
                     <div className="headerLogin">
-                        <h2 >Add new user</h2>
+                        <h2 >Add new order</h2>
                     </div>
                     <div className="form-row">
                         <div className="form-gorup col-md-8 offset-md-2">
                             <div className="form-group">
-                                <label >Founder ID</label>
-                                <input className="form-control" type="text" name="founderId" value={this.state.founderId} onChange={this.handleInputChange} required />
-                            </div>
-
-                            <div className="form-group">
-                                <label>deadline</label>
-                                <input className="form-control" type="text" name="deadline" value={this.state.deadline} onChange={this.handleInputChange} required />
+                                <label>Deadline</label>
+                                <DatePicker
+                                    selected={this.state.deadline}
+                                    onChange={this.handleDateChange}
+                                    showTimeSelect
+                                    timeFormat="HH:mm"
+                                    timeIntervals={15}
+                                    dateFormat="MMMM d, yyyy h:mm aa"
+                                    timeCaption="time"
+                                />
                             </div>
 
                             <div className="form-group">
                                 <label>Ingredient Photo</label>
-                                <input className="form-control" type="text" name="ingredientPhoto" value={this.state.ingredientPhoto} onChange={this.handleInputChange} />
+                                <input className="form-control" type="file" name="ingredientsPhoto" onChange={this.handleFileChange} />
                             </div>
 
                             <div className="form-group">

@@ -1,15 +1,18 @@
 ﻿import React, { Component } from 'react';
 import AuthMethods from '../Helpers/AuthMethods';
 import { withRouter } from 'react-router-dom';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
-class EditUserForm extends Component {
+
+class EditOrderForm extends Component {
     constructor(props) {
         super(props);
         this.Auth = new AuthMethods();
 
         this.state = {
             deadline: this.props.orderToEdit.deadline,
-            ingredientPhoto: this.props.orderToEdit.ingredientPhoto,
+            ingredientsPhotoUrl: this.props.orderToEdit.ingredientsPhotoUrl,
             ingredientsAvaiableList: this.props.orderToEdit.ingredientsAvaiableList,
             description: this.props.orderToEdit.description,
             isSubmitDisabled: false
@@ -18,16 +21,25 @@ class EditUserForm extends Component {
 
     handleSubmit = (event) => {
         event.preventDefault();
-        let {deadline, ingredientPhoto, ingredientsAvaiableList, description } = this.state;
+        let { deadline, ingredientsPhotoUrl, ingredientsAvaiableList, description } = this.state;
 
         this.Auth.editOrder(
-            {id: this.props.orderToEdit.orderId, deadline, ingredientPhoto, ingredientsAvaiableList, description }
+            { id: this.props.orderToEdit.orderId, deadline, ingredientsPhotoUrl, ingredientsAvaiableList, description }
         ).then((res) => { this.props.history.push('/residents')});
     }
 
     handleInputChange = (event) => {
         this.setState({ [event.target.name]: event.target.value });
-        this.checkIfFormDataIsValid();
+        //this.checkIfFormDataIsValid();
+    }
+
+    handleFileChange = (event) => {
+        this.setState({ ingredientsPhoto: event.target.files[0] });
+        // this.checkIfFormDataIsValid();
+    }
+
+    handleDateChange = (date) => {
+        this.setState({ deadline: date });
     }
 
     //checkIfFormDataIsValid = () => {
@@ -48,14 +60,22 @@ class EditUserForm extends Component {
                     </div>
                     <div className="form-row">
                         <div className="form-gorup col-md-8 offset-md-2">
+
                             <div className="form-group">
-                                <label >Deadline</label>
-                                <input className="form-control" type="text" name="deadline" value={this.state.deadline} onChange={this.handleInputChange} required />
+                                <label>Ingredients Avaiable</label>
+                                <input className="form-control" type="text" name="ingredientsPhotoUrl" value={this.state.ingredientsPhotoUrl} onChange={this.handleInputChange} />
+                            </div>
+
+                            <div className="form-group">
+                                <div className="form-group">
+                                    <label>deadline</label>
+                                    <input className="form-control" type="text" name="deadline" onChange={this.handleDateChange} />
+                                </div>
                             </div>
 
                             <div className="form-group">
                                 <label>Ingredient Photo</label>
-                                <input className="form-control" type="text" name="ingredientPhoto" value={this.state.ingredientPhoto} onChange={this.handleInputChange} />
+                                <input className="form-control" type="file" name="ingredientsPhoto" onChange={this.handleFileChange} />
                             </div>
 
                             <div className="form-group">
@@ -68,7 +88,7 @@ class EditUserForm extends Component {
                                 <input className="form-control" type="text" name="description" value={this.state.description} onChange={this.handleInputChange} />
                             </div>
 
-                            <input type="submit" value="Edit user data" className="btn btn-large btn-block btn-info" disabled={this.state.isSubmitDisabled} />
+                            <input type="submit" value="Edit order data" className="btn btn-large btn-block btn-info" disabled={this.state.isSubmitDisabled} />
 
                             <input type="button" value="Cancel" onClick={() => { this.props.history.push('/orders') }} className="btn btn-large btn-block btn-danger" />
                         </div>
@@ -79,4 +99,4 @@ class EditUserForm extends Component {
     }
 }
 
-export default withRouter(EditUserForm);
+export default withRouter(EditOrderForm);

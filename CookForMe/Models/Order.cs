@@ -20,7 +20,8 @@ namespace CookForMe.Models
         public AppUser Founder { get; set; }
         public DateTime CreationDate { get; set; }
         public DateTime Deadline { get; set; }
-        public byte[] IngredientsPhoto { get; set; }
+        //public byte[] IngredientsPhoto { get; set; }
+        public string IngredientsPhotoUrl { get; set; }
         public OrderStatus OrderStatus { get; set; }
         //Error when creating Order table, change it later
         //[NotMapped]

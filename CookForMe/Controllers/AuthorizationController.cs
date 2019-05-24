@@ -64,15 +64,10 @@ namespace CookForMe.Controllers
 
             if (user != null && await _userManager.CheckPasswordAsync(user,loginData.Password))
             {
-                var role = await _userManager.GetRolesAsync(user);
-
-                IdentityOptions identityOptions = new IdentityOptions();
-
                 var tokenDescriptor = new SecurityTokenDescriptor
                 {
                     Subject = new ClaimsIdentity(new Claim[] {
                         new Claim("UserID", user.Id.ToString()),
-                        new Claim(identityOptions.ClaimsIdentity.RoleClaimType, role.FirstOrDefault())
                     }),
                     Expires = DateTime.Now.AddHours(1),
                     SigningCredentials = new SigningCredentials(
