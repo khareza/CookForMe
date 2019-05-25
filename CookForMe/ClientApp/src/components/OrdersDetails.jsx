@@ -1,6 +1,7 @@
 ﻿import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+import Moment from 'react-moment';
 import '../ComponentsStyles/OrderDetails.css';
 
 export class OrdersDetails extends Component {
@@ -18,8 +19,9 @@ export class OrdersDetails extends Component {
         return (
             <div className="orderCard">
                 <div className="orderCardHeader">
-                    <p>${this.props.order.ingredientsPhotoUrl}</p>
-                    <p>Deadline: ${this.props.order.deadline}</p>
+                    <p>{this.props.order.ingredientsPhotoUrl}</p>
+                    <p>Deadline: <Moment format="dddd YYYY-MM-DD HH:mm">{this.props.order.deadline}</Moment></p>
+                    <p>Time left: <Moment fromNow="dddd YYYY-MM-DD HH:mm">{this.props.order.deadline}</Moment></p>
                 </div>
                 <div className="orderData">
                     <div>
@@ -36,18 +38,3 @@ export class OrdersDetails extends Component {
         );
     }
 }
-
-
-//<div>
-//    <div className="card border-success mb-3">
-//        <div className="card-header">
-//            ${this.props.order.ingredientsPhotoUrl}
-//        </div>
-//        <div className="card-body text-success">
-//            <h5 className="card-title">{`Founder: ${this.props.order.description}`}</h5>
-//            <p className="card-text">{`Order deadline ${this.props.order.deadline}`}</p>
-//            <a className="btn btn-primary text-light" onClick={this.editOrder}>Edit</a>
-//            <a className="btn btn-danger text-light" onClick={this.deleteOrder}>Delete</a>
-//        </div>
-//    </div>
-//</div>

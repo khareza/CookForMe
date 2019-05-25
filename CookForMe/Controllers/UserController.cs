@@ -38,7 +38,7 @@ namespace CookForMe.Controllers
 
         [HttpGet]
         [Route("GetOrders")]
-        public ActionResult<IEnumerable<Order>> GetOrders()
+        public ActionResult<List<Order>> GetOrders()
         {
             return _orderContext.GetAll();
         }
@@ -119,7 +119,7 @@ namespace CookForMe.Controllers
 
         [HttpPut]
         [Route("EditOrder")]
-        public async Task<IActionResult> EditOrder(OrderFormData formData)
+        public IActionResult EditOrder(OrderFormData formData)
         {
             var response = _orderContext.Edit(formData);
 

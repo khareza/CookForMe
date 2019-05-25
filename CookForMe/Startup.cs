@@ -29,6 +29,7 @@ namespace CookForMe
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddTransient<OrdersService>();
             //get access to appsettings.json settings everywhere in applications by using ApplicationSettings class object
             services.Configure<ApplicationSettings>(Configuration.GetSection("ApplicationSettings"));
 
