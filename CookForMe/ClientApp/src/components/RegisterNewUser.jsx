@@ -11,7 +11,7 @@ export class RegisterNewUser extends Component {
             password: '',
             firstName: '',
             lastName: '',
-            email:'',
+            email: '',
             isSubmitDisabled: true
         };
     }
@@ -21,7 +21,7 @@ export class RegisterNewUser extends Component {
         let { userName, password, firstName, lastName, email } = this.state;
 
         this.Auth.register(
-            { userName, password, firstName, lastName, email}
+            { userName, password, firstName, lastName, email }
         );
 
         this.setState({
@@ -30,11 +30,12 @@ export class RegisterNewUser extends Component {
             firstName: '',
             lastName: '',
             email: '',
-            isSubmitDisabled: true});
+            isSubmitDisabled: true
+        });
     }
 
     handleInputChange = (event) => {
-        this.setState({ [event.target.name]: event.target.value});
+        this.setState({ [event.target.name]: event.target.value });
         this.checkIfFormDataIsValid();
     }
 
@@ -49,41 +50,34 @@ export class RegisterNewUser extends Component {
 
     render() {
         return (
-            <div>
-                <form onSubmit={this.handleSubmit} autoComplete="off">
-                    <div className="headerLogin">
-                        <h2 >Add new user</h2>
+            <div className="startForm">
+                <form onSubmit={this.handleSubmit} autoComplete="off" >
+                    <div className="form-group">
+                        <label >User Name</label>
+                        <input className="form-control" type="text" name="userName" value={this.state.userName} onChange={this.handleInputChange} required />
                     </div>
-                    <div className="form-row">
-                        <div className="form-gorup col-md-8 offset-md-2">
-                            <div className="form-group">
-                                <label >User Name</label>
-                                <input className="form-control" type="text" name="userName" value={this.state.userName} onChange={this.handleInputChange} required />
-                            </div>
 
-                            <div className="form-group">
-                                <label>Password</label>
-                                <input className="form-control" type="password" name="password" value={this.state.password} onChange={this.handleInputChange} required />
-                            </div>
-
-                            <div className="form-group">
-                                <label>FirstName</label>
-                                <input className="form-control" type="text" name="firstName" value={this.state.firstName} onChange={this.handleInputChange}/>
-                            </div>
-
-                            <div className="form-group">
-                                <label>LastName</label>
-                                <input className="form-control" type="text" name="lastName" value={this.state.lastName} onChange={this.handleInputChange}/>
-                            </div>
-
-                            <div className="form-group">
-                                <label>Email</label>
-                                <input className="form-control" type="text" name="email" value={this.state.email} onChange={this.handleInputChange}/>
-                            </div>
-                            <input type="submit" value="Add new resident" className="btn btn-large btn-block btn-primary" disabled={this.state.isSubmitDisabled} />
-                            <input type="button" value="Cancel" onClick={() => { this.props.history.push('/residents') }} className="btn btn-large btn-block btn-danger" />
-                        </div>
+                    <div className="form-group">
+                        <label>Password</label>
+                        <input className="form-control" type="password" name="password" value={this.state.password} onChange={this.handleInputChange} required />
                     </div>
+
+                    <div className="form-group">
+                        <label>FirstName</label>
+                        <input className="form-control" type="text" name="firstName" value={this.state.firstName} onChange={this.handleInputChange} />
+                    </div>
+
+                    <div className="form-group">
+                        <label>LastName</label>
+                        <input className="form-control" type="text" name="lastName" value={this.state.lastName} onChange={this.handleInputChange} />
+                    </div>
+
+                    <div className="form-group">
+                        <label>Email</label>
+                        <input className="form-control" type="text" name="email" value={this.state.email} onChange={this.handleInputChange} />
+                    </div>
+                    <input type="submit" value="Register" className="btn btn-large btn-block btn-primary" disabled={this.state.isSubmitDisabled} />
+                    <input type="button" value="Cancel" onClick={() => { this.props.history.push('/start/login') }} className="btn btn-large btn-block btn-danger" />
                 </form>
             </div>
         );

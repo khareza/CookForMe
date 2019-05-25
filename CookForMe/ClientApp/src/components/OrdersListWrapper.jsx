@@ -6,14 +6,37 @@ import OrdersList from './OrdersList';
 import EditOrderForm from './EditOrderForm';
 
 export class OrdersListWrapper extends Component {
-    Auth = new AuthMethods();
-    state = {
-        orderToEdit: {}
+    constructor(props) {
+        super(props);
+        this.Auth = new AuthMethods();
+        this.state = {
+            orderToEdit: {},
+            orders: []
+        }
     }
 
-    editOrder = (orderToEdit) => {
+    componentDidMount() {
+        this.getOrders();
+    }
+
+    getOrders = () => {
+        this.Auth.getOrders()
+            .then((res) => {
+                this.setState({ orders: res.data });
+            });
+    }
+
+    deleteOrder = (id) => {
+        this.Auth.deleteOrder(id)
+            .then(() => { this.getOrders() })
+            .catch(err => { console.log(err) });
+    }
+
+
+    editOrder = (id) => {
+        console.log(id);
         this.setState({
-            orderToEdit       
+            orderToEdit: this.state.orders.find(x => x.id === id)     
         });
         this.props.history.push('/orders/edit')
     }
@@ -21,9 +44,9 @@ export class OrdersListWrapper extends Component {
     render() {
         return (
             <div>
-                <Route exact path="/orders" render={() => (<OrdersList editOrder={this.editOrder} />)}/>
+                <Route exact path="/orders" render={() => (<OrdersList orders={this.state.orders} deleteOrder = { this.deleteOrder } editOrder = { this.editOrder } />)}/>
                 <Route exact path="/orders/create" component={AddNewOrder} />
-                <Route exact path="/orders/edit" render={() => (<EditOrderForm orderToEdit={this.state.orderToEdit} />)} />
+                <Route exact path="/orders/edit/:order_id" render={() => (<EditOrderForm/>)} />
             </div>
         );
     }

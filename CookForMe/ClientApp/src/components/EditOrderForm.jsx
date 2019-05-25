@@ -3,29 +3,48 @@ import AuthMethods from '../Helpers/AuthMethods';
 import { withRouter } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-
+import '../ComponentsStyles/CustomFileUploader.css';
 
 class EditOrderForm extends Component {
+
     constructor(props) {
         super(props);
         this.Auth = new AuthMethods();
 
         this.state = {
-            deadline: this.props.orderToEdit.deadline,
-            ingredientsPhotoUrl: this.props.orderToEdit.ingredientsPhotoUrl,
-            ingredientsAvaiableList: this.props.orderToEdit.ingredientsAvaiableList,
-            description: this.props.orderToEdit.description,
+            deadline: new Date(),
+            ingredientsPhotoUrl: '',
+            ingredientsAvaiableList: '',
+            ingredientsPhoto: '',
+            description: '',
             isSubmitDisabled: false
         };
+        let id = this.props.match.params.order_id;
+        this.getOrder(id);
+    }
+
+    getOrder = (id) => {
+        this.Auth.getOrderById(id)
+            .then((res) => {
+                this.setState({
+                    ingredientsPhotoUrl: res.data.ingredientsPhotoUrl ? res.data.ingredientsPhotoUrl : 'WithOutPhoto',
+                    ingredientsAvaiableList: res.data.ingredientsAvaiable,
+                    ingredientsPhoto: '',
+                    description: res.data.description,
+                    isSubmitDisabled: false
+                });
+            }).catch((err) => {
+                this.props.history.push(`/orders`);
+            });
     }
 
     handleSubmit = (event) => {
         event.preventDefault();
-        let { deadline, ingredientsPhotoUrl, ingredientsAvaiableList, description } = this.state;
+        let { deadline, ingredientsPhotoUrl, ingredientsAvaiableList, description } = this.state.order;
 
         this.Auth.editOrder(
-            { id: this.props.orderToEdit.orderId, deadline, ingredientsPhotoUrl, ingredientsAvaiableList, description }
-        ).then((res) => { this.props.history.push('/residents')});
+            { orderId: this.props.orderToEdit.id, photoUrl: ingredientsPhotoUrl, deadline, ingredientsAvaiableList, description }
+        ).then((res) => { this.props.history.push('/orders') });
     }
 
     handleInputChange = (event) => {
@@ -34,7 +53,7 @@ class EditOrderForm extends Component {
     }
 
     handleFileChange = (event) => {
-        this.setState({ ingredientsPhoto: event.target.files[0] });
+        this.setState({ ingredientsPhotoUrl: event.target.files[0].name });
         // this.checkIfFormDataIsValid();
     }
 
@@ -55,9 +74,6 @@ class EditOrderForm extends Component {
         return (
             <div>
                 <form onSubmit={this.handleSubmit} autoComplete="off">
-                    <div className="headerLogin">
-                        {this.props.orderToEdit.id ? <h2 >Edit order</h2> : <h2 >Select order</h2>} 
-                    </div>
                     <div className="form-row">
                         <div className="form-gorup col-md-8 offset-md-2">
 
@@ -67,15 +83,28 @@ class EditOrderForm extends Component {
                             </div>
 
                             <div className="form-group">
-                                <div className="form-group">
-                                    <label>deadline</label>
-                                    <input className="form-control" type="text" name="deadline" onChange={this.handleDateChange} />
+                                <label>Deadline</label>
+                                <div>
+                                    <DatePicker
+                                        selected={this.state.deadline}
+                                        onChange={this.handleDateChange}
+                                        showTimeSelect
+                                        timeFormat="HH:mm"
+                                        timeIntervals={15}
+                                        dateFormat="MMMM d, yyyy h:mm aa"
+                                        timeCaption="time"
+                                    />
                                 </div>
                             </div>
 
                             <div className="form-group">
                                 <label>Ingredient Photo</label>
-                                <input className="form-control" type="file" name="ingredientsPhoto" onChange={this.handleFileChange} />
+                                <div>
+                                    <label htmlFor="file-upload" className="custom-file-upload">
+                                        Select new photo
+                                    </label>
+                                    <input className="inputFileinput" id="file-upload" type="file" name="ingredientsPhoto" onChange={this.handleFileChange} />
+                                </div>
                             </div>
 
                             <div className="form-group">

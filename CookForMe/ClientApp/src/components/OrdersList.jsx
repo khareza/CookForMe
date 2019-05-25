@@ -5,39 +5,18 @@ import { withRouter } from 'react-router-dom';
 
 class OrdersList extends Component {
     Auth = new AuthMethods();
-    constructor(props) {
-        super(props);
-        this.state = {
-            orders: []
-        }
+
+
+    editOrder = (id) => {
+        this.props.history.push(`/orders/edit/${id}`);
     }
 
-    componentDidMount() {
-        this.getOrders();
-    }
-
-    getOrders = () => {
-        this.Auth.getOrders()
-            .then(res => {
-                this.setState({ orders: res.data })
-            });
-    }
-
-    editOrder = (orderToEdit) => {
-        this.props.editOrder(orderToEdit);
-    }
-
-    deleteOrder = (id) => {
-        this.Auth.deleteOrder(id)
-            .then(() => { this.getOrders() })
-            .catch(err => { console.log(err) });
-    }
 
     renderOrderComponents = () => {
-        return this.state.orders.map((order)=> {
+        return this.props.orders.map((order)=> {
             return (
                 <OrdersDetails key={order.id}
-                    deleteOrder={this.deleteOrder}
+                    deleteOrder={this.props.deleteOrder}
                     editOrder={this.editOrder}
                     order={order} />
             )

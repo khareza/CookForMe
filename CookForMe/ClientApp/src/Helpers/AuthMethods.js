@@ -86,13 +86,17 @@ export default class AuthMethods {
     deleteOrder = (id) => {
         axios.defaults.headers.common['Authorization'] =
             'Bearer ' + this.getToken();
-        console.log(id);
         return axios.delete(`${this.userApiUrl}/DeleteOrder/` + id);
     }
     getOrders = () => {
         axios.defaults.headers.common['Authorization'] =
             'Bearer ' + this.getToken();
         return axios.get(`${this.userApiUrl}/GetOrders`);
+    }
+    getOrderById = (id) => {
+        axios.defaults.headers.common['Authorization'] =
+            'Bearer ' + this.getToken();
+        return axios.get(`${this.userApiUrl}/GetOrder/`+ id);
     }
     getUserId = () => {
         const decoded = decode(this.getToken());

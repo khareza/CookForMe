@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { LoginWrapper as Login } from './components/LoginWrapper';
+import { LoginWrapper } from './components/LoginWrapper';
 import { BrowserRouter as Router, Route, Switch, withRouter } from "react-router-dom";
 import AuthMethods from './Helpers/AuthMethods';
 import PrivateComponent from './components/PrivateComponent'
@@ -11,14 +11,14 @@ class App extends Component {
 
     handleLogout = () => {
         this.Auth.logout();
-        this.props.history.push('/login');
+        this.props.history.push('/start/login');
     }
 
     render() {
         return (
             <Router>
                 <Switch>
-                    <Route exac path="/login" component={Login} />
+                    <Route exac path="/start" component={LoginWrapper} />
                     <PrivateComponent path="/" component={UserProfile} logOut={this.handleLogout} />
                 </Switch>
             </Router>

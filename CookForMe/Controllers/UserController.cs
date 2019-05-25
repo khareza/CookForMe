@@ -23,29 +23,44 @@ namespace CookForMe.Controllers
         private SignInManager<AppUser> _signInManager;
         private UserManager<AppUser> _userManager;
         private ApplicationSettings _appSettings;
-        private AuthenticationContext _context;
+        private OrdersService _orderContext;
 
         public UserController(SignInManager<AppUser> signInManager,
             UserManager<AppUser> userManager, 
             IOptions<ApplicationSettings> appSettings,
-            AuthenticationContext context)
+            OrdersService orderContext)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _appSettings = appSettings.Value;
-            _context = context;
+            _orderContext = orderContext;
         }
 
         [HttpGet]
         [Route("GetOrders")]
         public ActionResult<IEnumerable<Order>> GetOrders()
         {
-            return _context.Orders.ToList();
+            return _orderContext.GetAll();
+        }
+
+        [HttpGet]
+        [Route("GetOrder/{id}")]
+        public ActionResult<Order> GetOrderById(int id)
+        {
+            var order = _orderContext.Get(id);
+            if (order==null)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                return Ok(order);
+            }
         }
 
         [HttpPost]
         [Route("CreateOrder")]
-        public async Task<IActionResult> CreateOrder(OrderFormData formData)
+        public IActionResult CreateOrder(OrderFormData formData)
         {
             var founder = _userManager.Users
                 .FirstOrDefault(u => u.Id == formData.FounderId);
@@ -64,8 +79,7 @@ namespace CookForMe.Controllers
             newOrder.Responses = new List<Response>();
             newOrder.IngredientsPhotoUrl = formData.PhotoUrl;
 
-            _context.Orders.Add(newOrder);
-            _context.SaveChanges();
+            _orderContext.Create(newOrder);
             return Ok();
         }
 
@@ -92,50 +106,31 @@ namespace CookForMe.Controllers
 
         [HttpDelete]
         [Route("DeleteOrder/{orderId}")]
-        public ActionResult DeleteOrder(int orderId)
+        public IActionResult DeleteOrder(int orderId)
         {
-            var orderToDelete = _context.Orders.FirstOrDefault(o=>o.Id == orderId);
-            if (orderToDelete == null)
+            var response =_orderContext.Delete(orderId);
+            if (response == null)
             {
                 return BadRequest();
             }
-            _context.Orders.Remove(orderToDelete);
-            _context.SaveChanges();
-
-            return Ok(orderToDelete);
+            return Ok(response);
         }
 
 
-        [HttpDelete]
+        [HttpPut]
         [Route("EditOrder")]
         public async Task<IActionResult> EditOrder(OrderFormData formData)
         {
+            var response = _orderContext.Edit(formData);
 
-            var order = _context.Orders.FirstOrDefault(o => o.Id == formData.OrderId);
-
-
-            if (order != null)
-            {
-                //use object mapper here :)
-
-                order.Deadline = formData.Deadline;
-                order.IngredientsAvaiable = formData.IngredientsAvaiableList;
-                order.Description = formData.Description;
-                order.IngredientsPhotoUrl = formData.PhotoUrl;
-                //using (var memoryStream = new MemoryStream())
-                //{
-                //    //await formData.IngredientsPhoto.Files.First().CopyToAsync(memoryStream);
-                //    order.IngredientsPhoto = memoryStream.ToArray();
-                //}
-                _context.SaveChanges();
-                return Ok(order);
-            }
-            else
+            if (response == null)
             {
                 return BadRequest();
             }
+            else
+            {
+                return Ok(response);
+            }
         }
-
-
     }
 }

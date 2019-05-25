@@ -33,7 +33,6 @@ export class SideMenu extends Component {
                             <li><NavLink to="/responses">Responses</NavLink></li>
                         </ul>
                     </nav>
-                    
                 </div>
                 <button className="btn btn-danger logOutBtn" onClick={this.props.logOut}>LogOut</button>
             </header>

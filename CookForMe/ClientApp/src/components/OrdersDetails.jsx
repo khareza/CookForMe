@@ -6,7 +6,7 @@ import '../ComponentsStyles/OrderDetails.css';
 export class OrdersDetails extends Component {
 
     editOrder = () => {
-        this.props.editOrder(this.props.order);
+        this.props.editOrder(this.props.order.id);
     }
 
     deleteOrder = () => {
@@ -33,10 +33,6 @@ export class OrdersDetails extends Component {
                     </div>
                 </div>
             </div>
-
-
-
-
         );
     }
 }

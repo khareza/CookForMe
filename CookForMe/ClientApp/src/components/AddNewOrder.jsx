@@ -37,7 +37,7 @@ export class AddNewOrder extends Component {
     }
 
     handleFileChange = (event) => {
-        this.setState({ ingredientsPhoto: event.target.files[0] });
+        this.setState({ ingredientsPhoto: event.target.files[0].name });
         // this.checkIfFormDataIsValid();
     }
 
@@ -69,7 +69,12 @@ export class AddNewOrder extends Component {
 
                             <div className="form-group">
                                 <label>Ingredient Photo</label>
-                                <input className="form-control" type="file" name="ingredientsPhoto" onChange={this.handleFileChange} />
+                                <div>
+                                    <label htmlFor="file-upload" className="custom-file-upload">
+                                       Select photo
+                                    </label>
+                                    <input className="inputFileinput" id="file-upload" type="file" name="ingredientsPhoto" onChange={this.handleFileChange} />
+                                </div>
                             </div>
 
                             <div className="form-group">
