@@ -13,7 +13,9 @@ namespace CookForMe.Models
     public class Response
     {
         public int Id { get; set; }
+        public string ResponserId { get; set; }
         public AppUser Responser { get; set; }
+        public int OrderId { get; set; }
         public Order Order { get; set; }
         public List<Recipe> Recipes { get; set; }
         public ResponseStatus ResponseStatus { get; set; }

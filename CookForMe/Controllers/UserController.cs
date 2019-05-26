@@ -26,6 +26,7 @@ namespace CookForMe.Controllers
         private OrdersService _orderContext;
         private ResponseService _responseContext;
 
+
         public UserController(SignInManager<AppUser> signInManager,
             UserManager<AppUser> userManager, 
             IOptions<ApplicationSettings> appSettings,
@@ -71,16 +72,14 @@ namespace CookForMe.Controllers
         [Route("CreateOrder")]
         public IActionResult CreateOrder(OrderFormData formData)
         {
-            var founder = _userManager.Users
-                .FirstOrDefault(u => u.Id == formData.FounderId);
 
-            if (!ModelState.IsValid || founder == null)
+            if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
             //////Dodać mapper
             Order newOrder = new Order();
-            newOrder.Founder = founder;
+            newOrder.FounderId = formData.FounderId;
             newOrder.IngredientsAvaiable = formData.IngredientsAvaiableList;
             newOrder.Description = formData.Description;
             newOrder.CreationDate = DateTime.Now;
@@ -147,26 +146,26 @@ namespace CookForMe.Controllers
         [Route("CreateResponse")]
         public IActionResult CreateResponse(ResponseFormData formData)
         {
-            var responser = _userManager.Users
-                .FirstOrDefault(u => u.Id == formData.ResponserId);
 
-            if (!ModelState.IsValid || responser == null)
+            if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
 
             //////Dodać mapper
-            Response newResponse = new Response();
+            
             Recipe newRecipe = new Recipe();
             newRecipe.Name = formData.RecipeName;
             newRecipe.Price = formData.RecipePrice;
             newRecipe.AvgCookTime = formData.RecipeAvgCookTime;
 
+            Response newResponse = new Response();
             newResponse.Recipes = new List<Recipe>();
-            newResponse.Responser = responser;
+            newResponse.ResponserId = formData.ResponserId;
             newResponse.Recipes.Add(newRecipe);
+            newResponse.OrderId = formData.OrderId;
 
-            //_responseContext.Create(newResponse, formData.OrderId);
+            _responseContext.Create(newResponse);
             return Ok(newResponse);
         }
 

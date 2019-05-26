@@ -32,6 +32,8 @@ export class RegisterNewUser extends Component {
             email: '',
             isSubmitDisabled: true
         });
+
+        this.props.history.push('/start/login');
     }
 
     handleInputChange = (event) => {

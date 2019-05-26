@@ -14,6 +14,8 @@ namespace CookForMe.DAL
         public OrdersService(AuthenticationContext context)
         {
             _context = context;
+            //_context.Database.EnsureDeleted();
+            //_context.Database.EnsureCreated();
         }
 
         public List<Order> GetAll(string id)

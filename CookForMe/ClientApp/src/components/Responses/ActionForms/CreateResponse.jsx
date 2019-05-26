@@ -23,7 +23,7 @@ export default class AddNewOrder extends Component {
             { responserId: this.Auth.getUserId(), recipeName: name, recipePrice: price, recipeAvgCookTime: avgCookTime, orderId  }
         ).then((res) => {
             console.log(res);
-           // this.props.history.push('/Responses/MyResponses');
+           this.props.history.push('/Responses/MyResponses');
         })
     }
 

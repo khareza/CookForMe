@@ -17,6 +17,7 @@ namespace CookForMe.Models
     public class Order
     {
         public int Id { get; set; }
+        public string FounderId { get; set; }
         public AppUser Founder { get; set; }
         public DateTime CreationDate { get; set; }
         public DateTime Deadline { get; set; }

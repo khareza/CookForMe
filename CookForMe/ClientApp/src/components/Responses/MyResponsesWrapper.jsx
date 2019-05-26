@@ -21,7 +21,8 @@ export default class MyResponsesWrapper extends Component {
     getResponses = () => {
         this.Auth.getUserResponses()
             .then((res) => {
-                this.setState({ responses: res.data });
+                console.log(res.data);
+               // this.setState({ responses: res.data });
             });
     }
 

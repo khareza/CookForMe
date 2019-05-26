@@ -6,12 +6,8 @@ import '../../../ComponentsStyles/OrderDetails.css';
 
 export class ResponseDetails extends Component {
 
-    editOrder = () => {
-        this.props.editOrder(this.props.order.id);
-    }
-
-    deleteOrder = () => {
-        this.props.deleteOrder(this.props.order.id);
+    deleteResponse = () => {
+        this.props.deleteResponse(this.props.response.id);
     }
 
     render() {
@@ -19,7 +15,7 @@ export class ResponseDetails extends Component {
         return (
             <div className="orderCard">
                 <div className="orderCardHeader">
-                    <p>{this.props.order.ingredientsPhotoUrl}</p>
+                    <p>{this.props.response.name}</p>
                     <p>Deadline: <Moment format="dddd YYYY-MM-DD HH:mm">{this.props.order.deadline}</Moment></p>
                     <p>Time left: <Moment fromNow="dddd YYYY-MM-DD HH:mm">{this.props.order.deadline}</Moment></p>
                 </div>
