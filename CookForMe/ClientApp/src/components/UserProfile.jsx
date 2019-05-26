@@ -2,7 +2,7 @@
 import { Route } from 'react-router-dom';
 import { SideMenu } from './SideMenu';
 import { ActiveUserDetails } from './ActiveUserDetails';
-import { OrdersListWrapper } from './OrdersListWrapper';
+import { OrdersListWrapper } from './Orders/OrdersWrapper';
 import { ResponsesListWrapper } from './ResponsesListWrapper';
 import '../ComponentsStyles/UserProfile.css';
 
@@ -18,7 +18,7 @@ export class UserProfile extends Component {
                 </div>
                 <div className="col-md-10 d-inline-block mt-5 ">
                     <Route path="/profile" component={ActiveUserDetails} />
-                    <Route path="/orders" component={OrdersListWrapper} />
+                    <Route path="/Orders" component={OrdersListWrapper} />
                     <Route path="/responses" component={ResponsesListWrapper} />
                 </div>
             </div>

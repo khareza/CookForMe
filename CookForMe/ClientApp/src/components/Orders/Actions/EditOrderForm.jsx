@@ -1,9 +1,9 @@
 ﻿import React, { Component } from 'react';
-import AuthMethods from '../Helpers/AuthMethods';
 import { withRouter } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import '../ComponentsStyles/CustomFileUploader.css';
+import AuthMethods from '../../../Helpers/AuthMethods';
+import '../../../ComponentsStyles/CustomFileUploader.css';
 
 class EditOrderForm extends Component {
 
@@ -34,7 +34,7 @@ class EditOrderForm extends Component {
                     isSubmitDisabled: false
                 });
             }).catch((err) => {
-                this.props.history.push(`/orders`);
+                this.props.history.push(`/orders/MyOrders`);
             });
     }
 

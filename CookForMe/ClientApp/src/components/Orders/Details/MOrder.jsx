@@ -2,9 +2,9 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import Moment from 'react-moment';
-import '../ComponentsStyles/OrderDetails.css';
+import '../../../ComponentsStyles/OrderDetails.css';
 
-export class OrdersDetails extends Component {
+export class OrderDetails extends Component {
 
     editOrder = () => {
         this.props.editOrder(this.props.order.id);

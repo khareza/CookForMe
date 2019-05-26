@@ -1,7 +1,8 @@
 ﻿import React, { Component } from 'react';
-import AuthMethods from '../Helpers/AuthMethods';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import AuthMethods from '../../../Helpers/AuthMethods';
+
 
 
 export class AddNewOrder extends Component {

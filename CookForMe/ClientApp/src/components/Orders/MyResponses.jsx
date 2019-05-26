@@ -1,11 +1,10 @@
 ﻿import React, { Component } from 'react';
-import { OrdersDetails } from './OrdersDetails';
-import AuthMethods from '../Helpers/AuthMethods';
 import { withRouter } from 'react-router-dom';
+import { OrderDetails } from './Details/ROrder';
+import AuthMethods from '../../Helpers/AuthMethods';
 
-class OrdersList extends Component {
+class MyReponses extends Component {
     Auth = new AuthMethods();
-
 
     editOrder = (id) => {
         this.props.history.push(`/orders/edit/${id}`);
@@ -13,9 +12,9 @@ class OrdersList extends Component {
 
 
     renderOrderComponents = () => {
-        return this.props.orders.map((order)=> {
+        return this.props.orders.map((order) => {
             return (
-                <OrdersDetails key={order.id}
+                <OrderDetails key={order.id}
                     deleteOrder={this.props.deleteOrder}
                     editOrder={this.editOrder}
                     order={order} />
@@ -39,4 +38,4 @@ class OrdersList extends Component {
     }
 }
 
-export default withRouter(OrdersList);
+export default withRouter(MyReponses);
