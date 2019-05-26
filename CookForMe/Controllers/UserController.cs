@@ -37,10 +37,17 @@ namespace CookForMe.Controllers
         }
 
         [HttpGet]
-        [Route("GetOrders")]
-        public ActionResult<List<Order>> GetOrders()
+        [Route("GetOrders/{id}")]
+        public ActionResult<List<Order>> GetOrders(string id)
         {
-            return _orderContext.GetAll();
+            return _orderContext.GetAll(id);
+        }
+
+        [HttpGet]
+        [Route("GetMyOrders/{id}")]
+        public ActionResult<List<Order>> GetMyOrders(string id)
+        {
+            return _orderContext.GetMyOrders(id);
         }
 
         [HttpGet]

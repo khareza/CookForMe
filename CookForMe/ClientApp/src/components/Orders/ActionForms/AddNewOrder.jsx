@@ -5,7 +5,7 @@ import AuthMethods from '../../../Helpers/AuthMethods';
 
 
 
-export class AddNewOrder extends Component {
+export default class AddNewOrder extends Component {
     constructor(props) {
         super(props);
 
@@ -28,7 +28,7 @@ export class AddNewOrder extends Component {
             { founderId: this.Auth.getUserId(), photoUrl: ingredientsPhoto.name, deadline, ingredientsAvaiableList, description }
         ).then((res) => {
 
-            this.props.history.push('/orders')
+            this.props.history.push('/orders/MyOrders')
         })       
     }
 
@@ -88,7 +88,7 @@ export class AddNewOrder extends Component {
                                 <input className="form-control" type="text" name="description" value={this.state.description} onChange={this.handleInputChange} />
                             </div>
                             <input type="submit" value="Add new order" className="btn btn-large btn-block btn-primary" disabled={this.state.isSubmitDisabled} />
-                            <input type="button" value="Cancel" onClick={() => { this.props.history.push('/orders') }} className="btn btn-large btn-block btn-danger" />
+                            <input type="button" value="Cancel" onClick={() => { this.props.history.push('/orders/MyOrders') }} className="btn btn-large btn-block btn-danger" />
                         </div>
                     </div>
                 </form>

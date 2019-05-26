@@ -29,10 +29,6 @@ class AllOrders extends Component {
                     <h2>All orders</h2>
                 </div>
                 {this.renderOrderComponents()}
-                <div className="text-center">
-                    <button className="btn btn-success mt-3"
-                        onClick={() => { this.props.history.push('/orders/create') }}>Add new order</button>
-                </div>
             </div>
         );
     }

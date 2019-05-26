@@ -88,16 +88,27 @@ export default class AuthMethods {
             'Bearer ' + this.getToken();
         return axios.delete(`${this.userApiUrl}/DeleteOrder/` + id);
     }
-    getOrders = () => {
+
+    getAllOrders = () => {
+        let id = this.getUserId();
         axios.defaults.headers.common['Authorization'] =
             'Bearer ' + this.getToken();
-        return axios.get(`${this.userApiUrl}/GetOrders`);
+        return axios.get(`${this.userApiUrl}/GetOrders/${id}`);
     }
+
+    getMyOrders = () => {
+        let id = this.getUserId();
+        axios.defaults.headers.common['Authorization'] =
+            'Bearer ' + this.getToken();
+        return axios.get(`${this.userApiUrl}/GetMyOrders/${id}`);
+    }
+
     getOrderById = (id) => {
         axios.defaults.headers.common['Authorization'] =
             'Bearer ' + this.getToken();
-        return axios.get(`${this.userApiUrl}/GetOrder/`+ id);
+        return axios.get(`${this.userApiUrl}/GetOrder/${id}`);
     }
+
     getUserId = () => {
         const decoded = decode(this.getToken());
         return decoded.UserID;

@@ -7,7 +7,7 @@ class MyOrders extends Component {
     Auth = new AuthMethods();
 
     editOrder = (id) => {
-        this.props.history.push(`/orders/edit/${id}`);
+        this.props.history.push(`/orders/MyOrders/edit/${id}`);
     }
 
 
@@ -26,12 +26,12 @@ class MyOrders extends Component {
         return (
             <div>
                 <div className="headerLogin">
-                    <h2>All orders</h2>
+                    <h2>My orders</h2>
                 </div>
                 {this.renderOrderComponents()}
                 <div className="text-center">
                     <button className="btn btn-success mt-3"
-                        onClick={() => { this.props.history.push('/orders/create') }}>Add new order</button>
+                        onClick={() => { this.props.history.push('/orders/MyOrders/create') }}>Add new order</button>
                 </div>
             </div>
         );

@@ -16,9 +16,14 @@ namespace CookForMe.DAL
             _context = context;
         }
 
-        public List<Order> GetAll()
+        public List<Order> GetAll(string id)
         {
-            return _context.Orders.ToList();
+            return _context.Orders.Where(x=>x.Founder.Id != id).ToList();
+        }
+
+        public List<Order> GetMyOrders(string id)
+        {
+            return _context.Orders.Where(x => x.Founder.Id == id).ToList();
         }
 
         public Order Get(int id)
