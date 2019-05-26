@@ -1,17 +1,15 @@
 ﻿import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons'
+import { faCheck } from '@fortawesome/free-solid-svg-icons'
 import Moment from 'react-moment';
 import '../../../ComponentsStyles/OrderDetails.css';
+import AuthMethods from '../../../Helpers/AuthMethods';
 
 export class OrderDetails extends Component {
+    Auth = new AuthMethods();
 
-    editOrder = () => {
-        this.props.editOrder(this.props.order.id);
-    }
-
-    deleteOrder = () => {
-        this.props.deleteOrder(this.props.order.id);
+    responseToOrder = () => {
+        this.props.responseToOrder(this.props.order.id);
     }
 
     render() {
@@ -30,8 +28,7 @@ export class OrderDetails extends Component {
 
                     </div>
                     <div className="orderButtons">
-                        <a className="button buttonEdit" onClick={this.editOrder}><FontAwesomeIcon icon={faCheck}></FontAwesomeIcon></a>
-                        <a className="button buttonDelete" onClick={this.deleteOrder}><FontAwesomeIcon icon={faTimes}></FontAwesomeIcon></a>
+                        <a className="button buttonAccept" onClick={this.responseToOrder}><FontAwesomeIcon icon={faCheck}></FontAwesomeIcon></a>
                     </div>
                 </div>
             </div>

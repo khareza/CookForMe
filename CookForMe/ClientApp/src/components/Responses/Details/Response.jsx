@@ -4,7 +4,7 @@ import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import Moment from 'react-moment';
 import '../../../ComponentsStyles/OrderDetails.css';
 
-export class OrderDetails extends Component {
+export class ResponseDetails extends Component {
 
     editOrder = () => {
         this.props.editOrder(this.props.order.id);

@@ -1,23 +1,18 @@
 ﻿import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import { OrderDetails } from './Details/ROrder';
+import { ResponseDetails } from './Details/Response';
 import AuthMethods from '../../Helpers/AuthMethods';
 
 class MyReponses extends Component {
     Auth = new AuthMethods();
 
-    editOrder = (id) => {
-        this.props.history.push(`/orders/edit/${id}`);
-    }
-
 
     renderOrderComponents = () => {
-        return this.props.orders.map((order) => {
+        return this.props.responses.map((response) => {
             return (
-                <OrderDetails key={order.id}
-                    deleteOrder={this.props.deleteOrder}
-                    editOrder={this.editOrder}
-                    order={order} />
+                <ResponseDetails key={response.id}
+                    deleteResponse={this.props.deleteResponse}
+                    response={response} />
             )
         })
     }

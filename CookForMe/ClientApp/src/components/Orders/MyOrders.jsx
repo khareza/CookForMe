@@ -10,7 +10,6 @@ class MyOrders extends Component {
         this.props.history.push(`/orders/MyOrders/edit/${id}`);
     }
 
-
     renderOrderComponents = () => {
         return this.props.orders.map((order) => {
             return (

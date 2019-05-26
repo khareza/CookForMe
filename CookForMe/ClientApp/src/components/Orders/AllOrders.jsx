@@ -6,17 +6,16 @@ import AuthMethods from '../../Helpers/AuthMethods';
 class AllOrders extends Component {
     Auth = new AuthMethods();
 
-    editOrder = (id) => {
-        this.props.history.push(`/orders/edit/${id}`);
-    }
 
+    responseToOrder = (id) => {
+        this.props.history.push(`/Responses/MyResponses/create/${id}`);
+    }
 
     renderOrderComponents = () => {
         return this.props.orders.map((order) => {
             return (
                 <OrderDetails key={order.id}
-                    deleteOrder={this.props.deleteOrder}
-                    editOrder={this.editOrder}
+                    responseToOrder={this.responseToOrder}
                     order={order} />
             )
         })

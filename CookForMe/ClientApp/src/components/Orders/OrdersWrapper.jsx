@@ -4,6 +4,13 @@ import AllOrdersWrapper from './AllOrdersWrapper';
 import MyOrdersWrapper from './MyOrdersWrapper';
 
 export class OrdersListWrapper extends Component {
+
+    constructor(props) {
+        super(props);
+        this.props.history.push('Orders/AllOrders');
+
+    }
+
     render() {
         return (
             <div>

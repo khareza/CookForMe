@@ -64,3 +64,11 @@
     .buttonDelete:hover {
         background-color: #e74c3c;
     }
+
+.buttonAccept {
+    background-color: #228b22;
+}
+
+    .buttonAccept:hover {
+        background-color: #006400;
+    }

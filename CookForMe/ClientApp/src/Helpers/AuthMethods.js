@@ -114,4 +114,24 @@ export default class AuthMethods {
         return decoded.UserID;
     }
 
+    createResponse = (newResponseFormData) => {
+        console.log(newResponseFormData);
+        axios.defaults.headers.common['Authorization'] =
+            'Bearer ' + this.getToken();
+        return axios.post(`${this.userApiUrl}/CreateResponse`, newResponseFormData);
+    }
+
+    getOrderResponses = (id) => {
+        axios.defaults.headers.common['Authorization'] =
+            'Bearer ' + this.getToken();
+        return axios.get(`${this.userApiUrl}/GetOrderResponses/${id}`);
+    }
+
+
+    getUserResponses = () => {
+        axios.defaults.headers.common['Authorization'] =
+            'Bearer ' + this.getToken();
+        let id = this.getUserId();
+        return axios.get(`${this.userApiUrl}/GetUserResponses/${id}`);
+    }
 }

@@ -24,16 +24,18 @@ namespace CookForMe.Controllers
         private UserManager<AppUser> _userManager;
         private ApplicationSettings _appSettings;
         private OrdersService _orderContext;
+        private ResponseService _responseContext;
 
         public UserController(SignInManager<AppUser> signInManager,
             UserManager<AppUser> userManager, 
             IOptions<ApplicationSettings> appSettings,
-            OrdersService orderContext)
+            OrdersService orderContext, ResponseService responseContext)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _appSettings = appSettings.Value;
             _orderContext = orderContext;
+            _responseContext = responseContext;
         }
 
         [HttpGet]
@@ -139,5 +141,50 @@ namespace CookForMe.Controllers
                 return Ok(response);
             }
         }
+        //move it to different controller
+
+        [HttpPost]
+        [Route("CreateResponse")]
+        public IActionResult CreateResponse(ResponseFormData formData)
+        {
+            var responser = _userManager.Users
+                .FirstOrDefault(u => u.Id == formData.ResponserId);
+
+            if (!ModelState.IsValid || responser == null)
+            {
+                return BadRequest();
+            }
+
+            //////Dodać mapper
+            Response newResponse = new Response();
+            Recipe newRecipe = new Recipe();
+            newRecipe.Name = formData.RecipeName;
+            newRecipe.Price = formData.RecipePrice;
+            newRecipe.AvgCookTime = formData.RecipeAvgCookTime;
+
+            newResponse.Recipes = new List<Recipe>();
+            newResponse.Responser = responser;
+            newResponse.Recipes.Add(newRecipe);
+
+            //_responseContext.Create(newResponse, formData.OrderId);
+            return Ok(newResponse);
+        }
+
+        [HttpGet]
+        [Route("GetOrderResponses/{id}")]
+        public ActionResult<List<Response>> GetOrderResponses(int id)
+        {
+            return _responseContext.GetResponsesOfSpecificOrder(id);
+        }
+
+        [HttpGet]
+        [Route("GetUserResponses/{id}")]
+        public ActionResult<List<Response>> GetUserResponses(string id)
+        {
+            return _responseContext.GetUserResponses(id);
+        }
+
+
+
     }
 }
