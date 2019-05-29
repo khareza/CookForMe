@@ -27,7 +27,6 @@ export default class IngredientsWrapper extends Component {
 
         this.setState(ingredients);
         this.saveIngredients();
-        console.log(this.state.ingredients);
     }
 
     saveIngredients = () => {

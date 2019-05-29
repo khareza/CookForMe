@@ -15,6 +15,7 @@ export default class AddNewOrder extends Component {
             ingredientsPhoto: '',
             ingredientsAvaiableList: '',
             description: '',
+            imagePreviewUrl: '',
             isSubmitDisabled: false
         };
     }
@@ -29,7 +30,7 @@ export default class AddNewOrder extends Component {
 
         this.OrderRequest.uploadOrderPhoto(fd).then((res) => {
             this.OrderRequest.createOrder(
-                { founderId: this.Auth.getUserId(), photoUrl:res.data, deadline, ingredientsAvaiableList, description }
+                { founderId: this.Auth.getUserId(), photoUrl: res.data, deadline, ingredientsAvaiableList, description }
             )
         }).then((res) => {
             console.log(res);
@@ -43,7 +44,17 @@ export default class AddNewOrder extends Component {
     }
 
     handleFileChange = (event) => {
-        this.setState({ ingredientsPhoto: event.target.files[0] });
+        let reader = new FileReader();
+        let file = event.target.files[0];
+        reader.onloadend = () => {
+            this.setState(
+                {
+                    ingredientsPhoto: file,
+                    imagePreviewUrl: reader.result
+                });
+        }
+        reader.readAsDataURL(file);
+
         // this.checkIfFormDataIsValid();
     }
 
@@ -66,16 +77,18 @@ export default class AddNewOrder extends Component {
                     <div className="form-row">
                         <div className="form-gorup col-md-8 offset-md-2">
                             <div className="form-group">
-                                <label>Deadline</label>
-                                <DatePicker
-                                    selected={this.state.deadline}
-                                    onChange={this.handleDateChange}
-                                    showTimeSelect
-                                    timeFormat="HH:mm"
-                                    timeIntervals={15}
-                                    dateFormat="MMMM d, yyyy h:mm aa"
-                                    timeCaption="time"
-                                />
+                                <label>Order expires in</label>
+                                <div>
+                                    <DatePicker
+                                        selected={this.state.deadline}
+                                        onChange={this.handleDateChange}
+                                        showTimeSelect
+                                        timeFormat="HH:mm"
+                                        timeIntervals={15}
+                                        dateFormat="MMMM d, yyyy h:mm aa"
+                                        timeCaption="time"
+                                    />
+                                </div>
                             </div>
 
                             <div className="form-group">
@@ -85,12 +98,17 @@ export default class AddNewOrder extends Component {
                                         Select photo
                                     </label>
                                     <input className="inputFileinput" id="file-upload" type="file" name="ingredientsPhoto" onChange={this.handleFileChange} />
+                                    <div>
+                                        {this.state.imagePreviewUrl
+                                            ? <img className="imgPreview" src={this.state.imagePreviewUrl} alt="Select" />
+                                            : null}
+                                    </div>
                                 </div>
                             </div>
 
                             <div className="form-group">
                                 <label>Ingredients Avaiable List</label>
-                                <IngredientsWrapper saveIngredients={this.saveIngredients}/>
+                                <IngredientsWrapper saveIngredients={this.saveIngredients} />
                             </div>
 
                             <div className="form-group">

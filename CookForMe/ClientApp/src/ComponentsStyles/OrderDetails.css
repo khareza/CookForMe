@@ -81,5 +81,10 @@ margin:10px 20px;
 }
 .offer {
     display:flex;
-    justify-content:space-around;
+    justify-content:space-between;
+    padding:0 20px 0 20px;
+}
+.imgPreview {
+width:50%
+
 }
