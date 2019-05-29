@@ -2,7 +2,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrashAlt, faEdit } from '@fortawesome/free-solid-svg-icons'
 import Moment from 'react-moment';
-import '../../../ComponentsStyles/OrderDetails.css';
 
 export class ResponseDetails extends Component {
 

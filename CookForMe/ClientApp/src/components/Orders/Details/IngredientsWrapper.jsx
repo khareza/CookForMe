@@ -2,6 +2,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import Ingredient from './Ingredient'
+
 export default class IngredientsWrapper extends Component {
 
     state = {

@@ -1,16 +1,15 @@
 ﻿import React, { Component } from 'react';
 import DatePicker from 'react-datepicker';
 import IngredientsWrapper from '../Details/IngredientsWrapper';
-import 'react-datepicker/dist/react-datepicker.css';
 import AuthMethods from '../../../Helpers/AuthMethods';
-
-
+import OrderMethods from '../../../Helpers/OrderMethods';
 
 export default class AddNewOrder extends Component {
     constructor(props) {
         super(props);
 
         this.Auth = new AuthMethods();
+        this.OrderRequest = new OrderMethods();
         this.state = {
             deadline: new Date(),
             ingredientsPhoto: '',
@@ -27,8 +26,9 @@ export default class AddNewOrder extends Component {
 
         const fd = new FormData();
         fd.append('photo', ingredientsPhoto);
-        this.Auth.uploadOrderPhoto(fd).then((res) => {
-            this.Auth.createOrder(
+
+        this.OrderRequest.uploadOrderPhoto(fd).then((res) => {
+            this.OrderRequest.createOrder(
                 { founderId: this.Auth.getUserId(), photoUrl:res.data, deadline, ingredientsAvaiableList, description }
             )
         }).then((res) => {

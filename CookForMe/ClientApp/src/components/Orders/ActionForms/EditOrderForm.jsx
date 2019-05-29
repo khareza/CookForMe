@@ -1,15 +1,13 @@
 ﻿import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
-import AuthMethods from '../../../Helpers/AuthMethods';
-import '../../../ComponentsStyles/CustomFileUploader.css';
+import OrderMethods from '../../../Helpers/OrderMethods';
 
 class EditOrderForm extends Component {
 
     constructor(props) {
         super(props);
-        this.Auth = new AuthMethods();
+        this.OrderRequest = new OrderMethods();
 
         this.state = {
             deadline: new Date(),
@@ -24,7 +22,7 @@ class EditOrderForm extends Component {
     }
 
     getOrder = (id) => {
-        this.Auth.getOrderById(id)
+        this.OrderRequest.getOrderById(id)
             .then((res) => {
                 this.setState({
                     ingredientsPhotoUrl: res.data.ingredientsPhotoUrl ? res.data.ingredientsPhotoUrl : 'WithOutPhoto',

@@ -4,7 +4,6 @@ import { SideMenu } from './SideMenu';
 import { ActiveUserDetails } from './ActiveUserDetails';
 import { OrdersListWrapper } from './Orders/OrdersWrapper';
 import { ResponsesWrapper } from './Responses/ResponsesWrapper';
-import '../ComponentsStyles/UserProfile.css';
 
 export class UserProfile extends Component {
 

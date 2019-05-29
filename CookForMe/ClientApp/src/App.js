@@ -4,8 +4,13 @@ import { BrowserRouter as Router, Route, Switch, withRouter } from "react-router
 import AuthMethods from './Helpers/AuthMethods';
 import PrivateComponent from './components/PrivateComponent'
 import { UserProfile } from './components/UserProfile';
+import 'react-datepicker/dist/react-datepicker.css';
 import './ComponentsStyles/SideMenu.css';
 import './ComponentsStyles/SelectMenu.css';
+import './ComponentsStyles/CustomFileUploader.css';
+import './ComponentsStyles/OrderDetails.css';
+import './ComponentsStyles/UserProfile.css';
+
 
 class App extends Component {
 

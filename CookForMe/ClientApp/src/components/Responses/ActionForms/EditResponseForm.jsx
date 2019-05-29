@@ -1,13 +1,13 @@
 ﻿import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import AuthMethods from '../../../Helpers/AuthMethods';
+import ResponseMethods from '../../../Helpers/ResponseMethods';
 import EditRecipe from './EditOffer';
 
 class EditResponseForm extends Component {
 
     constructor(props) {
         super(props);
-        this.Auth = new AuthMethods();
+        this.ResponseRequest = new ResponseMethods();
 
         this.state = {
             offers: [],
@@ -18,7 +18,7 @@ class EditResponseForm extends Component {
     }
 
     getResponse = (id) => {
-        this.Auth.getResponse(id)
+        this.ResponseRequest.getResponse(id)
             .then((res) => {
                 console.log(res.data);
                 this.setState({
@@ -32,7 +32,7 @@ class EditResponseForm extends Component {
     handleSubmit = (event) => {
         event.preventDefault();
 
-        this.Auth.editResponse(
+        this.ResponseRequest.editResponse(
             { id: this.props.match.params.response_id, offers: this.state.offers }
         ).then((res) => { this.props.history.push('/responses/MyResponses') });
     }

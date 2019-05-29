@@ -1,12 +1,12 @@
 ﻿import React, { Component } from 'react';
 import { Route} from 'react-router-dom';
-import AuthMethods from '../../Helpers/AuthMethods';
+import OrderMethods from '../../Helpers/OrderMethods';
 import AllOrders from './AllOrders';
 
 export default class AllOrdersWrapper extends Component {
     constructor(props) {
         super(props);
-        this.Auth = new AuthMethods();
+        this.OrderRequest = new OrderMethods();
         this.state = {
             orders: []
         }
@@ -17,12 +17,11 @@ export default class AllOrdersWrapper extends Component {
     }
 
     getOrders = () => {
-        this.Auth.getAllOrders()
+        this.OrderRequest.getAllOrders()
             .then((res) => {
                 this.setState({ orders: res.data });
             });
     }
-
 
     render() {
         return (

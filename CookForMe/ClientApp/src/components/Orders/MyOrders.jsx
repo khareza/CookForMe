@@ -1,11 +1,11 @@
 ﻿import React, { Component } from 'react';
 import { OrderDetails } from './Details/MOrder';
-import AuthMethods from '../../Helpers/AuthMethods';
+import OrderMethods from '../../Helpers/OrderMethods';
 
 export default class MyOrders extends Component {
     constructor(props) {
         super(props);
-        this.Auth = new AuthMethods();
+        this.OrderRequest = new OrderMethods();
         this.state = {
             orders: []
         }
@@ -16,7 +16,7 @@ export default class MyOrders extends Component {
     }
 
     getOrders = () => {
-        this.Auth.getMyOrders()
+        this.OrderRequest.getMyOrders()
             .then((res) => {
                 this.setState({ orders: res.data });
             });
@@ -27,7 +27,7 @@ export default class MyOrders extends Component {
     }
 
     deleteOrder = (id) => {
-        this.Auth.deleteOrder(id)
+        this.OrderRequest.deleteOrder(id)
             .then(() => { this.getOrders() })
             .catch(err => { console.log(err) });
     }

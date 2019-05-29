@@ -1,12 +1,11 @@
 ﻿import React, { Component } from 'react';
+import Moment from 'react-moment';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck } from '@fortawesome/free-solid-svg-icons'
-import Moment from 'react-moment';
-import '../../../ComponentsStyles/OrderDetails.css';
-import AuthMethods from '../../../Helpers/AuthMethods';
+import ResponseMethods from '../../../Helpers/ResponseMethods';
 
 export class OrderDetails extends Component {
-    Auth = new AuthMethods();
+    ResponseRequest = new ResponseMethods();
 
     state = {
         id: this.props.order.id,
@@ -22,7 +21,7 @@ export class OrderDetails extends Component {
     }
 
     getResponses = () => {
-        this.Auth.getOrderResponses(this.state.id)
+        this.ResponseRequest.getOrderResponses(this.state.id)
             .then((res) => {
                 this.setState({ responses: res.data });
             });

@@ -1,5 +1,6 @@
 ﻿import React, { Component } from 'react';
 import AuthMethods from '../../../Helpers/AuthMethods';
+import ResponseMethods from '../../../Helpers/ResponseMethods';
 import OffersWrapper from '../Details/OffersWrapper';
 
 export default class AddNewOrder extends Component {
@@ -7,6 +8,7 @@ export default class AddNewOrder extends Component {
         super(props);
 
         this.Auth = new AuthMethods();
+        this.ResponseRequest = new ResponseMethods();
         this.state = {
             orderId: this.props.match.params.order_id,
             name: '',
@@ -21,7 +23,7 @@ export default class AddNewOrder extends Component {
         event.preventDefault();
         let { orderId, offers} = this.state;
 
-        this.Auth.createResponse(
+        this.ResponseRequest.createResponse(
             { responserId: this.Auth.getUserId(), orderId, offers }
         ).then((res) => {
             console.log(res);

@@ -1,12 +1,12 @@
 ﻿import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { ResponseDetails } from './Details/Response';
-import AuthMethods from '../../Helpers/AuthMethods';
+import ResponseMethods from '../../Helpers/ResponseMethods';
 
 class MyReponses extends Component {
     constructor(props) {
         super(props);
-        this.Auth = new AuthMethods();
+        this.ResponseRequest = new ResponseMethods();
         this.state = {
             responses: []
         }
@@ -17,14 +17,14 @@ class MyReponses extends Component {
     }
 
     getResponses = () => {
-        this.Auth.getUserResponses()
+        this.ResponseRequest.getUserResponses()
             .then((res) => {
                 this.setState({ responses: res.data });
             });
     }
 
     deleteResponse = (id) => {
-        this.Auth.deleteResponse(id)
+        this.ResponseRequest.deleteResponse(id)
             .then(() => { this.getResponses() })
             .catch(err => { console.log(err) });
     }

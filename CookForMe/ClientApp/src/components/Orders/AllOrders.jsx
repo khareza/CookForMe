@@ -1,10 +1,8 @@
 ﻿import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { OrderDetails } from './Details/AOrder';
-import AuthMethods from '../../Helpers/AuthMethods';
 
 class AllOrders extends Component {
-    Auth = new AuthMethods();
 
     responseToOrder = (id) => {
         this.props.history.push(`/Responses/MyResponses/create/${id}`);
