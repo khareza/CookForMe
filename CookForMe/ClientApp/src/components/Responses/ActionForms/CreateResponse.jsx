@@ -1,5 +1,6 @@
 ﻿import React, { Component } from 'react';
 import AuthMethods from '../../../Helpers/AuthMethods';
+import OffersWrapper from '../Details/OffersWrapper';
 
 export default class AddNewOrder extends Component {
     constructor(props) {
@@ -11,20 +12,25 @@ export default class AddNewOrder extends Component {
             name: '',
             price: '',
             avgCookTime: '',
+            offers:[],
             isSubmitDisabled: false
         };
     }
 
     handleSubmit = (event) => {
         event.preventDefault();
-        let { orderId, name, price, avgCookTime } = this.state;
+        let { orderId, offers} = this.state;
 
         this.Auth.createResponse(
-            { responserId: this.Auth.getUserId(), recipeName: name, recipePrice: price, recipeAvgCookTime: avgCookTime, orderId  }
+            { responserId: this.Auth.getUserId(), orderId, offers }
         ).then((res) => {
             console.log(res);
            this.props.history.push('/Responses/MyResponses');
         })
+    }
+
+    saveOffers = (offersStringArray) => {
+        this.setState({ offers: offersStringArray });
     }
 
     handleInputChange = (event) => {
@@ -50,20 +56,7 @@ export default class AddNewOrder extends Component {
                             </div>
 
                             <div className="form-group">
-                                <label>Name</label>
-                                <input className="form-control" type="text" name="name" value={this.state.name} onChange={this.handleInputChange} />
-                            </div>
-
-
-                            <div className="form-group">
-                                <label>Price</label>
-                                <input className="form-control" type="text" name="price" value={this.state.price} onChange={this.handleInputChange} />
-                            </div>
-
-
-                            <div className="form-group">
-                                <label>Average cook time</label>
-                                <input className="form-control" type="text" name="avgCookTime" value={this.state.avgCookTime} onChange={this.handleInputChange} />
+                                <OffersWrapper saveOffers={this.saveOffers} />
                             </div>
 
                             <input type="submit" value="Response to order" className="btn btn-large btn-block btn-primary" disabled={this.state.isSubmitDisabled} />

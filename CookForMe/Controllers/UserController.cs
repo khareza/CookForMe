@@ -147,15 +147,15 @@ namespace CookForMe.Controllers
 
             //////Dodać mapper
             
-            Recipe newRecipe = new Recipe();
-            newRecipe.Name = formData.RecipeName;
-            newRecipe.Price = formData.RecipePrice;
-            newRecipe.AvgCookTime = formData.RecipeAvgCookTime;
+            //Recipe newRecipe = new Recipe();
+            //newRecipe.Name = formData.RecipeName;
+            //newRecipe.Price = formData.RecipePrice;
+            //newRecipe.AvgCookTime = formData.RecipeAvgCookTime;
 
             Response newResponse = new Response();
-            newResponse.Recipes = new List<Recipe>();
+            //newResponse.Recipes = new List<Recipe>();
             newResponse.ResponserId = formData.ResponserId;
-            newResponse.Recipes.Add(newRecipe);
+            newResponse.Recipes = formData.Offers;
             newResponse.OrderId = formData.OrderId;
 
             _responseContext.Create(newResponse);

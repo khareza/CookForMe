@@ -8,10 +8,11 @@ namespace CookForMe.Models.FormModels
     public class ResponseFormData
     {
         public int OrderId { get; set; }
+        public List<Recipe> Offers { get; set; }
         public string ResponserId { get; set; }
-        public string RecipeName { get; set; }
-        public decimal RecipePrice { get; set; }
-        public string RecipeAvgCookTime { get; set; }
+        //public string RecipeName { get; set; }
+        //public decimal RecipePrice { get; set; }
+        //public string RecipeAvgCookTime { get; set; }
 
     }
 }

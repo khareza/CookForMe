@@ -23,7 +23,6 @@ export class Login extends Component {
 
         this.Auth.login(loginFormData)
             .then(res => {
-                console.log(res);
                 if (res === false) {
                     return alert("Wrong login or password");
                 }

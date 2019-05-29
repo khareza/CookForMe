@@ -13,7 +13,7 @@ export default class Ingredient extends Component {
     render() {
         return (
             <div>
-                <input type="text" name="ingredientsPhoto" value={this.props.ingredient} onChange={this.handleInputChange}/>
+                <input type="text" value={this.props.ingredient} onChange={this.handleInputChange}/>
                 <a className="button buttonDelete" onClick={this.props.deleteIngredient}><FontAwesomeIcon icon={faMinus}></FontAwesomeIcon></a>
             </div>
         );
