@@ -8,6 +8,10 @@ using CookForMe.DAL;
 using CookForMe.Models;
 using CookForMe.Models.DTO;
 using CookForMe.Models.FormModels;
+using Imgur.API;
+using Imgur.API.Authentication.Impl;
+using Imgur.API.Endpoints.Impl;
+using Imgur.API.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -86,12 +90,20 @@ namespace CookForMe.Controllers
             newOrder.CreationDate = DateTime.Now;
             newOrder.OrderStatus = OrderStatus.Active;
             newOrder.Responses = new List<Response>();
-            newOrder.IngredientsPhotoUrl = formData.PhotoUrl;
             newOrder.Deadline = formData.Deadline;
-
+            newOrder.IngredientsPhotoUrl = formData.PhotoUrl;
             _orderContext.Create(newOrder);
-            return Ok();
+            return Ok(newOrder);
         }
+
+        [HttpPost]
+        [Route("UploadPhoto")]
+        public async Task<IActionResult> UploadPhoto(IFormFile photo)
+        {
+            var photoLink = await _orderContext.UploadPhoto(photo);
+            return Ok(photoLink);
+        }
+
 
         [HttpDelete]
         [Route("DeleteOrder/{orderId}")]

@@ -41,12 +41,12 @@ export default class AuthMethods {
             'Bearer ' + this.getToken();
         return axios.post(`${this.userApiUrl}/CreateOrder`, newOrderFormData);
     }
-    uploadOrderPhoto = (orderPhoto) => {
-        console.log(orderPhoto);
+    uploadOrderPhoto = (photo) => {
+        console.log(photo);
 
         axios.defaults.headers.common['Authorization'] =
             'Bearer ' + this.getToken();
-        return axios.post(`${this.userApiUrl}/UploadOrderPhoto`, orderPhoto);
+        return axios.post(`${this.userApiUrl}/UploadPhoto`, photo);
     }
 
     isTokenExpired = token => {

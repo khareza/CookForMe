@@ -1,5 +1,10 @@
 ﻿using CookForMe.Models;
 using CookForMe.Models.FormModels;
+using Imgur.API;
+using Imgur.API.Authentication.Impl;
+using Imgur.API.Endpoints.Impl;
+using Imgur.API.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -39,9 +44,31 @@ namespace CookForMe.DAL
 
         public void Create(Order newOrder)
         {
+
             _context.Orders.Add(newOrder);
             _context.SaveChanges();
         }
+
+        public async Task<string> UploadPhoto(IFormFile photo)
+        {
+            try
+            {
+                var client = new ImgurClient("0a97710cb62c21f", "2e503f82b29caf7f672fb4ca4ddc3ebb122d5431");
+                var endpoint = new ImageEndpoint(client);
+                IImage image;
+                using (var fs = photo.OpenReadStream())
+                {
+                    image = await endpoint.UploadImageStreamAsync(fs);
+                }
+                //var order = _context.Orders.FirstOrDefault(x => x.Id == orderId);
+                return image.Link;
+            }
+            catch (ImgurException imgurEx)
+            {
+                return string.Empty;
+            }
+        }
+
 
         public Order Delete(int orderId)
         {

@@ -1,5 +1,5 @@
 ﻿.orderCard {
-    width: 70%;
+    width: 40%;
     border: 1px solid #8bc34a;
     border-radius: 10px;
     margin: 3% auto;
@@ -31,7 +31,9 @@
     text-align: center;
     font-size: 1.1rem;
 }
-
+    .orderCardHeader img {
+        width:100%
+    }
     .orderCardHeader p {
         margin: 0;
     }

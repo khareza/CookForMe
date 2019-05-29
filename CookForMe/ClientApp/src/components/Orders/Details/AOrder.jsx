@@ -48,7 +48,9 @@ export class OrderDetails extends Component {
         return (
             <div className="orderCard">
                 <div className="orderCardHeader">
-                    <p>{this.props.order.ingredientsPhotoUrl}</p>
+                    {this.props.order.ingredientsPhotoUrl
+                        ? <img src={this.props.order.ingredientsPhotoUrl} alt="empty"></img>
+                        : null}
                     <p>Deadline: <Moment format="dddd YYYY-MM-DD HH:mm">{this.props.order.deadline}</Moment></p>
                     <p>Time left: <Moment fromNow="dddd YYYY-MM-DD HH:mm">{this.props.order.deadline}</Moment></p>
                     <p>Number of offers: {this.state.responses.length}</p>
