@@ -155,7 +155,7 @@ namespace CookForMe.Controllers
             Response newResponse = new Response();
             //newResponse.Recipes = new List<Recipe>();
             newResponse.ResponserId = formData.ResponserId;
-            newResponse.Recipes = formData.Offers;
+            newResponse.Offers = formData.Offers;
             newResponse.OrderId = formData.OrderId;
 
             _responseContext.Create(newResponse);

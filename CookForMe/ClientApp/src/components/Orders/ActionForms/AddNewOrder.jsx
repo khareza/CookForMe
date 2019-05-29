@@ -51,7 +51,7 @@ export default class AddNewOrder extends Component {
         this.setState({ deadline: date });
     }
 
-    saveIgredients = (igredientsString) => {
+    saveIngredients = (igredientsString) => {
 
         this.setState({ ingredientsAvaiableList: igredientsString });
     }
@@ -90,7 +90,7 @@ export default class AddNewOrder extends Component {
 
                             <div className="form-group">
                                 <label>Ingredients Avaiable List</label>
-                                <IngredientsWrapper saveIgredients={this.saveIgredients}/>
+                                <IngredientsWrapper saveIngredients={this.saveIngredients}/>
                             </div>
 
                             <div className="form-group">

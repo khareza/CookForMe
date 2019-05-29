@@ -23,17 +23,17 @@ namespace CookForMe.DAL
 
         public IEnumerable<ShortResponseDTO> GetResponsesOfSpecificOrder(int orderid)
         {
-            var responses = _context.Responses.Include(r => r.Recipes).Where(x => x.OrderId == orderid);
+            var responses = _context.Responses.Include(r => r.Offers).Where(x => x.OrderId == orderid);
 
             if (responses != null)
             {
-                foreach (var item in responses)
+                foreach (var res in responses)
                 {
-                    var responseDto = _mapper.Map<ShortResponseDTO>(item);
-                    responseDto.Recipes = new List<RecipeDTO>();
-                    foreach (var recipe in item.Recipes)
+                    var responseDto = _mapper.Map<ShortResponseDTO>(res);
+                    responseDto.Offers = new List<OfferDTO>();
+                    foreach (var recipe in res.Offers)
                     {
-                        responseDto.Recipes.Add(_mapper.Map<RecipeDTO>(recipe));
+                        responseDto.Offers.Add(_mapper.Map<OfferDTO>(recipe));
                     }
                     yield return responseDto;
                 }
@@ -42,15 +42,15 @@ namespace CookForMe.DAL
 
         public IEnumerable<ResponseDTO> GetUserResponses(string id)
         {
-            var responses = _context.Responses.Include(x => x.Recipes).Include(x => x.Order).Where(x => x.Responser.Id == id);
-            foreach (var item in responses)
+            var responses = _context.Responses.Include(x => x.Offers).Include(x => x.Order).Where(x => x.Responser.Id == id);
+            foreach (var res in responses)
             {
-                var responseDto = _mapper.Map<ResponseDTO>(item);
-                responseDto.Recipes = new List<RecipeDTO>();
+                var responseDto = _mapper.Map<ResponseDTO>(res);
+                responseDto.Offers = new List<OfferDTO>();
 
-                foreach (var recipe in item.Recipes)
+                foreach (var offer in res.Offers)
                 {
-                    responseDto.Recipes.Add(_mapper.Map<RecipeDTO>(recipe));
+                    responseDto.Offers.Add(_mapper.Map<OfferDTO>(offer));
                 }
                 yield return responseDto;
             }
@@ -58,14 +58,15 @@ namespace CookForMe.DAL
 
         public ShortResponseDTO GetResponse(int responseId)
         {
-            var response = _context.Responses.Include(r => r.Recipes).Where(x => x.Id == responseId).FirstOrDefault();
+            var response = _context.Responses.Include(r => r.Offers).Where(x => x.Id == responseId).FirstOrDefault();
+
             if (response != null)
             {
                 var responseDto = _mapper.Map<ShortResponseDTO>(response);
-                responseDto.Recipes = new List<RecipeDTO>();
-                foreach (var recipe in response.Recipes)
+                responseDto.Offers = new List<OfferDTO>();
+                foreach (var offer in response.Offers)
                 {
-                    responseDto.Recipes.Add(_mapper.Map<RecipeDTO>(recipe));
+                    responseDto.Offers.Add(_mapper.Map<OfferDTO>(offer));
                 }
                 return responseDto;
             }
@@ -78,15 +79,15 @@ namespace CookForMe.DAL
 
         public Response EditResponse(EditResponseFormData formData)
         {
-            var response = _context.Responses.Include(r=>r.Recipes).FirstOrDefault(r=>r.Id == formData.Id);
+            var response = _context.Responses.Include(r=>r.Offers).FirstOrDefault(r=>r.Id == formData.Id);
             if (response!=null)
             {
-                foreach (var recipe in response.Recipes)
+                foreach (var offer in response.Offers)
                 {
-                    var recipeForm = formData.Recipes.FirstOrDefault(x => x.Id == recipe.Id);
-                    recipe.Name = recipeForm.Name;
-                    recipe.Price = recipeForm.Price;
-                    recipe.AvgCookTime = recipeForm.AvgCookTime;
+                    var offerForm = formData.Offers.FirstOrDefault(x => x.Id == offer.Id);
+                    offer.Name = offerForm.Name;
+                    offer.Price = offerForm.Price;
+                    offer.AvgCookTime = offerForm.AvgCookTime;
                 }
                 _context.SaveChanges();
                 return response;

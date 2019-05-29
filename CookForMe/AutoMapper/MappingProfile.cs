@@ -25,9 +25,7 @@ namespace CookForMe.AutoMapper
                 .ForMember(dest => dest.ResponseStatus, opt => opt.MapFrom(src => src.ResponseStatus.ToString()));
 
 
-            CreateMap<Recipe, RecipeDTO>();
-
-
+            CreateMap<Offer, OfferDTO>();
         }
     }
 }

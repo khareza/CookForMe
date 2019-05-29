@@ -14,7 +14,7 @@ namespace CookForMe.Models.DTO
         public string OrderIngredientsPhotoUrl { get; set; }
         public List<string> OrderIngredientsAvaiableList { get; set; }
         public string OrderDescription { get; set; }
-        public List<RecipeDTO> Recipes { get; set; }
+        public List<OfferDTO> Offers { get; set; }
         public string ResponseStatus { get; set; }
 
     }

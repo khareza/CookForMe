@@ -5,8 +5,6 @@ export default class AuthMethods {
     constructor() {
         this.userApiUrl = "/api/User";
         this.authorizationApiUrl = "/api/Authorization";
-    //localhost:64763/
-    //localhost:50123/
     }
 
     login = (loginFormData) => {
@@ -35,15 +33,11 @@ export default class AuthMethods {
     }
 
     createOrder = (newOrderFormData) => {
-        console.log(newOrderFormData);
-
         axios.defaults.headers.common['Authorization'] =
             'Bearer ' + this.getToken();
         return axios.post(`${this.userApiUrl}/CreateOrder`, newOrderFormData);
     }
     uploadOrderPhoto = (photo) => {
-        console.log(photo);
-
         axios.defaults.headers.common['Authorization'] =
             'Bearer ' + this.getToken();
         return axios.post(`${this.userApiUrl}/UploadPhoto`, photo);
@@ -73,7 +67,6 @@ export default class AuthMethods {
     getConfirm = () => {
         // Check token validation
         let answer = decode(this.getToken());
-        console.log("Recieved answer!");
         return answer;
     };
 

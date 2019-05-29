@@ -35,12 +35,12 @@ export class OrderDetails extends Component {
     renderResponses = () => {
         return this.state.responses.map((response, index) => {
             let offerIndex = index;
-            return response.recipes.map((recipe, index) => (
+            return response.offers.map((offer, index) => (
                 <div className="offer" key={index}>
                     <p>{offerIndex + 1}</p>
-                    <p>{recipe.name}</p>
-                    <p>{recipe.price}</p>
-                    <p>{recipe.avgCookTime}</p>
+                    <p>{offer.name}</p>
+                    <p>{offer.price}</p>
+                    <p>{offer.avgCookTime}</p>
                     
                     <div className="orderButtons">
                         <a className="button buttonAccept" onClick={() => { console.log(`Offer ${offerIndex + 1} accepted`) }}><FontAwesomeIcon icon={faCheck}></FontAwesomeIcon></a>

@@ -25,12 +25,12 @@ export default class IngredientsWrapper extends Component {
         ingredients[index] = newValue;
 
         this.setState(ingredients);
-        this.saveIgredients();
+        this.saveIngredients();
         console.log(this.state.ingredients);
     }
 
-    saveIgredients = () => {
-        let igredientsString = this.state.igredients.join(';');
+    saveIngredients = () => {
+        let igredientsString = this.state.ingredients.join(';');
         this.props.saveIngredients(igredientsString);
     }
 

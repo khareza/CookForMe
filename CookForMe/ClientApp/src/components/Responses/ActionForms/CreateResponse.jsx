@@ -52,7 +52,7 @@ export default class AddNewOrder extends Component {
                             </div>
 
                             <div className="headerLogin">
-                                <h3>Recipe</h3>
+                                <h3>Your offers</h3>
                             </div>
 
                             <div className="form-group">

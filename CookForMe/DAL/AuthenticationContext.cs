@@ -13,7 +13,7 @@ namespace CookForMe.DAL
 
         public DbSet<AppUser> AppUsers { get; set; }
         public DbSet<Order> Orders { get; set; }
-        public DbSet<Recipe> Recipes { get; set; }
+        public DbSet<Offer> Offers { get; set; }
         public DbSet<Response> Responses { get; set; }
 
         public AuthenticationContext(DbContextOptions options) : base(options)
@@ -25,7 +25,7 @@ namespace CookForMe.DAL
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Response>()
-                .HasMany(r => r.Recipes)
+                .HasMany(r => r.Offers)
                 .WithOne(r => r.Response)
                 .HasForeignKey(r => r.ResponseId);
 

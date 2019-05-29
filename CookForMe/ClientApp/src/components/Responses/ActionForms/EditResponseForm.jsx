@@ -1,7 +1,7 @@
 ﻿import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import AuthMethods from '../../../Helpers/AuthMethods';
-import EditRecipe from './EditRecipe';
+import EditRecipe from './EditOffer';
 
 class EditResponseForm extends Component {
 
@@ -10,7 +10,7 @@ class EditResponseForm extends Component {
         this.Auth = new AuthMethods();
 
         this.state = {
-            recipes: [],
+            offers: [],
             isSubmitDisabled: false
         };
         let id = this.props.match.params.response_id;
@@ -22,7 +22,7 @@ class EditResponseForm extends Component {
             .then((res) => {
                 console.log(res.data);
                 this.setState({
-                    recipes: res.data.recipes,
+                    offers: res.data.offers,
                 });
             }).catch((err) => {
                 this.props.history.push(`/responses/MyResponses`);
@@ -33,22 +33,22 @@ class EditResponseForm extends Component {
         event.preventDefault();
 
         this.Auth.editResponse(
-            { id: this.props.match.params.response_id, recipes: this.state.recipes }
+            { id: this.props.match.params.response_id, offers: this.state.offers }
         ).then((res) => { this.props.history.push('/responses/MyResponses') });
     }
 
-    handleRecipeChange = (value, name, index ) => {
-        let recipes = this.state.recipes;
-        recipes[index][name] = value;
-        this.setState(recipes);
+    handleOfferChange = (value, name, index ) => {
+        let offers = this.state.offers;
+        offers[index][name] = value;
+        this.setState(offers);
     }
 
     render() {
         return (
             <div>
                 <form onSubmit={this.handleSubmit} autoComplete="off">
-                    {this.state.recipes.map((recipe, index) => (
-                        <EditRecipe key={index} recipe={recipe} index={index} handleRecipeChange={this.handleRecipeChange}/>
+                    {this.state.offers.map((offer, index) => (
+                        <EditRecipe key={index} offer={offer} index={index} handleRecipeChange={this.handleOfferChange}/>
                     ))}
                     <input type="submit" value="Edit response" className="btn btn-large btn-block btn-info" disabled={this.state.isSubmitDisabled} />
                     <input type="button" value="Cancel" onClick={() => { this.props.history.push('/responses/MyResponses') }} className="btn btn-large btn-block btn-danger" />

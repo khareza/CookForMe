@@ -37,8 +37,8 @@ export class ResponseDetails extends Component {
                         <div>
                             <p><span>My offer: </span></p>
                             <ul>
-                                {this.props.response.recipes.map((recipe, index) => (
-                                    <li key={index}>{recipe.name} {recipe.price} {recipe.avgCookTime}</li>
+                                {this.props.response.offers.map((offer, index) => (
+                                    <li key={index}>{offer.name} {offer.price} {offer.avgCookTime}</li>
                                 ))}
                             </ul>
                         </div>

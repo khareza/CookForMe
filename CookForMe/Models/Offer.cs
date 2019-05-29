@@ -2,7 +2,7 @@
 
 namespace CookForMe.Models
 {
-    public class Recipe
+    public class Offer
     {
         public int Id { get; set; }
         public string Name { get; set; }

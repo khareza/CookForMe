@@ -8,6 +8,6 @@ namespace CookForMe.Models.FormModels
     public class EditResponseFormData
     {
         public int Id { get; set; }
-        public List<Recipe> Recipes { get; set; }
+        public List<Offer> Offers { get; set; }
     }
 }
