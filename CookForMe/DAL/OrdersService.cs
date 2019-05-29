@@ -20,8 +20,6 @@ namespace CookForMe.DAL
         public OrdersService(AuthenticationContext context)
         {
             _context = context;
-            //_context.Database.EnsureDeleted();
-            //_context.Database.EnsureCreated();
         }
 
         public List<Order> GetAll(string id)
@@ -63,12 +61,11 @@ namespace CookForMe.DAL
                 //var order = _context.Orders.FirstOrDefault(x => x.Id == orderId);
                 return image.Link;
             }
-            catch (ImgurException imgurEx)
+            catch (Exception)
             {
                 return string.Empty;
             }
         }
-
 
         public Order Delete(int orderId)
         {

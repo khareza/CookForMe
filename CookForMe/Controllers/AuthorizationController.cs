@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using CookForMe.AppSettings;
 using CookForMe.Models;
 using CookForMe.Models.FormModels;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -20,12 +17,10 @@ namespace CookForMe.Controllers
     [ApiController]
     public class AuthorizationController : ControllerBase
     {
-        private SignInManager<AppUser> _signInManager;
         private UserManager<AppUser> _userManager;
         private ApplicationSettings _appSettings;
-        public AuthorizationController(SignInManager<AppUser> signInManager, UserManager<AppUser> userManager, IOptions<ApplicationSettings> appSettings)
+        public AuthorizationController(UserManager<AppUser> userManager, IOptions<ApplicationSettings> appSettings)
         {
-            _signInManager = signInManager;
             _userManager = userManager;
             _appSettings = appSettings.Value;
         }
