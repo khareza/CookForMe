@@ -2,6 +2,7 @@
 import { withRouter } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
 import OrderMethods from '../../../Helpers/OrderMethods';
+import { NotificationManager } from 'react-notifications';
 
 class EditOrderForm extends Component {
 
@@ -31,7 +32,9 @@ class EditOrderForm extends Component {
                     description: res.data.description,
                     isSubmitDisabled: false
                 });
+
             }).catch((err) => {
+
                 this.props.history.push(`/orders/MyOrders`);
             });
     }
@@ -42,7 +45,13 @@ class EditOrderForm extends Component {
 
         this.Auth.editOrder(
             { orderId: this.props.orderToEdit.id, photoUrl: ingredientsPhotoUrl, deadline, ingredientsAvaiableList, description }
-        ).then((res) => { this.props.history.push('/orders') });
+        ).then((res) => {
+            NotificationManager.success('Edited order successful', 'Correct');
+            this.props.history.push('/orders')
+        }).catch(() => {
+            NotificationManager.error('Data not valid', 'Error!', 5000, () => {
+            });
+        });
     }
 
     handleInputChange = (event) => {
@@ -77,7 +86,11 @@ class EditOrderForm extends Component {
 
                             <div className="form-group">
                                 <label>Ingredients Avaiable</label>
-                                <input className="form-control" type="text" name="ingredientsPhotoUrl" value={this.state.ingredientsPhotoUrl} onChange={this.handleInputChange} />
+                                <div>
+                                    {this.state.ingredientsPhotoUrl
+                                        ? <img className="imgPreview" src={this.state.ingredientsPhotoUrl} alt="empty"></img>
+                                        : null}
+                                </div>
                             </div>
 
                             <div className="form-group">

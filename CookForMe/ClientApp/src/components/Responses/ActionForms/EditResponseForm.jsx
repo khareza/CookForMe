@@ -1,7 +1,8 @@
 ﻿import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import ResponseMethods from '../../../Helpers/ResponseMethods';
-import EditRecipe from './EditOffer';
+import EditOffer from './EditOffer';
+import { NotificationManager } from 'react-notifications';
 
 class EditResponseForm extends Component {
 
@@ -34,7 +35,13 @@ class EditResponseForm extends Component {
 
         this.ResponseRequest.editResponse(
             { id: this.props.match.params.response_id, offers: this.state.offers }
-        ).then((res) => { this.props.history.push('/responses/MyResponses') });
+        ).then((res) => {
+            NotificationManager.success('Edited offer successful', 'Correct');
+            this.props.history.push('/responses/MyResponses')
+        }).catch(() => {
+            NotificationManager.error('Wrong data', 'Error!', 5000, () => {
+            });
+        });
     }
 
     handleOfferChange = (value, name, index ) => {
@@ -48,7 +55,7 @@ class EditResponseForm extends Component {
             <div>
                 <form onSubmit={this.handleSubmit} autoComplete="off">
                     {this.state.offers.map((offer, index) => (
-                        <EditRecipe key={index} offer={offer} index={index} handleRecipeChange={this.handleOfferChange}/>
+                        <EditOffer key={index} offer={offer} index={index} handleRecipeChange={this.handleOfferChange}/>
                     ))}
                     <input type="submit" value="Edit response" className="btn btn-large btn-block btn-info" disabled={this.state.isSubmitDisabled} />
                     <input type="button" value="Cancel" onClick={() => { this.props.history.push('/responses/MyResponses') }} className="btn btn-large btn-block btn-danger" />

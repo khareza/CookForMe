@@ -1,5 +1,6 @@
 ﻿import React, { Component } from 'react';
 import AuthMethods from '../Helpers/AuthMethods';
+import { NotificationManager } from 'react-notifications';
 
 export class RegisterNewUser extends Component {
     constructor(props) {
@@ -22,7 +23,12 @@ export class RegisterNewUser extends Component {
 
         this.Auth.register(
             { userName, password, firstName, lastName, email }
-        );
+        ).then(() => {
+            NotificationManager.success('Register Successful', 'Correct');
+        }).catch(() => {
+            NotificationManager.error('Data not valid', 'Error!', 5000, () => {
+            });
+        });
 
         this.setState({
             userName: '',

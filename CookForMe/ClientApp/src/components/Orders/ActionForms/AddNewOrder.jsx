@@ -3,6 +3,7 @@ import DatePicker from 'react-datepicker';
 import IngredientsWrapper from '../Details/IngredientsWrapper';
 import AuthMethods from '../../../Helpers/AuthMethods';
 import OrderMethods from '../../../Helpers/OrderMethods';
+import { NotificationManager } from 'react-notifications';
 
 export default class AddNewOrder extends Component {
     constructor(props) {
@@ -33,8 +34,11 @@ export default class AddNewOrder extends Component {
                 { founderId: this.Auth.getUserId(), photoUrl: res.data, deadline, ingredientsAvaiableList, description }
             )
         }).then((res) => {
-            console.log(res);
+            NotificationManager.success('Created new order', 'Success');
             this.props.history.push('/orders/MyOrders')
+        }).catch(() => {
+            NotificationManager.error('Data not valid', 'Error!', 5000, () => {
+            });
         })
     }
 

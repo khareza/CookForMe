@@ -2,6 +2,7 @@
 import AuthMethods from '../../../Helpers/AuthMethods';
 import ResponseMethods from '../../../Helpers/ResponseMethods';
 import OffersWrapper from '../Details/OffersWrapper';
+import { NotificationManager } from 'react-notifications';
 
 export default class AddNewOrder extends Component {
     constructor(props) {
@@ -26,8 +27,11 @@ export default class AddNewOrder extends Component {
         this.ResponseRequest.createResponse(
             { responserId: this.Auth.getUserId(), orderId, offers }
         ).then((res) => {
-            console.log(res);
+           NotificationManager.success('Created response', 'Success');
            this.props.history.push('/Responses/MyResponses');
+        }).catch(() => {
+            NotificationManager.error('Data not valid', 'Error!', 5000, () => {
+            });
         })
     }
 

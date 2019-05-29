@@ -1,6 +1,7 @@
 ﻿import React, { Component } from 'react';
 import '../ComponentsStyles/Login.css';
 import AuthMethods from '../Helpers/AuthMethods';
+import { NotificationManager } from 'react-notifications';
 
 export class Login extends Component {
     constructor(props) {
@@ -23,12 +24,11 @@ export class Login extends Component {
 
         this.Auth.login(loginFormData)
             .then(res => {
-                if (res === false) {
-                    return alert("Wrong login or password");
-                }
+                NotificationManager.success('Login Successful', 'Correct');
                 this.props.history.push('/profile');
             }).catch(err => {
-                alert("Wrong login or password");
+                NotificationManager.error('Wrong login or password', 'Error!', 5000, () => {
+                });
             })
     }
 

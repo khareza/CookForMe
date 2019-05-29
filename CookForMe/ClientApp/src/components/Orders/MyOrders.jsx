@@ -1,6 +1,7 @@
 ﻿import React, { Component } from 'react';
 import { OrderDetails } from './Details/MOrder';
 import OrderMethods from '../../Helpers/OrderMethods';
+import { NotificationManager } from 'react-notifications';
 
 export default class MyOrders extends Component {
     constructor(props) {
@@ -28,8 +29,14 @@ export default class MyOrders extends Component {
 
     deleteOrder = (id) => {
         this.OrderRequest.deleteOrder(id)
-            .then(() => { this.getOrders() })
-            .catch(err => { console.log(err) });
+            .then(() => {
+                NotificationManager.success('Deleted order successful', 'Correct');
+                this.getOrders()
+            })
+            .catch(err => {
+                NotificationManager.error("You can't do that", 'Error!', 5000, () => {
+                });
+            });
     }
 
     renderOrderComponents = () => {
