@@ -6,22 +6,15 @@ export class ResponsesWrapper extends Component {
     render() {
         return (
             <div>
-                <div>
-                    <ul>
-                        {
-                            //<NavLink to="/Responses/OtherResponses">Other's responses</NavLink>
-                        }
-                        <NavLink to="/Responses/MyResponses">My Responses</NavLink>
-                    </ul>
+                <div className="selectMenu">
+                    <NavLink activeClassName="selectMenuActive" to="/Responses/AcceptedResponses">Accepted responses</NavLink>
+                    <NavLink activeClassName="selectMenuActive" to="/Responses/MyResponses">My responses</NavLink>
                 </div>
                 <div>
-                    {
-                        //<Route path="/Responses/OtherResponses" component={AllOrdersWrapper} />
-                    }
+
                     <Route path="/Responses/MyResponses" component={MyResponsesWrapper} />
                 </div>
             </div>
         );
     }
 }
-

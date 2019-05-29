@@ -4,14 +4,42 @@ import { ResponseDetails } from './Details/Response';
 import AuthMethods from '../../Helpers/AuthMethods';
 
 class MyReponses extends Component {
-    Auth = new AuthMethods();
+    constructor(props) {
+        super(props);
+        this.Auth = new AuthMethods();
+        this.state = {
+            responses: []
+        }
+    }
 
+    componentDidMount = () => {
+        this.getResponses();
+    }
 
-    renderOrderComponents = () => {
-        return this.props.responses.map((response) => {
+    getResponses = () => {
+        this.Auth.getUserResponses()
+            .then((res) => {
+                this.setState({ responses: res.data });
+            });
+    }
+
+    deleteResponse = (id) => {
+        this.Auth.deleteResponse(id)
+            .then(() => { this.getResponses() })
+            .catch(err => { console.log(err) });
+    }
+
+    editResponse = (id) => {
+        this.props.history.push(`/responses/MyResponses/edit/${id}`);
+    }
+
+    renderResponseComponents = () => {
+        return this.state.responses.map((response) => {
+            console.log(response);
             return (
-                <ResponseDetails key={response.id}
-                    deleteResponse={this.props.deleteResponse}
+                <ResponseDetails key={response.responseId}
+                    deleteResponse={this.deleteResponse}
+                    editResponse={this.editResponse}
                     response={response} />
             )
         })
@@ -20,14 +48,7 @@ class MyReponses extends Component {
     render() {
         return (
             <div>
-                <div className="headerLogin">
-                    <h2>All orders</h2>
-                </div>
-                {this.renderOrderComponents()}
-                <div className="text-center">
-                    <button className="btn btn-success mt-3"
-                        onClick={() => { this.props.history.push('/orders/create') }}>Add new order</button>
-                </div>
+                {this.renderResponseComponents()}
             </div>
         );
     }

@@ -8,9 +8,11 @@ export default class AllOrdersWrapper extends Component {
         super(props);
         this.Auth = new AuthMethods();
         this.state = {
-            orderToEdit: {},
             orders: []
         }
+    }
+
+    componentDidMount() {
         this.getOrders();
     }
 
@@ -25,7 +27,7 @@ export default class AllOrdersWrapper extends Component {
     render() {
         return (
             <div>
-                <Route exact path="/Orders/AllOrders" render={() => (<AllOrders orders={this.state.orders} deleteOrder={this.deleteOrder} editOrder={this.editOrder} />)} />
+                <Route exac path="/Orders/AllOrders" render={() => (<AllOrders orders={this.state.orders} deleteOrder={this.deleteOrder} editOrder={this.editOrder} />)} />
             </div>
         );
     }

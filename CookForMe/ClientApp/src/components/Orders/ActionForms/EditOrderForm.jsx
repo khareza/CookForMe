@@ -119,7 +119,7 @@ class EditOrderForm extends Component {
 
                             <input type="submit" value="Edit order data" className="btn btn-large btn-block btn-info" disabled={this.state.isSubmitDisabled} />
 
-                            <input type="button" value="Cancel" onClick={() => { this.props.history.push('/orders') }} className="btn btn-large btn-block btn-danger" />
+                            <input type="button" value="Cancel" onClick={() => { this.props.history.push('/orders/MyOrders') }} className="btn btn-large btn-block btn-danger" />
                         </div>
                     </div>
                 </form>

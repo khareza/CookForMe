@@ -6,7 +6,6 @@ import AuthMethods from '../../Helpers/AuthMethods';
 class AllOrders extends Component {
     Auth = new AuthMethods();
 
-
     responseToOrder = (id) => {
         this.props.history.push(`/Responses/MyResponses/create/${id}`);
     }
@@ -24,9 +23,6 @@ class AllOrders extends Component {
     render() {
         return (
             <div>
-                <div className="headerLogin">
-                    <h2>All orders</h2>
-                </div>
                 {this.renderOrderComponents()}
             </div>
         );

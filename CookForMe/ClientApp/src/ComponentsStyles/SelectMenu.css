@@ -1,0 +1,25 @@
+﻿.selectMenu {
+    display: flex;
+    justify-content: center;
+    margin:0 0 20px 0;
+}
+
+    .selectMenu > * {
+        font-size: 2rem;
+        border-bottom: 1px solid grey;
+        padding: 20px 40px;
+        color: darkgray;
+        margin:0 20px;
+    }
+
+        .selectMenu > *:hover {
+            text-decoration: none;
+            border-bottom: 1px solid black;
+            color: #003366;
+        }
+
+.selectMenuActive {
+    text-decoration: none;
+    border-bottom: 1px solid black;
+    color: #003366;
+}

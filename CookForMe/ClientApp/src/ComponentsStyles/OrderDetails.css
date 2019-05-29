@@ -72,3 +72,12 @@
     .buttonAccept:hover {
         background-color: #006400;
     }
+
+hr {
+margin:10px 20px;
+
+}
+.offer {
+    display:flex;
+    justify-content:space-around;
+}

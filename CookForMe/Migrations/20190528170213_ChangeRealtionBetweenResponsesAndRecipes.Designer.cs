@@ -4,14 +4,16 @@ using CookForMe.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CookForMe.Migrations
 {
     [DbContext(typeof(AuthenticationContext))]
-    partial class AuthenticationContextModelSnapshot : ModelSnapshot
+    [Migration("20190528170213_ChangeRealtionBetweenResponsesAndRecipes")]
+    partial class ChangeRealtionBetweenResponsesAndRecipes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -56,9 +58,10 @@ namespace CookForMe.Migrations
 
                     b.Property<string>("Name");
 
-                    b.Property<decimal>("Price");
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("ResponseId");
+                    b.Property<int?>("ResponseId");
 
                     b.HasKey("Id");
 
@@ -73,7 +76,7 @@ namespace CookForMe.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("OrderId");
+                    b.Property<int>("OrderId");
 
                     b.Property<int>("ResponseStatus");
 
@@ -270,9 +273,6 @@ namespace CookForMe.Migrations
 
                     b.Property<string>("LastName");
 
-                    b.Property<decimal>("Rating")
-                        .HasColumnType("decimal(5, 2)");
-
                     b.Property<string>("Street");
 
                     b.HasDiscriminator().HasValue("AppUser");
@@ -289,15 +289,15 @@ namespace CookForMe.Migrations
                 {
                     b.HasOne("CookForMe.Models.Response", "Response")
                         .WithMany("Recipes")
-                        .HasForeignKey("ResponseId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("ResponseId");
                 });
 
             modelBuilder.Entity("CookForMe.Models.Response", b =>
                 {
                     b.HasOne("CookForMe.Models.Order", "Order")
                         .WithMany("Responses")
-                        .HasForeignKey("OrderId");
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("CookForMe.Models.AppUser", "Responser")
                         .WithMany("Responses")

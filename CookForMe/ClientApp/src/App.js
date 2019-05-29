@@ -4,6 +4,8 @@ import { BrowserRouter as Router, Route, Switch, withRouter } from "react-router
 import AuthMethods from './Helpers/AuthMethods';
 import PrivateComponent from './components/PrivateComponent'
 import { UserProfile } from './components/UserProfile';
+import './ComponentsStyles/SideMenu.css';
+import './ComponentsStyles/SelectMenu.css';
 
 class App extends Component {
 

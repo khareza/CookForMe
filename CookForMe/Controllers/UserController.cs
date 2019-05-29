@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using CookForMe.AppSettings;
 using CookForMe.DAL;
 using CookForMe.Models;
+using CookForMe.Models.DTO;
 using CookForMe.Models.FormModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -86,31 +87,11 @@ namespace CookForMe.Controllers
             newOrder.OrderStatus = OrderStatus.Active;
             newOrder.Responses = new List<Response>();
             newOrder.IngredientsPhotoUrl = formData.PhotoUrl;
+            newOrder.Deadline = formData.Deadline;
 
             _orderContext.Create(newOrder);
             return Ok();
         }
-
-        //[HttpPost]
-        //[Route("UploadOrderPhoto")]
-        //public IActionResult UploadOrderPhoto(IFormCollection formData)
-        //{
-        //    int orderId = int.Parse(formData["orderId"].First());
-        //    var order = _context.Orders.First(o => o.Id == orderId);
-
-        //    if (formData != null && formData.Files.First().Length != 0)
-        //    {
-        //        using (var stream = formData.Files.First().OpenReadStream())
-        //        using (var memoryStream = new MemoryStream())
-        //        {
-        //            stream.CopyTo(memoryStream);
-        //            order.IngredientsPhoto = memoryStream.ToArray();
-        //        }
-        //    }
-        //    _context.SaveChanges();
-          
-        //    return Ok(order);
-        //}
 
         [HttpDelete]
         [Route("DeleteOrder/{orderId}")]
@@ -171,19 +152,42 @@ namespace CookForMe.Controllers
 
         [HttpGet]
         [Route("GetOrderResponses/{id}")]
-        public ActionResult<List<Response>> GetOrderResponses(int id)
+        public List<ShortResponseDTO> GetOrderResponses(int id)
         {
-            return _responseContext.GetResponsesOfSpecificOrder(id);
+
+            return _responseContext.GetResponsesOfSpecificOrder(id).ToList();
+
         }
 
         [HttpGet]
         [Route("GetUserResponses/{id}")]
-        public ActionResult<List<Response>> GetUserResponses(string id)
+        public ActionResult<List<ResponseDTO>> GetUserResponses(string id)
         {
-            return _responseContext.GetUserResponses(id);
+            return _responseContext.GetUserResponses(id).ToList();
         }
 
+        [HttpGet]
+        [Route("GetResponse/{id}")]
+        public ActionResult<ShortResponseDTO> GetResponse(int id)
+        {
+            return _responseContext.GetResponse(id);
+        }
 
+        [HttpPut]
+        [Route("EditResponse")]
+        public IActionResult EditResponse(EditResponseFormData formData)
+        {
+            var response = _responseContext.EditResponse(formData);
+
+            if (response == null)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                return Ok(response);
+            }
+        }
 
     }
 }

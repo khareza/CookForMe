@@ -1,5 +1,6 @@
 ﻿using CookForMe.Models;
 using CookForMe.Models.FormModels;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +21,8 @@ namespace CookForMe.DAL
 
         public List<Order> GetAll(string id)
         {
-            return _context.Orders.Where(x=>x.Founder.Id != id).ToList();
+            var allOrders = _context.Orders.Where(x => x.Founder.Id != id);
+            return allOrders.Where(x => !x.Responses.Any(o => o.ResponserId == id)).ToList();
         }
 
         public List<Order> GetMyOrders(string id)
