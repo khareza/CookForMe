@@ -4,6 +4,7 @@ using CookForMe.DAL;
 using CookForMe.Models;
 using CookForMe.Models.DTO;
 using CookForMe.Models.FormModels;
+using CookForMe.ServiceInterfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,9 +16,9 @@ namespace CookForMe.Controllers
     [Authorize]
     public class ResponseController : ControllerBase
     {
-        private ResponseService _responseContext;
+        private IResponseService _responseContext;
 
-        public ResponseController(ResponseService responseContext)
+        public ResponseController(IResponseService responseContext)
         {
             _responseContext = responseContext;
         }

@@ -3,6 +3,7 @@ using CookForMe.AppSettings;
 using CookForMe.AutoMapper;
 using CookForMe.DAL;
 using CookForMe.Models;
+using CookForMe.ServiceInterfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -31,10 +32,11 @@ namespace CookForMe
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddTransient<OrdersService>();
-            services.AddTransient<ResponseService>();
+            services.AddTransient<IOrdersService, OrdersService>();
+            services.AddTransient<IResponseService, ResponseService>();
             //get access to appsettings.json settings everywhere in applications by using ApplicationSettings class object
             services.Configure<ApplicationSettings>(Configuration.GetSection("ApplicationSettings"));
+
             var mappingConfig = new MapperConfiguration(mc =>
             {
                 mc.AddProfile(new MappingProfile());

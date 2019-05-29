@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using CookForMe.DAL;
 using CookForMe.Models;
 using CookForMe.Models.FormModels;
+using CookForMe.ServiceInterfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -15,9 +16,9 @@ namespace CookForMe.Controllers
     [Authorize]
     public class OrderController : ControllerBase
     {
-        private OrdersService _orderContext;
+        private IOrdersService _orderContext;
 
-        public OrderController(OrdersService orderContext)
+        public OrderController(IOrdersService orderContext)
         {
             _orderContext = orderContext;
         }

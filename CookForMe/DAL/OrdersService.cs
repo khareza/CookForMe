@@ -1,5 +1,6 @@
 ﻿using CookForMe.Models;
 using CookForMe.Models.FormModels;
+using CookForMe.ServiceInterfaces;
 using Imgur.API;
 using Imgur.API.Authentication.Impl;
 using Imgur.API.Endpoints.Impl;
@@ -13,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace CookForMe.DAL
 {
-    public class OrdersService
+    public class OrdersService : IOrdersService
     {
         private AuthenticationContext _context;
 

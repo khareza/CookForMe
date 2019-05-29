@@ -2,6 +2,7 @@
 using CookForMe.Models;
 using CookForMe.Models.DTO;
 using CookForMe.Models.FormModels;
+using CookForMe.ServiceInterfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace CookForMe.DAL
 {
-    public class ResponseService
+    public class ResponseService : IResponseService
     {
         private AuthenticationContext _context;
         private readonly IMapper _mapper;
@@ -74,13 +75,13 @@ namespace CookForMe.DAL
             {
                 return null;
             }
-            
+
         }
 
         public Response EditResponse(EditResponseFormData formData)
         {
-            var response = _context.Responses.Include(r=>r.Offers).FirstOrDefault(r=>r.Id == formData.Id);
-            if (response!=null)
+            var response = _context.Responses.Include(r => r.Offers).FirstOrDefault(r => r.Id == formData.Id);
+            if (response != null)
             {
                 foreach (var offer in response.Offers)
                 {
