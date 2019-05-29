@@ -7,8 +7,8 @@ namespace CookForMe.Models.DTO
 {
     public class ResponseDTO
     {
-        public int ResponseId { get; set; }
-        public int? OrderId { get; set; }
+        public int Id { get; set; }
+        public int OrderId { get; set; }
         public DateTime OrderCreationDate { get; set; }
         public DateTime OrderDeadline { get; set; }
         public string OrderIngredientsPhotoUrl { get; set; }

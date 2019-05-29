@@ -1,4 +1,5 @@
-﻿using CookForMe.Models;
+﻿using AutoMapper;
+using CookForMe.Models;
 using CookForMe.Models.DTO;
 using CookForMe.Models.FormModels;
 using Microsoft.EntityFrameworkCore;
@@ -12,26 +13,27 @@ namespace CookForMe.DAL
     public class ResponseService
     {
         private AuthenticationContext _context;
+        private readonly IMapper _mapper;
 
-        public ResponseService(AuthenticationContext context)
+        public ResponseService(AuthenticationContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
-        public IEnumerable<ShortResponseDTO> GetResponsesOfSpecificOrder(int id)
+        public IEnumerable<ShortResponseDTO> GetResponsesOfSpecificOrder(int orderid)
         {
-            var responses = _context.Responses.Include(r => r.Recipes).Where(x => x.OrderId == id);
+            var responses = _context.Responses.Include(r => r.Recipes).Where(x => x.OrderId == orderid);
+
             if (responses != null)
             {
                 foreach (var item in responses)
                 {
-                    ShortResponseDTO responseDto = new ShortResponseDTO();
-                    responseDto.ResponseId = item.Id;
-                    responseDto.ResponseStatus = item.ResponseStatus.ToString();
+                    var responseDto = _mapper.Map<ShortResponseDTO>(item);
                     responseDto.Recipes = new List<RecipeDTO>();
                     foreach (var recipe in item.Recipes)
                     {
-                        responseDto.Recipes.Add(new RecipeDTO { Name = recipe.Name, Price = recipe.Price, AvgCookTime = recipe.AvgCookTime });
+                        responseDto.Recipes.Add(_mapper.Map<RecipeDTO>(recipe));
                     }
                     yield return responseDto;
                 }
@@ -43,38 +45,35 @@ namespace CookForMe.DAL
             var responses = _context.Responses.Include(x => x.Recipes).Include(x => x.Order).Where(x => x.Responser.Id == id);
             foreach (var item in responses)
             {
-                ResponseDTO responseDto = new ResponseDTO();
-                responseDto.ResponseId = item.Id;
-                responseDto.OrderId = item.OrderId;
-                responseDto.OrderCreationDate = item.Order.CreationDate;
-                responseDto.OrderDeadline = item.Order.Deadline;
-                responseDto.OrderIngredientsPhotoUrl = item.Order.IngredientsPhotoUrl;
-                responseDto.OrderIngredientsAvaiableList = item.Order.IngredientsAvaiableList;
-                responseDto.OrderDescription = item.Order.Description;
-                responseDto.ResponseStatus = item.ResponseStatus.ToString();
+                var responseDto = _mapper.Map<ResponseDTO>(item);
                 responseDto.Recipes = new List<RecipeDTO>();
+
                 foreach (var recipe in item.Recipes)
                 {
-                    responseDto.Recipes.Add(new RecipeDTO { Name = recipe.Name, Price = recipe.Price, AvgCookTime = recipe.AvgCookTime });
+                    responseDto.Recipes.Add(_mapper.Map<RecipeDTO>(recipe));
                 }
                 yield return responseDto;
             }
         }
 
-        public ShortResponseDTO GetResponse(int id)
+        public ShortResponseDTO GetResponse(int responseId)
         {
-            ShortResponseDTO responseDto = new ShortResponseDTO();
-            var response = _context.Responses.Include(r => r.Recipes).Where(x => x.Id == id).FirstOrDefault();
+            var response = _context.Responses.Include(r => r.Recipes).Where(x => x.Id == responseId).FirstOrDefault();
             if (response != null)
             {
-                responseDto.ResponseId = response.Id;
+                var responseDto = _mapper.Map<ShortResponseDTO>(response);
                 responseDto.Recipes = new List<RecipeDTO>();
                 foreach (var recipe in response.Recipes)
                 {
-                    responseDto.Recipes.Add(new RecipeDTO { Id = recipe.Id, Name = recipe.Name, Price = recipe.Price, AvgCookTime = recipe.AvgCookTime });
+                    responseDto.Recipes.Add(_mapper.Map<RecipeDTO>(recipe));
                 }
+                return responseDto;
             }
-            return responseDto;
+            else
+            {
+                return null;
+            }
+            
         }
 
         public Response EditResponse(EditResponseFormData formData)

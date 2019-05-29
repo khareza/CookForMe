@@ -37,7 +37,7 @@ class MyReponses extends Component {
         return this.state.responses.map((response) => {
             console.log(response);
             return (
-                <ResponseDetails key={response.responseId}
+                <ResponseDetails key={response.id}
                     deleteResponse={this.deleteResponse}
                     editResponse={this.editResponse}
                     response={response} />

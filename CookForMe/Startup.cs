@@ -1,4 +1,6 @@
+using AutoMapper;
 using CookForMe.AppSettings;
+using CookForMe.AutoMapper;
 using CookForMe.DAL;
 using CookForMe.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -33,6 +35,15 @@ namespace CookForMe
             services.AddTransient<ResponseService>();
             //get access to appsettings.json settings everywhere in applications by using ApplicationSettings class object
             services.Configure<ApplicationSettings>(Configuration.GetSection("ApplicationSettings"));
+            var mappingConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new MappingProfile());
+            });
+
+            IMapper mapper = mappingConfig.CreateMapper();
+            services.AddSingleton(mapper);
+
+            services.AddMvc();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
