@@ -33,6 +33,7 @@ export default class OrderMethods {
     }
 
     editOrder = (editFormData) => {
+        console.log(editFormData);
         return axios.put(`${this.orderApiUrl}/EditOrder`, editFormData);
     }
 

@@ -8,7 +8,7 @@ export class OrdersListWrapper extends Component {
         return (
             <div>
                 <div className="selectMenu">
-                    <NavLink activeClassName="selectMenuActive" className="selectMenuItem" to="/Orders/AllOrders">All orders</NavLink>
+                    <NavLink activeClassName="selectMenuActive" className="selectMenuItem" to="/Orders/AllOrders">Orders avaiable</NavLink>
                     <NavLink activeClassName="selectMenuActive" className="selectMenuItem" to="/Orders/MyOrders">My orders</NavLink>
                 </div>
                 <div>

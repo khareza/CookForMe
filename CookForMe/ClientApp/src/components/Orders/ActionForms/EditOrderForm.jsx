@@ -11,15 +11,15 @@ class EditOrderForm extends Component {
         this.OrderRequest = new OrderMethods();
 
         this.state = {
-            deadline: new Date(),
+            expirationDate: new Date(),
             ingredientsPhotoUrl: '',
             ingredientsAvaiableList: '',
             ingredientsPhoto: '',
             description: '',
             isSubmitDisabled: false
         };
-        let id = this.props.match.params.order_id;
-        this.getOrder(id);
+        this.id = this.props.match.params.order_id;
+        this.getOrder(this.id);
     }
 
     getOrder = (id) => {
@@ -41,13 +41,13 @@ class EditOrderForm extends Component {
 
     handleSubmit = (event) => {
         event.preventDefault();
-        let { deadline, ingredientsPhotoUrl, ingredientsAvaiableList, description } = this.state.order;
+        let { expirationDate, ingredientsPhotoUrl, ingredientsAvaiableList, description } = this.state;
 
-        this.Auth.editOrder(
-            { orderId: this.props.orderToEdit.id, photoUrl: ingredientsPhotoUrl, deadline, ingredientsAvaiableList, description }
+        this.OrderRequest.editOrder(
+            { orderId: this.id, photoUrl: ingredientsPhotoUrl, expirationDate, ingredientsAvaiableList, description }
         ).then((res) => {
             NotificationManager.success('Edited order successful', 'Correct');
-            this.props.history.push('/orders')
+            this.props.history.push('/orders/MyOrders')
         }).catch(() => {
             NotificationManager.error('Data not valid', 'Error!', 5000, () => {
             });
@@ -65,7 +65,8 @@ class EditOrderForm extends Component {
     }
 
     handleDateChange = (date) => {
-        this.setState({ deadline: date });
+        this.setState({ expirationDate: date });
+        console.log(this.state.expirationDate);
     }
 
     //checkIfFormDataIsValid = () => {
@@ -94,10 +95,10 @@ class EditOrderForm extends Component {
                             </div>
 
                             <div className="form-group">
-                                <label>Deadline</label>
+                                <label>Expiration date</label>
                                 <div>
                                     <DatePicker
-                                        selected={this.state.deadline}
+                                        selected={this.state.expirationDate}
                                         onChange={this.handleDateChange}
                                         showTimeSelect
                                         timeFormat="HH:mm"

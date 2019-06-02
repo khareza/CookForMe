@@ -1,13 +1,11 @@
 ﻿import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 import { SideMenu } from './SideMenu';
-import { ActiveUserDetails } from './ActiveUserDetails';
+import { UserProfile } from './Profile/UserProfile';
 import { OrdersListWrapper } from './Orders/OrdersWrapper';
 import { ResponsesWrapper } from './Responses/ResponsesWrapper';
 
-export class UserProfile extends Component {
-
-
+export class MainWrapper extends Component {
 
     render() {
         return (
@@ -16,7 +14,7 @@ export class UserProfile extends Component {
                     <SideMenu logOut={this.props.logOut} />
                 </div>
                 <div className="col-md-10 d-inline-block mt-5 ">
-                    <Route path="/profile" component={ActiveUserDetails} />
+                    <Route path="/profile" component={UserProfile} />
                     <Route path="/Orders" component={OrdersListWrapper} />
                     <Route path="/responses" component={ResponsesWrapper} />
                 </div>

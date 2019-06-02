@@ -12,7 +12,6 @@ namespace CookForMe.AppSettings.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<Offer> builder)
         {
-            throw new NotImplementedException();
         }
     }
 }

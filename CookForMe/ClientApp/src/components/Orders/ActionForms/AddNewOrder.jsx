@@ -12,7 +12,7 @@ export default class AddNewOrder extends Component {
         this.Auth = new AuthMethods();
         this.OrderRequest = new OrderMethods();
         this.state = {
-            deadline: new Date(),
+            expirationDate: new Date(),
             ingredientsPhoto: '',
             ingredientsAvaiableList: '',
             description: '',
@@ -23,7 +23,7 @@ export default class AddNewOrder extends Component {
 
     handleSubmit = (event) => {
         event.preventDefault();
-        let { deadline, ingredientsPhoto, ingredientsAvaiableList, description } = this.state;
+        let { expirationDate, ingredientsPhoto, ingredientsAvaiableList, description } = this.state;
         console.log(ingredientsPhoto);
 
         const fd = new FormData();
@@ -31,7 +31,7 @@ export default class AddNewOrder extends Component {
 
         this.OrderRequest.uploadOrderPhoto(fd).then((res) => {
             this.OrderRequest.createOrder(
-                { founderId: this.Auth.getUserId(), photoUrl: res.data, deadline, ingredientsAvaiableList, description }
+                { founderId: this.Auth.getUserId(), photoUrl: res.data, expirationDate, ingredientsAvaiableList, description }
             )
         }).then((res) => {
             NotificationManager.success('Created new order', 'Success');
@@ -63,7 +63,7 @@ export default class AddNewOrder extends Component {
     }
 
     handleDateChange = (date) => {
-        this.setState({ deadline: date });
+        this.setState({ expirationDate: date });
     }
 
     saveIngredients = (igredientsString) => {
@@ -84,7 +84,7 @@ export default class AddNewOrder extends Component {
                                 <label>Order expires in</label>
                                 <div>
                                     <DatePicker
-                                        selected={this.state.deadline}
+                                        selected={this.state.expirationDate}
                                         onChange={this.handleDateChange}
                                         showTimeSelect
                                         timeFormat="HH:mm"

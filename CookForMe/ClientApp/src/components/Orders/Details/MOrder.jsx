@@ -56,8 +56,8 @@ export class OrderDetails extends Component {
                     {this.props.order.ingredientsPhotoUrl
                         ? <img className="imgPreview" src={this.props.order.ingredientsPhotoUrl} alt="empty"></img>
                         : null}
-                    <p>Deadline: <Moment format="dddd YYYY-MM-DD HH:mm">{this.props.order.deadline}</Moment></p>
-                    <p>Time left: <Moment fromNow="dddd YYYY-MM-DD HH:mm">{this.props.order.deadline}</Moment></p>
+                    <p>Deadline: <Moment format="dddd YYYY-MM-DD HH:mm">{this.props.order.expirationDate}</Moment></p>
+                    <p>Time left: <Moment fromNow="dddd YYYY-MM-DD HH:mm">{this.props.order.expirationDate}</Moment></p>
                 </div>
                 <div className="orderData">
                     <div>

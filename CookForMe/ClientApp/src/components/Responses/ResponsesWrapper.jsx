@@ -11,7 +11,6 @@ export class ResponsesWrapper extends Component {
                     <NavLink activeClassName="selectMenuActive" to="/Responses/MyResponses">My responses</NavLink>
                 </div>
                 <div>
-
                     <Route path="/Responses/MyResponses" component={MyResponsesWrapper} />
                 </div>
             </div>

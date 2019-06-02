@@ -4,7 +4,7 @@ import { LoginWrapper } from './components/LoginWrapper';
 import { BrowserRouter as Router, Route, Switch, withRouter } from "react-router-dom";
 import AuthMethods from './Helpers/AuthMethods';
 import PrivateComponent from './components/PrivateComponent'
-import { UserProfile } from './components/UserProfile';
+import { MainWrapper } from './components/MainWrapper';
 import 'react-datepicker/dist/react-datepicker.css';
 import 'react-notifications/lib/notifications.css';
 import './ComponentsStyles/SideMenu.css';
@@ -32,7 +32,7 @@ class App extends Component {
                 <Router>
                     <Switch>
                         <Route exac path="/start" component={LoginWrapper} />
-                        <PrivateComponent path="/" component={UserProfile} logOut={this.handleLogout} />
+                        <PrivateComponent path="/" component={MainWrapper} logOut={this.handleLogout} />
                     </Switch>
                 </Router>
             </div>
