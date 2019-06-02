@@ -14,7 +14,7 @@ namespace CookForMe.AutoMapper
         {
             CreateMap<Response, ResponseDTO>()
                 .ForMember(dest => dest.OrderCreationDate, opt => opt.MapFrom(src => src.Order.CreationDate))
-                .ForMember(dest => dest.OrderDeadline, opt => opt.MapFrom(src => src.Order.Deadline))
+                .ForMember(dest => dest.OrderDeadline, opt => opt.MapFrom(src => src.Order.ExpirationDate))
                 .ForMember(dest => dest.OrderDescription, opt => opt.MapFrom(src => src.Order.Description))
                 .ForMember(dest => dest.OrderIngredientsPhotoUrl, opt => opt.MapFrom(src => src.Order.IngredientsPhotoUrl))
                 .ForMember(dest => dest.OrderIngredientsAvaiableList, opt => opt.MapFrom(src => src.Order.IngredientsAvaiableList))

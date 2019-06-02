@@ -66,7 +66,7 @@ namespace CookForMe.Controllers
             newOrder.FounderId = formData.FounderId;
             newOrder.IngredientsAvaiable = formData.IngredientsAvaiableList;
             newOrder.Description = formData.Description;
-            newOrder.Deadline = formData.Deadline;
+            newOrder.ExpirationDate = formData.ExpirationDate;
             newOrder.IngredientsPhotoUrl = formData.PhotoUrl;
             newOrder.CreationDate = DateTime.Now;
             newOrder.OrderStatus = OrderStatus.Active;

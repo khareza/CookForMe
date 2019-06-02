@@ -14,6 +14,7 @@ namespace CookForMe.Models
         public string Street { get; set; }
         public decimal Rating { get; set; }
         public List<Order> MadeOrders { get; set; }
-        public List<Response> Responses { get; set; }
+        public List<Response> MadeResponses { get; set; }
+        public List<AcceptedOffer> AcceptedOffers { get; set; }
     }
 }

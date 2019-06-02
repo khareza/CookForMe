@@ -10,7 +10,7 @@ namespace CookForMe.Models.FormModels
     {
         public string FounderId { get; set; }
         public int OrderId { get; set; }
-        public DateTime Deadline { get; set; }
+        public DateTime ExpirationDate { get; set; }
         public string PhotoUrl { get; set; }
        // public IFormFile Photo { get; set; }
         public string IngredientsAvaiableList { get; set; }

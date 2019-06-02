@@ -1,4 +1,5 @@
-﻿using CookForMe.Models;
+﻿using CookForMe.AppSettings.EntityConfigurations;
+using CookForMe.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -15,6 +16,7 @@ namespace CookForMe.DAL
         public DbSet<Order> Orders { get; set; }
         public DbSet<Offer> Offers { get; set; }
         public DbSet<Response> Responses { get; set; }
+        public DbSet<AcceptedOffer> AcceptedOffers { get; set; }
 
         public AuthenticationContext(DbContextOptions options) : base(options)
         {
@@ -24,29 +26,11 @@ namespace CookForMe.DAL
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Response>()
-                .HasMany(r => r.Offers)
-                .WithOne(r => r.Response)
-                .HasForeignKey(r => r.ResponseId);
-
-            modelBuilder.Entity<Order>()
-                .HasMany(o => o.Responses)
-                .WithOne(r => r.Order)
-                .HasForeignKey(r => r.OrderId);
-
-            modelBuilder.Entity<AppUser>()
-                .HasMany(a => a.Responses)
-                .WithOne(r => r.Responser)
-                .HasForeignKey(r => r.ResponserId);
-
-            modelBuilder.Entity<AppUser>()
-                .HasMany(a => a.MadeOrders)
-                .WithOne(o=> o.Founder)
-                .HasForeignKey(o => o.FounderId);
-
-            modelBuilder.Entity<AppUser>()
-                .Property(a=>a.Rating)
-                .HasColumnType("decimal(5, 2)");
+            modelBuilder.ApplyConfiguration(new AcceptedOfferConfiguration());
+            modelBuilder.ApplyConfiguration(new AppUserConfiguration());
+            modelBuilder.ApplyConfiguration(new OfferConfiguration());
+            modelBuilder.ApplyConfiguration(new OrderConfiguration());
+            modelBuilder.ApplyConfiguration(new ResponseConfiguration());
         }
 
     }

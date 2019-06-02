@@ -89,7 +89,7 @@ namespace CookForMe.DAL
             {
                 //use object mapper here :)
 
-                order.Deadline = formData.Deadline;
+                order.ExpirationDate = formData.ExpirationDate;
                 order.IngredientsAvaiable = formData.IngredientsAvaiableList;
                 order.Description = formData.Description;
                 order.IngredientsPhotoUrl = formData.PhotoUrl;
