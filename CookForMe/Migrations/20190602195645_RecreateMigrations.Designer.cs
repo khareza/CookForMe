@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CookForMe.Migrations
 {
     [DbContext(typeof(AuthenticationContext))]
-    [Migration("20190528172052_Updated")]
-    partial class Updated
+    [Migration("20190602195645_RecreateMigrations")]
+    partial class RecreateMigrations
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,34 +21,32 @@ namespace CookForMe.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("CookForMe.Models.Order", b =>
+            modelBuilder.Entity("CookForMe.Models.AcceptedOffer", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("CreationDate");
+                    b.Property<string>("CallerId");
 
-                    b.Property<DateTime>("Deadline");
+                    b.Property<int>("ChosenOfferId");
 
-                    b.Property<string>("Description");
-
-                    b.Property<string>("FounderId");
-
-                    b.Property<string>("IngredientsAvaiable");
-
-                    b.Property<string>("IngredientsPhotoUrl");
-
-                    b.Property<int>("OrderStatus");
+                    b.Property<int>("ChosenResponseId");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FounderId");
+                    b.HasIndex("CallerId");
 
-                    b.ToTable("Orders");
+                    b.HasIndex("ChosenOfferId")
+                        .IsUnique();
+
+                    b.HasIndex("ChosenResponseId")
+                        .IsUnique();
+
+                    b.ToTable("AcceptedOffers");
                 });
 
-            modelBuilder.Entity("CookForMe.Models.Recipe", b =>
+            modelBuilder.Entity("CookForMe.Models.Offer", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -66,7 +64,34 @@ namespace CookForMe.Migrations
 
                     b.HasIndex("ResponseId");
 
-                    b.ToTable("Recipes");
+                    b.ToTable("Offers");
+                });
+
+            modelBuilder.Entity("CookForMe.Models.Order", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreationDate");
+
+                    b.Property<string>("Description");
+
+                    b.Property<DateTime>("ExpirationDate");
+
+                    b.Property<string>("FounderId");
+
+                    b.Property<string>("IngredientsAvaiable");
+
+                    b.Property<string>("IngredientsPhotoUrl");
+
+                    b.Property<int>("OrderStatus");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FounderId");
+
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("CookForMe.Models.Response", b =>
@@ -273,11 +298,37 @@ namespace CookForMe.Migrations
                     b.Property<string>("LastName");
 
                     b.Property<decimal>("Rating")
-                        .HasColumnType("decimal(2, 2)");
+                        .HasColumnType("decimal(5, 2)");
 
                     b.Property<string>("Street");
 
                     b.HasDiscriminator().HasValue("AppUser");
+                });
+
+            modelBuilder.Entity("CookForMe.Models.AcceptedOffer", b =>
+                {
+                    b.HasOne("CookForMe.Models.AppUser", "Caller")
+                        .WithMany("AcceptedOffers")
+                        .HasForeignKey("CallerId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("CookForMe.Models.Offer", "ChosenOffer")
+                        .WithOne("AcceptedOffer")
+                        .HasForeignKey("CookForMe.Models.AcceptedOffer", "ChosenOfferId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("CookForMe.Models.Response", "ChosenResponse")
+                        .WithOne("AcceptedResponse")
+                        .HasForeignKey("CookForMe.Models.AcceptedOffer", "ChosenResponseId")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("CookForMe.Models.Offer", b =>
+                {
+                    b.HasOne("CookForMe.Models.Response", "Response")
+                        .WithMany("Offers")
+                        .HasForeignKey("ResponseId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("CookForMe.Models.Order", b =>
@@ -285,14 +336,6 @@ namespace CookForMe.Migrations
                     b.HasOne("CookForMe.Models.AppUser", "Founder")
                         .WithMany("MadeOrders")
                         .HasForeignKey("FounderId");
-                });
-
-            modelBuilder.Entity("CookForMe.Models.Recipe", b =>
-                {
-                    b.HasOne("CookForMe.Models.Response", "Response")
-                        .WithMany("Recipes")
-                        .HasForeignKey("ResponseId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("CookForMe.Models.Response", b =>
@@ -303,7 +346,7 @@ namespace CookForMe.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("CookForMe.Models.AppUser", "Responser")
-                        .WithMany("Responses")
+                        .WithMany("MadeResponses")
                         .HasForeignKey("ResponserId");
                 });
 

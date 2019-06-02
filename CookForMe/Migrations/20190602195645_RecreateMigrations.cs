@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CookForMe.Migrations
 {
-    public partial class Init : Migration
+    public partial class RecreateMigrations : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -47,7 +47,7 @@ namespace CookForMe.Migrations
                     Age = table.Column<int>(nullable: true),
                     City = table.Column<string>(nullable: true),
                     Street = table.Column<string>(nullable: true),
-                    Rating = table.Column<decimal>(nullable: true)
+                    Rating = table.Column<decimal>(type: "decimal(5, 2)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -168,11 +168,11 @@ namespace CookForMe.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     FounderId = table.Column<string>(nullable: true),
                     CreationDate = table.Column<DateTime>(nullable: false),
-                    Deadline = table.Column<DateTime>(nullable: false),
-                    IngredientsPhoto = table.Column<byte[]>(nullable: true),
+                    ExpirationDate = table.Column<DateTime>(nullable: false),
+                    IngredientsPhotoUrl = table.Column<string>(nullable: true),
                     OrderStatus = table.Column<int>(nullable: false),
-                    IngredientsAvaiable = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(nullable: true)
+                    Description = table.Column<string>(nullable: true),
+                    IngredientsAvaiable = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -192,7 +192,7 @@ namespace CookForMe.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     ResponserId = table.Column<string>(nullable: true),
-                    OrderId = table.Column<int>(nullable: true),
+                    OrderId = table.Column<int>(nullable: false),
                     ResponseStatus = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -203,7 +203,7 @@ namespace CookForMe.Migrations
                         column: x => x.OrderId,
                         principalTable: "Orders",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Responses_AspNetUsers_ResponserId",
                         column: x => x.ResponserId,
@@ -213,7 +213,7 @@ namespace CookForMe.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Recipes",
+                name: "Offers",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -221,18 +221,68 @@ namespace CookForMe.Migrations
                     Name = table.Column<string>(nullable: true),
                     Price = table.Column<decimal>(nullable: false),
                     AvgCookTime = table.Column<string>(nullable: true),
-                    ResponseId = table.Column<int>(nullable: true)
+                    ResponseId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Recipes", x => x.Id);
+                    table.PrimaryKey("PK_Offers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Recipes_Responses_ResponseId",
+                        name: "FK_Offers_Responses_ResponseId",
                         column: x => x.ResponseId,
+                        principalTable: "Responses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AcceptedOffers",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CallerId = table.Column<string>(nullable: true),
+                    ChosenResponseId = table.Column<int>(nullable: false),
+                    ChosenOfferId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AcceptedOffers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AcceptedOffers_AspNetUsers_CallerId",
+                        column: x => x.CallerId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_AcceptedOffers_Offers_ChosenOfferId",
+                        column: x => x.ChosenOfferId,
+                        principalTable: "Offers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_AcceptedOffers_Responses_ChosenResponseId",
+                        column: x => x.ChosenResponseId,
                         principalTable: "Responses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AcceptedOffers_CallerId",
+                table: "AcceptedOffers",
+                column: "CallerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AcceptedOffers_ChosenOfferId",
+                table: "AcceptedOffers",
+                column: "ChosenOfferId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AcceptedOffers_ChosenResponseId",
+                table: "AcceptedOffers",
+                column: "ChosenResponseId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -274,14 +324,14 @@ namespace CookForMe.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Offers_ResponseId",
+                table: "Offers",
+                column: "ResponseId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Orders_FounderId",
                 table: "Orders",
                 column: "FounderId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Recipes_ResponseId",
-                table: "Recipes",
-                column: "ResponseId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Responses_OrderId",
@@ -296,6 +346,9 @@ namespace CookForMe.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "AcceptedOffers");
+
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -312,7 +365,7 @@ namespace CookForMe.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Recipes");
+                name: "Offers");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

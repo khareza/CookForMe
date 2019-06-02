@@ -9,7 +9,7 @@ export class UserProfile extends Component {
         return (
             <div>
                 <div className="selectMenu">
-                    <NavLink activeClassName="selectMenuActive" to="/Profile/Main">Your profile</NavLink>
+                    <NavLink activeClassName="selectMenuActive" to="/Profile/Main">My profile</NavLink>
                     <NavLink activeClassName="selectMenuActive" to="/Profile/OrdersHistory">Orders history</NavLink>
                     <NavLink activeClassName="selectMenuActive" to="/Profile/ResponsesHistory">Responses history</NavLink>
                 </div>
