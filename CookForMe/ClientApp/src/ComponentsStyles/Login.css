@@ -1,4 +1,16 @@
-﻿.loginWrapper {
+﻿
+.mainLoginWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    position: relative;
+    background-image: url('./LoginBackground.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.loginWrapper {
     display: flex;
     flex-direction:column;
     align-items: center;
@@ -61,11 +73,3 @@
 }
 
 
-.mainLoginWrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    position: relative;
-    background-color: #81c784;
-}
