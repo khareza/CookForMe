@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using CookForMe.AppSettings.Validators;
 using CookForMe.DAL;
 using CookForMe.Models;
 using CookForMe.Models.DTO;
 using CookForMe.Models.FormModels;
 using CookForMe.ServiceInterfaces;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -27,9 +29,13 @@ namespace CookForMe.Controllers
         [Route("CreateResponse")]
         public IActionResult CreateResponse(ResponseFormData formData)
         {
-            if (!ModelState.IsValid)
+            ResponseFormValidator validator = new ResponseFormValidator();
+
+            ValidationResult result = validator.Validate(formData);
+
+            if (!result.IsValid)
             {
-                return BadRequest();
+                return BadRequest(result.Errors);
             }
 
             Response newResponse = new Response();
@@ -68,8 +74,16 @@ namespace CookForMe.Controllers
         [Route("EditResponse")]
         public IActionResult EditResponse(EditResponseFormData formData)
         {
+            EditResponseValidator validator = new EditResponseValidator();
 
-                _responseContext.EditResponse(formData);
+            ValidationResult result = validator.Validate(formData);
+
+            if (!result.IsValid)
+            {
+                return BadRequest(result.Errors);
+            }
+
+            _responseContext.EditResponse(formData);
 
             return Ok();
         }

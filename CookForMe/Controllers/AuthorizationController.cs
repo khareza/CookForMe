@@ -4,8 +4,10 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using CookForMe.AppSettings;
+using CookForMe.AppSettings.Validators;
 using CookForMe.Models;
 using CookForMe.Models.FormModels;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -29,6 +31,15 @@ namespace CookForMe.Controllers
         [Route("Register")]
         public async Task<object> Register(RegisterFormData registerData)
         {
+            RegisterFormValidator validator = new RegisterFormValidator();
+
+            ValidationResult result = validator.Validate(registerData);
+
+            if (!result.IsValid)
+            {
+                return BadRequest(result.Errors);
+            }
+
             var newUser = new AppUser
             {
                 UserName = registerData.UserName,
@@ -40,9 +51,9 @@ namespace CookForMe.Controllers
 
             try
             {
-                var result = await _userManager.CreateAsync(newUser, registerData.Password);
+                await _userManager.CreateAsync(newUser, registerData.Password);
 
-                return Ok(result);
+                return Ok();
             }
             catch (Exception)
             {
@@ -55,6 +66,15 @@ namespace CookForMe.Controllers
         [Route("Login")]
         public async Task<object> Login(LoginFormData loginData)
         {
+            LoginFormValidator validator = new LoginFormValidator();
+
+            ValidationResult result = validator.Validate(loginData);
+
+            if (!result.IsValid)
+            {
+                return BadRequest(result.Errors);
+            }
+
             var user = await _userManager.FindByNameAsync(loginData.UserName);
 
             if (user != null && await _userManager.CheckPasswordAsync(user,loginData.Password))

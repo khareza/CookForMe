@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using CookForMe.AppSettings.Validators;
 using CookForMe.DAL;
 using CookForMe.Models;
 using CookForMe.Models.FormModels;
 using CookForMe.ServiceInterfaces;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -57,9 +59,14 @@ namespace CookForMe.Controllers
         public IActionResult CreateOrder(OrderFormData formData)
         {
 
-            if (!ModelState.IsValid)
+            OrderFormValidator validator = new OrderFormValidator();
+
+            ValidationResult result = validator.Validate(formData);
+
+
+            if (!result.IsValid)
             {
-                return BadRequest();
+                return BadRequest(result.Errors);
             }
             //////Dodać mapper
             Order newOrder = new Order();
@@ -102,6 +109,15 @@ namespace CookForMe.Controllers
         [Route("EditOrder")]
         public IActionResult EditOrder(OrderFormData formData)
         {
+            OrderFormValidator validator = new OrderFormValidator();
+
+            ValidationResult result = validator.Validate(formData);
+
+            if (!result.IsValid)
+            {
+                return BadRequest(result.Errors);
+            }
+
             var response = _orderContext.Edit(formData);
 
             if (response == null)
