@@ -105,7 +105,9 @@
 }
 
 .content {
-    margin-left:20px;
+    width:100%;
+    display:flex;
+    justify-content:center;
 }
 
 .site {
