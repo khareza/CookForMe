@@ -22,18 +22,16 @@ export class SideMenu extends Component {
     render() {
         return (
             <header className="header" role="banner">
-                <h1 className="logo">
+                <div className="logo">
                     <a href="/profile">Cook for <span>Me</span></a>
-                </h1>
-                <div className="nav-wrap">
-                    <nav className="main-nav">
-                        <ul className="unstyled list-hover-slide">
-                            <li><NavLink to="/profile">My profile</NavLink></li>
-                            <li><NavLink to="/orders">Orders</NavLink></li>
-                            <li><NavLink to="/responses">Responses</NavLink></li>
-                        </ul>
-                    </nav>
                 </div>
+                <nav className="main-nav">
+                    <ul className="unstyled list-hover-slide">
+                        <li><NavLink to="/profile">My profile</NavLink></li>
+                        <li><NavLink to="/orders">Orders</NavLink></li>
+                        <li><NavLink to="/responses">Responses</NavLink></li>
+                    </ul>
+                </nav>
                 <button className="btn btn-danger logOutBtn" onClick={this.props.logOut}>LogOut</button>
             </header>
         );

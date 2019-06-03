@@ -25,6 +25,7 @@ export default class OrderMethods {
     }
 
     createOrder = (newOrderFormData) => {
+        console.log(newOrderFormData);
         return axios.post(`${this.orderApiUrl}/CreateOrder`, newOrderFormData);
     }
 

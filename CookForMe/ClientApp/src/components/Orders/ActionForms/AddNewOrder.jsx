@@ -29,17 +29,18 @@ export default class AddNewOrder extends Component {
         const fd = new FormData();
         fd.append('photo', ingredientsPhoto);
 
-        this.OrderRequest.uploadOrderPhoto(fd).then((res) => {
-            this.OrderRequest.createOrder(
-                { founderId: this.Auth.getUserId(), photoUrl: res.data, expirationDate, ingredientsAvaiableList, description }
-            )
-        }).then((res) => {
-            NotificationManager.success('Created new order', 'Success');
-            this.props.history.push('/orders/MyOrders')
-        }).catch(() => {
-            NotificationManager.error('Data not valid', 'Error!', 5000, () => {
-            });
-        })
+        this.OrderRequest.uploadOrderPhoto(fd)
+            .then((res) => {
+                this.OrderRequest.createOrder(
+                    { founderId: this.Auth.getUserId(), photoUrl: res.data, expirationDate, ingredientsAvaiableList, description }
+                )
+            }).then((res) => {
+                NotificationManager.success('Created new order', 'Success');
+                this.props.history.push('/orders/MyOrders')
+            }).catch(() => {
+                NotificationManager.error('Data not valid', 'Error!', 5000, () => {
+                });
+            })
     }
 
     handleInputChange = (event) => {

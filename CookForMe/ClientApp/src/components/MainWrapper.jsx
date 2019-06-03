@@ -9,11 +9,11 @@ export class MainWrapper extends Component {
 
     render() {
         return (
-            <div className="row mx-0">
-                <div className="col-md-2">
+            <div className="site mx-0">
+                <div className="menuWrapper">
                     <SideMenu logOut={this.props.logOut} />
                 </div>
-                <div className="col-md-10 d-inline-block mt-5 ">
+                <div className="content d-inline-block mt-5 ">
                     <Route path="/profile" component={UserProfile} />
                     <Route path="/Orders" component={OrdersListWrapper} />
                     <Route path="/responses" component={ResponsesWrapper} />
