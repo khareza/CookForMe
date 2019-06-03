@@ -5,20 +5,27 @@ import Ingredient from './Ingredient'
 
 export default class IngredientsWrapper extends Component {
 
-    state = {
-        ingredients: ['']
+    constructor(props) {
+        super(props);
+        console.log(props);
+
+        this.state = {
+            ingredients: this.props.ingredientsList ? this.props.ingredientsList : ['']
+        }
     }
 
     addNewIngredient = () => {
+        //this.setState({ ingredients: this.props.getIngredients() });
         //let ingredients = [...this.state.ingredients, ''];
         this.setState({ ingredients: [...this.state.ingredients, ''] });
-        console.log(this.state.ingredients);
     }
 
     deleteIngredient = (index) => {
+
         let ingredients = this.state.ingredients;
         ingredients.splice(index, 1);
         this.setState(ingredients);
+        this.saveIngredients();
     }
 
     handleIngredientChange = (newValue, index) => {
@@ -30,12 +37,16 @@ export default class IngredientsWrapper extends Component {
     }
 
     saveIngredients = () => {
-        let igredientsString = this.state.ingredients.join(';');
+        console.log('saveIngredients');
+        let igredentsList = this.state.ingredients.filter((ingr) => {
+            return ingr.match(/[a-z]/i);
+        })
+        let igredientsString = igredentsList.join(';');
         this.props.saveIngredients(igredientsString);
     }
 
     renderIngredients = () => {
-       return this.state.ingredients.map((ingredient, index) => (
+        return this.state.ingredients.map((ingredient, index) => (
             <Ingredient ingredient={ingredient} index={index} key={index}
                 deleteIngredient={this.deleteIngredient}
                 handleIngredientChange={this.handleIngredientChange} />

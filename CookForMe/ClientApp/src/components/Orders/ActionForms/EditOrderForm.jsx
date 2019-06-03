@@ -3,6 +3,7 @@ import { withRouter } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
 import OrderMethods from '../../../Helpers/OrderMethods';
 import { NotificationManager } from 'react-notifications';
+import IngredientsWrapper from '../Details/IngredientsWrapper';
 
 class EditOrderForm extends Component {
 
@@ -19,20 +20,24 @@ class EditOrderForm extends Component {
             isSubmitDisabled: false
         };
         this.id = this.props.match.params.order_id;
+
+    }
+
+    componentDidMount = () => {
         this.getOrder(this.id);
     }
+
 
     getOrder = (id) => {
         this.OrderRequest.getOrderById(id)
             .then((res) => {
                 this.setState({
-                    ingredientsPhotoUrl: res.data.ingredientsPhotoUrl ? res.data.ingredientsPhotoUrl : 'WithOutPhoto',
-                    ingredientsAvaiableList: res.data.ingredientsAvaiable,
+                    ingredientsPhotoUrl: res.data.ingredientsPhotoUrl ? res.data.ingredientsPhotoUrl : 'WithoutPhoto',
+                    ingredientsAvaiableList: res.data.ingredientsAvaiable ? res.data.ingredientsAvaiable : ' ',
                     ingredientsPhoto: '',
                     description: res.data.description,
                     isSubmitDisabled: false
                 });
-
             }).catch((err) => {
 
                 this.props.history.push(`/orders/MyOrders`);
@@ -67,6 +72,11 @@ class EditOrderForm extends Component {
     handleDateChange = (date) => {
         this.setState({ expirationDate: date });
         console.log(this.state.expirationDate);
+    }
+
+    saveIngredients = (igredientsString) => {
+
+        this.setState({ ingredientsAvaiableList: igredientsString });
     }
 
     //checkIfFormDataIsValid = () => {
@@ -119,11 +129,12 @@ class EditOrderForm extends Component {
                                 </div>
                             </div>
 
-                            <div className="form-group">
-                                <label>Ingredients Avaiable</label>
-                                <input className="form-control" type="text" name="ingredientsAvaiableList" value={this.state.ingredientsAvaiableList} onChange={this.handleInputChange} />
-                            </div>
-
+                            {this.state.ingredientsAvaiableList.length ?
+                                (<div className="form-group">
+                                    <label>Ingredients Avaiable List</label>
+                                    <IngredientsWrapper saveIngredients={this.saveIngredients} ingredientsList={this.state.ingredientsAvaiableList.split(';')} />
+                                </div>) : null
+                            }
                             <div className="form-group">
                                 <label>Description</label>
                                 <input className="form-control" type="text" name="description" value={this.state.description} onChange={this.handleInputChange} />

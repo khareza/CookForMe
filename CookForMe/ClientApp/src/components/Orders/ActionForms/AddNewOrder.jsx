@@ -74,12 +74,12 @@ export default class AddNewOrder extends Component {
 
     render() {
         return (
-            <div>
+            <div >
                 <form onSubmit={this.handleSubmit} autoComplete="off" encType="multipart/form-data">
                     <div className="headerLogin">
                         <h2 >Add new order</h2>
                     </div>
-                    <div className="form-row">
+                    <div>
                         <div className="form-gorup col-md-8 offset-md-2">
                             <div className="form-group">
                                 <label>Order expires in</label>
@@ -113,7 +113,7 @@ export default class AddNewOrder extends Component {
 
                             <div className="form-group">
                                 <label>Ingredients Avaiable List</label>
-                                <IngredientsWrapper saveIngredients={this.saveIngredients} />
+                                <IngredientsWrapper saveIngredients={this.saveIngredients} ingredientsList={this.state.ingredientsAvaiableList}/>
                             </div>
 
                             <div className="form-group">
