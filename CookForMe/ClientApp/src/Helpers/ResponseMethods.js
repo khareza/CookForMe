@@ -30,6 +30,7 @@ export default class ResponseMethods {
     }
 
     editResponse = (editFormData) => {
+        console.log(editFormData);
         return axios.put(`${this.responseApiUrl}/EditResponse`, editFormData);
     }
 }

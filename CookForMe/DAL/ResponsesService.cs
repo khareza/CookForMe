@@ -78,26 +78,39 @@ namespace CookForMe.DAL
 
         }
 
-        public Response EditResponse(EditResponseFormData formData)
+        public void EditResponse(EditResponseFormData formData)
         {
-            var response = _context.Responses.Include(r => r.Offers).FirstOrDefault(r => r.Id == formData.Id);
-            if (response != null)
-            {
-                foreach (var offer in response.Offers)
-                {
-                    var offerForm = formData.Offers.FirstOrDefault(x => x.Id == offer.Id);
-                    offer.Name = offerForm.Name;
-                    offer.Price = offerForm.Price;
-                    offer.AvgCookTime = offerForm.AvgCookTime;
-                }
-                _context.SaveChanges();
-                return response;
-            }
-            else
-            {
-                return null;
-            }
+            DeleteOffer(formData.OffersToDelete);
 
+            foreach (var offer in formData.Offers)
+            {
+                if (offer.Id != 0)
+                {
+                    var offerFromDb = _context.Offers.Where(o => o.Id == offer.Id).FirstOrDefault();
+                    offerFromDb.Name = offer.Name;
+                    offerFromDb.Price = offer.Price;
+                    offerFromDb.AvgCookTime = offer.AvgCookTime;
+                }
+                else
+                {
+                    offer.ResponseId = formData.Id;
+                    _context.Offers.Add(offer);
+                }
+            }
+            _context.SaveChanges();
+
+        }
+
+        private void DeleteOffer(List<Offer> offers)
+        {
+            foreach (var offer in offers)
+            {
+                if (offer.Id != 0)
+                {
+                    _context.Offers.Remove(offer);
+                }
+            }
+            _context.SaveChanges();
         }
 
         public void Create(Response newResponse)

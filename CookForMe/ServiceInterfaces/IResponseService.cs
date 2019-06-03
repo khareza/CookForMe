@@ -8,7 +8,7 @@ namespace CookForMe.ServiceInterfaces
     public interface IResponseService
     {
         void Create(Response newResponse);
-        Response EditResponse(EditResponseFormData formData);
+        void EditResponse(EditResponseFormData formData);
         ShortResponseDTO GetResponse(int responseId);
         IEnumerable<ShortResponseDTO> GetResponsesOfSpecificOrder(int orderid);
         IEnumerable<ResponseDTO> GetUserResponses(string id);

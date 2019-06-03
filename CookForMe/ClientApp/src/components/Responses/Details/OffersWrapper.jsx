@@ -6,7 +6,7 @@ import Offer from './Offer'
 export default class OffersWrapper extends Component {
 
     state = {
-        offers: [{
+        offers: this.props.offersList ? this.props.offersList : [{
             name:'',
             price:'',
             avgCookTime:''
@@ -16,13 +16,21 @@ export default class OffersWrapper extends Component {
     addNewOffer = () => {
         //let ingredients = [...this.state.ingredients, ''];
         this.setState({
-            offers: [...this.state.offers, {name: '', price: '', avgCookTime: ''}] });
+            offers: [...this.state.offers, { name: '', price: '', avgCookTime: '' }]
+        });
+        this.saveOffers();
     }
 
-    deleteOffer  = (index) => {
+    deleteOffer = (index) => {
+        console.log(index);
+
         let offers = this.state.offers;
+        let offerToDelete = offers[index];
         offers.splice(index, 1);
+        this.props.addOfferToDelete(offerToDelete);
+
         this.setState(offers);
+        this.saveOffers();
     }
 
     handleOfferChange = (newValue,name, index) => {

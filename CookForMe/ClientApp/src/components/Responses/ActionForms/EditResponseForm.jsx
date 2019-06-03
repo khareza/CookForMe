@@ -3,6 +3,7 @@ import { withRouter } from 'react-router-dom';
 import ResponseMethods from '../../../Helpers/ResponseMethods';
 import EditOffer from './EditOffer';
 import { NotificationManager } from 'react-notifications';
+import OffersWrapper from '../Details/OffersWrapper';
 
 class EditResponseForm extends Component {
 
@@ -12,16 +13,23 @@ class EditResponseForm extends Component {
 
         this.state = {
             offers: [],
+            offersToDelete: [],
             isSubmitDisabled: false
         };
-        let id = this.props.match.params.response_id;
-        this.getResponse(id);
+        this.id = this.props.match.params.response_id;
+        console.log(this.props);
+    }
+
+    componentDidMount = () => {
+        this.getResponse(this.id);
+
     }
 
     getResponse = (id) => {
+        console.log(id);
+
         this.ResponseRequest.getResponse(id)
             .then((res) => {
-                console.log(res.data);
                 this.setState({
                     offers: res.data.offers,
                 });
@@ -34,7 +42,7 @@ class EditResponseForm extends Component {
         event.preventDefault();
 
         this.ResponseRequest.editResponse(
-            { id: this.props.match.params.response_id, offers: this.state.offers }
+            { id: this.props.match.params.response_id, offers: this.state.offers, offersToDelete: this.state.offersToDelete }
         ).then((res) => {
             NotificationManager.success('Edited offer successful', 'Correct');
             this.props.history.push('/responses/MyResponses')
@@ -50,13 +58,23 @@ class EditResponseForm extends Component {
         this.setState(offers);
     }
 
+    saveOffers = (offersStringArray) => {
+        this.setState({ offers: offersStringArray });
+        console.log(this.state.offers);
+
+    }
+
+    addOfferToDelete = (offer) => {
+        console.log(offer);
+        this.setState({offersToDelete: [...this.state.offersToDelete, offer]})
+    }
+
     render() {
         return (
             <div>
                 <form onSubmit={this.handleSubmit} autoComplete="off">
-                    {this.state.offers.map((offer, index) => (
-                        <EditOffer key={index} offer={offer} index={index} handleRecipeChange={this.handleOfferChange}/>
-                    ))}
+                    {this.state.offers.length > 0 ?
+                        <OffersWrapper saveOffers={this.saveOffers} offersList={this.state.offers} addOfferToDelete={this.addOfferToDelete} /> : null}
                     <input type="submit" value="Edit response" className="btn btn-large btn-block btn-info" disabled={this.state.isSubmitDisabled} />
                     <input type="button" value="Cancel" onClick={() => { this.props.history.push('/responses/MyResponses') }} className="btn btn-large btn-block btn-danger" />
                 </form>

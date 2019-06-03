@@ -17,7 +17,7 @@ export default class Offer extends Component {
                 <input placeholder="Name" type="text" name="name" value={this.props.offer.name} onChange={this.handleInputChange} />
                 <input placeholder="Price" name="price" value={this.props.offer.price} onChange={this.handleInputChange} />
                 <input placeholder="Avg Cook Time" name="avgCookTime" value={this.props.offer.avgCookTime} onChange={this.handleInputChange} />
-                <a className="button buttonDelete" onClick={this.props.deleteOffer}><FontAwesomeIcon icon={faMinus}></FontAwesomeIcon></a>
+                <a className="button buttonDelete" onClick={() => { this.props.deleteOffer(this.props.index) }}><FontAwesomeIcon icon={faMinus}></FontAwesomeIcon></a>
             </div>
         );
     }

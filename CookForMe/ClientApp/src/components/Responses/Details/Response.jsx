@@ -6,11 +6,11 @@ import Moment from 'react-moment';
 export class ResponseDetails extends Component {
 
     deleteResponse = () => {
-        this.props.deleteResponse(this.props.response.responseId);
+        this.props.deleteResponse(this.props.response.id);
     }
 
     editResponse = () => {
-        this.props.editResponse(this.props.response.responseId);
+        this.props.editResponse(this.props.response.id);
     }
 
     render() {

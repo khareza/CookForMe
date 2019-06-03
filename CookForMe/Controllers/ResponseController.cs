@@ -68,18 +68,10 @@ namespace CookForMe.Controllers
         [Route("EditResponse")]
         public IActionResult EditResponse(EditResponseFormData formData)
         {
-            var response = _responseContext.EditResponse(formData);
 
-            if (response == null)
-            {
-                return BadRequest();
-            }
-            else
-            {
-                return Ok(response);
-            }
+                _responseContext.EditResponse(formData);
+
+            return Ok();
         }
-
-
     }
 }

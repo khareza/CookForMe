@@ -9,5 +9,6 @@ namespace CookForMe.Models.FormModels
     {
         public int Id { get; set; }
         public List<Offer> Offers { get; set; }
+        public List<Offer> OffersToDelete { get; set; }
     }
 }

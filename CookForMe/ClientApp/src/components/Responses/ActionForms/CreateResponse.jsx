@@ -12,9 +12,6 @@ export default class AddNewOrder extends Component {
         this.ResponseRequest = new ResponseMethods();
         this.state = {
             orderId: this.props.match.params.order_id,
-            name: '',
-            price: '',
-            avgCookTime: '',
             offers:[],
             isSubmitDisabled: false
         };
