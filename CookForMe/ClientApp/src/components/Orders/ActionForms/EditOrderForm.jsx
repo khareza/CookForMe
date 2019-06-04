@@ -4,6 +4,7 @@ import DatePicker from 'react-datepicker';
 import OrderMethods from '../../../Helpers/OrderMethods';
 import { NotificationManager } from 'react-notifications';
 import IngredientsWrapper from '../Details/IngredientsWrapper';
+import { Error } from '../../Error';
 
 class EditOrderForm extends Component {
 
@@ -17,7 +18,8 @@ class EditOrderForm extends Component {
             ingredientsAvaiableList: '',
             ingredientsPhoto: '',
             description: '',
-            isSubmitDisabled: false
+            isSubmitDisabled: false,
+            errors: {}
         };
         this.id = this.props.match.params.order_id;
 
@@ -53,10 +55,18 @@ class EditOrderForm extends Component {
         ).then((res) => {
             NotificationManager.success('Edited order successful', 'Correct');
             this.props.history.push('/orders/MyOrders')
-        }).catch(() => {
-            NotificationManager.error('Data not valid', 'Error!', 5000, () => {
-            });
+        }).catch((err) => {
+            this.handleInputErrors(err.response.data.errors);
+            NotificationManager.error('Data not valid', 'Error!');
         });
+    }
+
+    handleInputErrors = (errors) => {
+        let errorsArray = [];
+        for (var field in errors) {
+            errorsArray[field] = errors[field];
+        }
+        this.setState({ errors: errorsArray });
     }
 
     handleInputChange = (event) => {
@@ -78,15 +88,6 @@ class EditOrderForm extends Component {
 
         this.setState({ ingredientsAvaiableList: igredientsString });
     }
-
-    //checkIfFormDataIsValid = () => {
-    //    if (this.state.userName.length > 0 && this.state.firstName.length > 0) {
-    //        this.setState({ isSubmitDisabled: false });
-    //    }
-    //    else {
-    //        this.setState({ isSubmitDisabled: true });
-    //    }
-    //}
 
     render() {
         return (
@@ -117,6 +118,7 @@ class EditOrderForm extends Component {
                                         timeCaption="time"
                                     />
                                 </div>
+                                {this.state.errors['ExpirationDate'] ? <Error messages={this.state.errors['ExpirationDate']} /> : null}
                             </div>
 
                             <div className="form-group">
@@ -129,12 +131,14 @@ class EditOrderForm extends Component {
                                 </div>
                             </div>
 
-                            {this.state.ingredientsAvaiableList.length ?
-                                (<div className="form-group">
+                            {this.state.ingredientsAvaiableList.length
+                                ? (<div className="form-group">
                                     <label>Ingredients Avaiable List</label>
                                     <IngredientsWrapper saveIngredients={this.saveIngredients} ingredientsList={this.state.ingredientsAvaiableList.split(';')} />
-                                </div>) : null
+                                </div>)
+                                : null
                             }
+                            {this.state.errors['IngredientsAvaiableList'] ? <Error messages={this.state.errors['IngredientsAvaiableList']} /> : null}
                             <div className="form-group">
                                 <label>Description</label>
                                 <input className="form-control" type="text" name="description" value={this.state.description} onChange={this.handleInputChange} />

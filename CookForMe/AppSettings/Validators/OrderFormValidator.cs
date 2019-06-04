@@ -13,13 +13,23 @@ namespace CookForMe.AppSettings.Validators
         {
             RuleFor(orderForm => orderForm.FounderId)
                 .NotNull()
-                .NotEmpty();
+                .WithMessage("User is invalid")
+                .NotEmpty()
+                .WithMessage("User is invalid"); 
 
             RuleFor(orderForm => orderForm.OrderId)
-                .GreaterThan(0);
+                .GreaterThan(0)
+                .WithMessage("Select order");
 
             RuleFor(orderForm => orderForm.ExpirationDate)
-                .GreaterThan(DateTime.Now);
+                .GreaterThan(DateTime.Now)
+                .WithMessage("Enter correct date");
+
+            RuleFor(orderForm => orderForm.IngredientsAvaiableList)
+                .NotEmpty()
+                .WithMessage("Enter list of ingredients")
+                .NotNull()
+                .WithMessage("Enter list of ingredients");
         }
     }
 }

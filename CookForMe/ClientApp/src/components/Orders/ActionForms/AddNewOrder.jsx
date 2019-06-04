@@ -4,6 +4,7 @@ import IngredientsWrapper from '../Details/IngredientsWrapper';
 import AuthMethods from '../../../Helpers/AuthMethods';
 import OrderMethods from '../../../Helpers/OrderMethods';
 import { NotificationManager } from 'react-notifications';
+import { Error } from '../../Error';
 
 export default class AddNewOrder extends Component {
     constructor(props) {
@@ -17,35 +18,42 @@ export default class AddNewOrder extends Component {
             ingredientsAvaiableList: '',
             description: '',
             imagePreviewUrl: '',
-            isSubmitDisabled: false
+            isSubmitDisabled: false,
+            errors: {}
         };
     }
 
     handleSubmit = (event) => {
         event.preventDefault();
         let { expirationDate, ingredientsPhoto, ingredientsAvaiableList, description } = this.state;
-        console.log(ingredientsPhoto);
 
         const fd = new FormData();
         fd.append('photo', ingredientsPhoto);
 
         this.OrderRequest.uploadOrderPhoto(fd)
             .then((res) => {
-                this.OrderRequest.createOrder(
+              return this.OrderRequest.createOrder(
                     { founderId: this.Auth.getUserId(), photoUrl: res.data, expirationDate, ingredientsAvaiableList, description }
                 )
             }).then((res) => {
                 NotificationManager.success('Created new order', 'Success');
                 this.props.history.push('/orders/MyOrders')
-            }).catch(() => {
-                NotificationManager.error('Data not valid', 'Error!', 5000, () => {
-                });
+            }).catch((err) => {
+                NotificationManager.error('Data not valid', 'Error!');
+                this.handleInputErrors(err.response.data.errors);
             })
+    }
+
+    handleInputErrors = (errors) => {
+        let errorsArray = [];
+        for (var field in errors) {
+            errorsArray[field] = errors[field];
+        }
+        this.setState({ errors: errorsArray });
     }
 
     handleInputChange = (event) => {
         this.setState({ [event.target.name]: event.target.value });
-        // this.checkIfFormDataIsValid();
     }
 
     handleFileChange = (event) => {
@@ -59,8 +67,6 @@ export default class AddNewOrder extends Component {
                 });
         }
         reader.readAsDataURL(file);
-
-        // this.checkIfFormDataIsValid();
     }
 
     handleDateChange = (date) => {
@@ -68,7 +74,6 @@ export default class AddNewOrder extends Component {
     }
 
     saveIngredients = (igredientsString) => {
-
         this.setState({ ingredientsAvaiableList: igredientsString });
     }
 
@@ -94,6 +99,7 @@ export default class AddNewOrder extends Component {
                                         timeCaption="time"
                                     />
                                 </div>
+                                {this.state.errors['ExpirationDate'] ? <Error messages={this.state.errors['ExpirationDate']} /> : null}
                             </div>
 
                             <div className="form-group">
@@ -113,7 +119,8 @@ export default class AddNewOrder extends Component {
 
                             <div className="form-group">
                                 <label>Ingredients Avaiable List</label>
-                                <IngredientsWrapper saveIngredients={this.saveIngredients} ingredientsList={this.state.ingredientsAvaiableList}/>
+                                <IngredientsWrapper saveIngredients={this.saveIngredients} ingredientsList={this.state.ingredientsAvaiableList} />
+                                {this.state.errors['IngredientsAvaiableList'] ? <Error messages={this.state.errors['IngredientsAvaiableList']} /> : null}
                             </div>
 
                             <div className="form-group">

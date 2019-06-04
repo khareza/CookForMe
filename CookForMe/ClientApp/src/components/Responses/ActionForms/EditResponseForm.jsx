@@ -1,7 +1,6 @@
 ﻿import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import ResponseMethods from '../../../Helpers/ResponseMethods';
-import EditOffer from './EditOffer';
 import { NotificationManager } from 'react-notifications';
 import OffersWrapper from '../Details/OffersWrapper';
 
