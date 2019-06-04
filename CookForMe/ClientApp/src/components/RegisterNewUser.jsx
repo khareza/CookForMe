@@ -49,16 +49,16 @@ export class RegisterNewUser extends Component {
     render() {
         return (
             <div className="startForm">
-                <form onSubmit={this.handleSubmit} autoComplete="off" >
+                <form onSubmit={this.handleSubmit} autoComplete="off">
                     <div className="form-group">
                         <label >User Name</label>
-                        <input className="form-control" type="text" name="userName" value={this.state.userName} onChange={this.handleInputChange} required />
+                        <input className="form-control" type="text" name="userName" value={this.state.userName} onChange={this.handleInputChange} />
                         {this.state.errors['UserName'] ? <Error messages={this.state.errors['UserName']} /> : null}
                     </div>
 
                     <div className="form-group">
                         <label>Password</label>
-                        <input className="form-control" type="password" name="password" value={this.state.password} onChange={this.handleInputChange} required />
+                        <input className="form-control" type="password" name="password" value={this.state.password} onChange={this.handleInputChange} />
                         {this.state.errors['Password'] ? <Error messages={this.state.errors['Password']} /> : null}
                     </div>
 
@@ -76,7 +76,7 @@ export class RegisterNewUser extends Component {
 
                     <div className="form-group">
                         <label>Email</label>
-                        <input className="form-control" type="text" name="email" value={this.state.email} onChange={this.handleInputChange} />
+                        <input className="form-control" type="email" name="email" value={this.state.email} onChange={this.handleInputChange}/>
                         {this.state.errors['Email'] ? <Error messages={this.state.errors['Email']} /> : null}
                     </div>
                     <input type="submit" value="Register" className="btn btn-large btn-block btn-primary" />
