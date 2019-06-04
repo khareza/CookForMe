@@ -11,8 +11,19 @@ namespace CookForMe.AppSettings.Validators
     {
         public EditResponseValidator()
         {
-            RuleFor(editResponse => editResponse.Id).GreaterThan(0);
-            RuleFor(editResponse => editResponse.Offers).NotEmpty();
+            RuleFor(editResponse => editResponse.Id)
+                .GreaterThan(0)
+                .WithMessage("Select order");
+
+            RuleFor(editResponse => editResponse.Offers)
+                .NotEmpty()
+                .WithMessage("Enter list of offers")
+                .NotNull()
+                .WithMessage("Enter list of offers");
+
+            RuleForEach(responseForm => responseForm.Offers)
+                .Must(offer => offer.Name.Length > 0)
+                .WithMessage("Enter offer name");
         }
     }
 }

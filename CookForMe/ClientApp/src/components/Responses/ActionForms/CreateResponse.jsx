@@ -3,6 +3,8 @@ import AuthMethods from '../../../Helpers/AuthMethods';
 import ResponseMethods from '../../../Helpers/ResponseMethods';
 import OffersWrapper from '../Details/OffersWrapper';
 import { NotificationManager } from 'react-notifications';
+import { Error } from '../../Error';
+import { config } from '@fortawesome/fontawesome-svg-core';
 
 export default class AddNewOrder extends Component {
     constructor(props) {
@@ -13,7 +15,8 @@ export default class AddNewOrder extends Component {
         this.state = {
             orderId: this.props.match.params.order_id,
             offers:[],
-            isSubmitDisabled: false
+            isSubmitDisabled: false,
+            errors: {}
         };
     }
 
@@ -26,10 +29,19 @@ export default class AddNewOrder extends Component {
         ).then((res) => {
            NotificationManager.success('Created response', 'Success');
            this.props.history.push('/Responses/MyResponses');
-        }).catch(() => {
-            NotificationManager.error('Data not valid', 'Error!', 5000, () => {
-            });
+        }).catch((err) => {
+            console.log(err.response.data.errors);
+            this.handleInputErrors(err.response.data.errors);
+            NotificationManager.error('Data not valid', 'Error!');
         })
+    }
+
+    handleInputErrors = (errors) => {
+        let errorsArray = [];
+        for (var field in errors) {
+            errorsArray[field] = errors[field];
+        }
+        this.setState({ errors: errorsArray });
     }
 
     saveOffers = (offersStringArray) => {
@@ -38,7 +50,6 @@ export default class AddNewOrder extends Component {
 
     handleInputChange = (event) => {
         this.setState({ [event.target.name]: event.target.value });
-        // this.checkIfFormDataIsValid();
     }
 
     render() {
@@ -60,6 +71,7 @@ export default class AddNewOrder extends Component {
 
                             <div className="form-group">
                                 <OffersWrapper saveOffers={this.saveOffers} />
+                                {this.state.errors['Offers'] ? <Error messages={this.state.errors['Offers']} /> : null}
                             </div>
 
                             <input type="submit" value="Response to order" className="btn btn-large btn-block btn-primary" disabled={this.state.isSubmitDisabled} />

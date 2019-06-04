@@ -71,12 +71,10 @@ class EditOrderForm extends Component {
 
     handleInputChange = (event) => {
         this.setState({ [event.target.name]: event.target.value });
-        //this.checkIfFormDataIsValid();
     }
 
     handleFileChange = (event) => {
         this.setState({ ingredientsPhotoUrl: event.target.files[0].name });
-        // this.checkIfFormDataIsValid();
     }
 
     handleDateChange = (date) => {

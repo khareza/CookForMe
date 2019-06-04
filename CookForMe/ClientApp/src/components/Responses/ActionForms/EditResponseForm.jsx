@@ -3,6 +3,7 @@ import { withRouter } from 'react-router-dom';
 import ResponseMethods from '../../../Helpers/ResponseMethods';
 import { NotificationManager } from 'react-notifications';
 import OffersWrapper from '../Details/OffersWrapper';
+import { Error } from '../../Error';
 
 class EditResponseForm extends Component {
 
@@ -13,20 +14,17 @@ class EditResponseForm extends Component {
         this.state = {
             offers: [],
             offersToDelete: [],
-            isSubmitDisabled: false
+            isSubmitDisabled: false,
+            errors: {}
         };
         this.id = this.props.match.params.response_id;
-        console.log(this.props);
     }
 
     componentDidMount = () => {
         this.getResponse(this.id);
-
     }
 
     getResponse = (id) => {
-        console.log(id);
-
         this.ResponseRequest.getResponse(id)
             .then((res) => {
                 this.setState({
@@ -45,10 +43,18 @@ class EditResponseForm extends Component {
         ).then((res) => {
             NotificationManager.success('Edited offer successful', 'Correct');
             this.props.history.push('/responses/MyResponses')
-        }).catch(() => {
-            NotificationManager.error('Wrong data', 'Error!', 5000, () => {
-            });
+        }).catch((err) => {
+            this.handleInputErrors(err.response.data.errors);
+            NotificationManager.error('Wrong data', 'Error!');
         });
+    }
+
+    handleInputErrors = (errors) => {
+        let errorsArray = [];
+        for (var field in errors) {
+            errorsArray[field] = errors[field];
+        }
+        this.setState({ errors: errorsArray });
     }
 
     handleOfferChange = (value, name, index ) => {
@@ -73,7 +79,8 @@ class EditResponseForm extends Component {
             <div>
                 <form onSubmit={this.handleSubmit} autoComplete="off">
                     {this.state.offers.length > 0 ?
-                        <OffersWrapper saveOffers={this.saveOffers} offersList={this.state.offers} addOfferToDelete={this.addOfferToDelete} /> : null}
+                        <OffersWrapper errors={this.state.errors} saveOffers={this.saveOffers} offersList={this.state.offers} addOfferToDelete={this.addOfferToDelete} /> : null}
+                    {this.state.errors['Offers'] ? <Error messages={this.state.errors['Offers']} /> : null}
                     <input type="submit" value="Edit response" className="btn btn-large btn-block btn-info" disabled={this.state.isSubmitDisabled} />
                     <input type="button" value="Cancel" onClick={() => { this.props.history.push('/responses/MyResponses') }} className="btn btn-large btn-block btn-danger" />
                 </form>

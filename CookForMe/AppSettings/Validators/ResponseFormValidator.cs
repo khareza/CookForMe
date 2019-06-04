@@ -12,15 +12,22 @@ namespace CookForMe.AppSettings.Validators
         public ResponseFormValidator()
         {
             RuleFor(responseForm => responseForm.OrderId)
-                .GreaterThan(0);
+                .GreaterThan(0)
+                .WithMessage("Select order");
 
             RuleFor(responseForm => responseForm.Offers)
                 .NotEmpty()
-                .NotNull();
+                .WithMessage("Enter list of offers")
+                .NotNull()
+                .WithMessage("Enter list of offers");
+
+            RuleForEach(responseForm => responseForm.Offers).SetValidator(new OfferValidator());
 
             RuleFor(responseForm => responseForm.ResponserId)
                 .NotEmpty()
-                .NotNull();
+                .WithMessage("User is invalid")
+                .NotNull()
+                .WithMessage("User is invalid");
         }
     }
 }
