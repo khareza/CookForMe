@@ -33,5 +33,6 @@ namespace CookForMe.Models
             get { return IngredientsAvaiable.Split(',').ToList(); }
             set { IngredientsAvaiable = string.Join(',', value); }
         }
+        public AcceptedResponse AcceptedOrder { get; set; }
     }
 }

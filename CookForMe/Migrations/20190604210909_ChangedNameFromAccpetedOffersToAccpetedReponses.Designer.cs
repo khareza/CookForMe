@@ -4,14 +4,16 @@ using CookForMe.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CookForMe.Migrations
 {
     [DbContext(typeof(AuthenticationContext))]
-    partial class AuthenticationContextModelSnapshot : ModelSnapshot
+    [Migration("20190604210909_ChangedNameFromAccpetedOffersToAccpetedReponses")]
+    partial class ChangedNameFromAccpetedOffersToAccpetedReponses
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,8 +31,6 @@ namespace CookForMe.Migrations
 
                     b.Property<int>("ChosenOfferId");
 
-                    b.Property<int>("ChosenOrderId");
-
                     b.Property<int>("ChosenResponseId");
 
                     b.HasKey("Id");
@@ -38,9 +38,6 @@ namespace CookForMe.Migrations
                     b.HasIndex("CallerId");
 
                     b.HasIndex("ChosenOfferId")
-                        .IsUnique();
-
-                    b.HasIndex("ChosenOrderId")
                         .IsUnique();
 
                     b.HasIndex("ChosenResponseId")
@@ -318,11 +315,6 @@ namespace CookForMe.Migrations
                     b.HasOne("CookForMe.Models.Offer", "ChosenOffer")
                         .WithOne("AcceptedOffer")
                         .HasForeignKey("CookForMe.Models.AcceptedResponse", "ChosenOfferId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("CookForMe.Models.Order", "ChosenOrder")
-                        .WithOne("AcceptedOrder")
-                        .HasForeignKey("CookForMe.Models.AcceptedResponse", "ChosenOrderId")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("CookForMe.Models.Response", "ChosenResponse")

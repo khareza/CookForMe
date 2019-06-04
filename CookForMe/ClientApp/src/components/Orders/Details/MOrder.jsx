@@ -3,9 +3,11 @@ import Moment from 'react-moment';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit, faTrashAlt, faCheck } from '@fortawesome/free-solid-svg-icons'
 import ResponseMethods from '../../../Helpers/ResponseMethods';
+import AuthMethods from '../../../Helpers/AuthMethods';
 
 export class OrderDetails extends Component {
     ResponseRequest = new ResponseMethods();
+    AuthMethods = new AuthMethods();
     state = {
         id: this.props.order.id,
         responses: []
@@ -29,6 +31,14 @@ export class OrderDetails extends Component {
                 this.setState({ responses: res.data });
             });
     }
+    //moved it to MyOrders in order to rerender component after success
+    acceptResponse = (responseId, offerId) => {
+        const callerId = this.AuthMethods.getUserId();
+        this.ResponseRequest.acceptResponse({ callerId, responseId, offerId,orderId: this.state.id})
+            .then((res) => {
+                //Delete order inside client side after success instead of downloading all orders again 
+            });
+    }
 
     renderResponses = () => {
         return this.state.responses.map((response, index) => {
@@ -41,7 +51,7 @@ export class OrderDetails extends Component {
                     <p>{offer.avgCookTime}</p>
                     
                     <div className="orderButtons">
-                        <a className="button buttonAccept" onClick={() => { console.log(`Offer ${offerIndex + 1} accepted`) }}><FontAwesomeIcon icon={faCheck}></FontAwesomeIcon></a>
+                        <a className="button buttonAccept" onClick={() => { this.acceptResponse(response.responseId, offer.id)}}><FontAwesomeIcon icon={faCheck}></FontAwesomeIcon></a>
                     </div>
                 </div>
             ))
@@ -63,7 +73,6 @@ export class OrderDetails extends Component {
                     <div>
                         <p><span>Description: </span>{this.props.order.description}</p>
                         <p><span>Ingredients list: </span>{this.props.order.ingredientsAvaiable}</p>
-
                     </div>
                     <div className="orderButtons">
                         <a className="button buttonEdit" onClick={this.editOrder}><FontAwesomeIcon icon={faEdit}></FontAwesomeIcon></a>

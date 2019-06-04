@@ -119,5 +119,28 @@ namespace CookForMe.DAL
             _context.SaveChanges();
         }
 
+        public void AcceptResponse(AcceptedResponseFormData formData)
+        {
+            AcceptedResponse acceptedOffer = new AcceptedResponse();
+            acceptedOffer.CallerId = formData.CallerId;
+            acceptedOffer.ChosenResponseId = formData.ResponseId;
+            acceptedOffer.ChosenOfferId = formData.OfferId;
+            acceptedOffer.ChosenOrderId = formData.OrderId;
+
+            var order = _context.Orders.Include(o=>o.Responses).FirstOrDefault(o => o.Id == formData.OrderId);
+            order.OrderStatus = OrderStatus.InProgress;
+            foreach (var response in order.Responses)
+            {
+                response.ResponseStatus = ResponseStatus.Rejected;
+            }
+            order.Responses.FirstOrDefault(r => r.Id == formData.ResponseId).ResponseStatus = ResponseStatus.Accepted;
+            //var acceptedResponse = _context.Responses.FirstOrDefault(r => r.Id == formData.ResponseId);
+            //acceptedResponse.ResponseStatus = ResponseStatus.Accepted;
+
+            _context.AcceptedResponses.Add(acceptedOffer);
+            _context.SaveChanges();
+        }
+
+
     }
 }

@@ -8,24 +8,30 @@ using System.Threading.Tasks;
 
 namespace CookForMe.AppSettings.EntityConfigurations
 {
-    public class AcceptedOfferConfiguration : IEntityTypeConfiguration<AcceptedOffer>
+    public class AcceptedOfferConfiguration : IEntityTypeConfiguration<AcceptedResponse>
     {
-        public void Configure(EntityTypeBuilder<AcceptedOffer> builder)
+        public void Configure(EntityTypeBuilder<AcceptedResponse> builder)
         {
             //AccpetedOffers/Response 1-1
             builder
                 .HasOne(ao => ao.ChosenResponse)
                 .WithOne(r => r.AcceptedResponse)
                 .OnDelete(DeleteBehavior.Restrict)
-                .HasForeignKey<AcceptedOffer>(ao => ao.ChosenResponseId);
+                .HasForeignKey<AcceptedResponse>(ao => ao.ChosenResponseId);
 
-            //AccpetedOffers/Order 1-1
+            //AccpetedOffers/Offer 1-1
             builder
                 .HasOne(ao => ao.ChosenOffer)
                 .WithOne(o => o.AcceptedOffer)
                 .OnDelete(DeleteBehavior.Restrict)
-                .HasForeignKey<AcceptedOffer>(ao => ao.ChosenOfferId);
+                .HasForeignKey<AcceptedResponse>(ao => ao.ChosenOfferId);
 
+            //AccpetedOffers/Order 1-1
+            builder
+                .HasOne(ao => ao.ChosenOrder)
+                .WithOne(o => o.AcceptedOrder)
+                .OnDelete(DeleteBehavior.Restrict)
+                .HasForeignKey<AcceptedResponse>(ao => ao.ChosenOrderId);
         }
     }
 }

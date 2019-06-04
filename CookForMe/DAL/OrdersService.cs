@@ -31,7 +31,7 @@ namespace CookForMe.DAL
 
         public List<Order> GetMyOrders(string id)
         {
-            return _context.Orders.Where(x => x.Founder.Id == id).ToList();
+            return _context.Orders.Where(x => x.Founder.Id == id && x.OrderStatus == OrderStatus.Active).ToList();
         }
 
         public Order Get(int id)
@@ -39,7 +39,6 @@ namespace CookForMe.DAL
             var order = _context.Orders.FirstOrDefault(o => o.Id == id);
             return order;
         }
-
 
         public void Create(Order newOrder)
         {

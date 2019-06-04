@@ -47,6 +47,14 @@ namespace CookForMe.Controllers
             return Ok(newResponse);
         }
 
+        [HttpPost]
+        [Route("AcceptResponse")]
+        public IActionResult AcceptResponse(AcceptedResponseFormData formData)
+        {
+            _responseContext.AcceptResponse(formData);
+            return Ok();
+        }
+
         [HttpGet]
         [Route("GetOrderResponses/{id}")]
         public List<ShortResponseDTO> GetOrderResponses(int id)

@@ -10,6 +10,6 @@ namespace CookForMe.Models
         public string AvgCookTime { get; set; }
         public int ResponseId { get; set; }
         public Response Response { get; set; }
-        public AcceptedOffer AcceptedOffer{ get; set; }
+        public AcceptedResponse AcceptedOffer { get; set; }
     }
 }

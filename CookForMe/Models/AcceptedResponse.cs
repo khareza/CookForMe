@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace CookForMe.Models
 {
-    public class AcceptedOffer
+    public class AcceptedResponse
     {
         public int Id { get; set; }
         public string CallerId { get; set; }
@@ -14,5 +14,7 @@ namespace CookForMe.Models
         public Response ChosenResponse { get; set; }
         public int ChosenOfferId { get; set; }
         public Offer ChosenOffer { get; set; }
+        public int ChosenOrderId { get; set; }
+        public Order ChosenOrder { get; set; }
     }
 }

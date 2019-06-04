@@ -15,6 +15,6 @@ namespace CookForMe.Models
         public decimal Rating { get; set; }
         public List<Order> MadeOrders { get; set; }
         public List<Response> MadeResponses { get; set; }
-        public List<AcceptedOffer> AcceptedOffers { get; set; }
+        public List<AcceptedResponse> AcceptedOffers { get; set; }
     }
 }

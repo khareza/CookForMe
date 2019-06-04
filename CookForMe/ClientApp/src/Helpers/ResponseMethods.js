@@ -11,10 +11,6 @@ export default class ResponseMethods {
             'Bearer ' + this.auth.getToken();
     }
 
-    createResponse = (newResponseFormData) => {
-        return axios.post(`${this.responseApiUrl}/CreateResponse`, newResponseFormData);
-    }
-
     getOrderResponses = (id) => {
         return axios.get(`${this.responseApiUrl}/GetOrderResponses/${id}`);
     }
@@ -29,8 +25,16 @@ export default class ResponseMethods {
         return axios.get(`${this.responseApiUrl}/GetResponse/${id}`);
     }
 
+    createResponse = (newResponseFormData) => {
+        return axios.post(`${this.responseApiUrl}/CreateResponse`, newResponseFormData);
+    }
+
+    acceptResponse = (acceptResponseFormData) => {
+        return axios.post(`${this.responseApiUrl}/AcceptResponse`, acceptResponseFormData);
+    }
+
     editResponse = (editFormData) => {
-        console.log(editFormData);
         return axios.put(`${this.responseApiUrl}/EditResponse`, editFormData);
     }
+
 }

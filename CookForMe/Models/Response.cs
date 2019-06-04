@@ -19,6 +19,6 @@ namespace CookForMe.Models
         public Order Order { get; set; }
         public List<Offer> Offers { get; set; }
         public ResponseStatus ResponseStatus { get; set; }
-        public AcceptedOffer AcceptedResponse { get; set; }
+        public AcceptedResponse AcceptedResponse { get; set; }
     }
 }
