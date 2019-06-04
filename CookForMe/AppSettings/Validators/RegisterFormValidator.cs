@@ -22,6 +22,7 @@ namespace CookForMe.AppSettings.Validators
         {
             RuleFor(registerForm => registerForm.FirstName)
                 .NotNull()
+                .WithMessage("Enter first name")
                 .NotEmpty()
                 .WithMessage("Enter first name")
                 .Matches(firstNameRegex)
@@ -29,6 +30,7 @@ namespace CookForMe.AppSettings.Validators
 
             RuleFor(registerForm => registerForm.LastName)
                 .NotNull()
+                .WithMessage("Enter last name")
                 .NotEmpty()
                 .WithMessage("Enter last name")
                 .Matches(firstNameRegex)
@@ -36,15 +38,18 @@ namespace CookForMe.AppSettings.Validators
 
             RuleFor(registerForm => registerForm.City)
                 .NotNull()
+                .WithMessage("Enter city")
                 .NotEmpty()
                 .WithMessage("Enter city");
 
             RuleFor(registerForm => registerForm.Street)
                 .NotNull()
+                .WithMessage("Enter street")
                 .NotEmpty()
                 .WithMessage("Enter street")
                 .Matches(passwordDigit)
                 .WithMessage("Enter exact address");
+
 
             RuleFor(registerForm => registerForm.UserName)
                 .NotNull()
@@ -60,6 +65,7 @@ namespace CookForMe.AppSettings.Validators
                 .NotEmpty()
                 .WithMessage("Enter password")
                 .MinimumLength(6)
+                .WithMessage("Password must be at least 6 characters long")
                 .Matches(passwordUppercase)
                 .WithMessage("Password must contain uppercase letter.")
                 .Matches(passwordLowerCase)

@@ -29,16 +29,19 @@ namespace CookForMe.Controllers
 
         [HttpPost]
         [Route("Register")]
-        public async Task<object> Register(RegisterFormData registerData)
+        public async Task<IActionResult> Register(RegisterFormData registerData)
         {
-            RegisterFormValidator validator = new RegisterFormValidator();
+            //RegisterFormValidator validator = new RegisterFormValidator();
 
-            ValidationResult result = validator.Validate(registerData);
+            //ValidationResult result = validator.Validate(registerData);
 
-            if (!result.IsValid)
-            {
-                return BadRequest(result.Errors);
-            }
+            //if (!result.IsValid)
+            //{
+            //    return BadRequest(result.Errors);
+            //}
+
+            if (!ModelState.IsValid)
+                return BadRequest();
 
             var newUser = new AppUser
             {

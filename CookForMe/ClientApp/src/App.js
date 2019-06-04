@@ -12,6 +12,7 @@ import './ComponentsStyles/SelectMenu.css';
 import './ComponentsStyles/CustomFileUploader.css';
 import './ComponentsStyles/OrderDetails.css';
 import './ComponentsStyles/UserProfile.css';
+import './ComponentsStyles/Error.css';
 
 
 class App extends Component {

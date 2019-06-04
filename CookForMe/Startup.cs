@@ -1,9 +1,13 @@
 using AutoMapper;
 using CookForMe.AppSettings;
+using CookForMe.AppSettings.Validators;
 using CookForMe.AutoMapper;
 using CookForMe.DAL;
 using CookForMe.Models;
+using CookForMe.Models.FormModels;
 using CookForMe.ServiceInterfaces;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -16,6 +20,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
+using System.Linq;
 using System.Text;
 
 namespace CookForMe
@@ -47,7 +52,15 @@ namespace CookForMe
 
             services.AddMvc();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddSingleton<IValidator<LoginFormData>, LoginFormValidator>();
+            services.AddSingleton<IValidator<RegisterFormData>, RegisterFormValidator>();
+            services.AddSingleton<IValidator<OrderFormData>, OrderFormValidator>();
+            services.AddSingleton<IValidator<ResponseFormData>, ResponseFormValidator>();
+            services.AddTransient<IValidator<EditResponseFormData>, EditResponseValidator>();
+
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2).AddFluentValidation((fv => {
+                fv.RunDefaultMvcValidationAfterFluentValidationExecutes = false;
+            }));
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>

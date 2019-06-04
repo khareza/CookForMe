@@ -71,5 +71,7 @@
     margin: 0;
     width: 70%;
 }
-
+.formWrapper {
+    display:flex;
+}
 
