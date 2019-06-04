@@ -3,6 +3,7 @@ using FluentValidation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mail;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -17,7 +18,9 @@ namespace CookForMe.AppSettings.Validators
         readonly Regex passwordLowerCase = new Regex(@"(?=.*[a-z])");
         readonly Regex passwordDigit = new Regex(@"(?=.*\d)");
         readonly Regex passwordSpecial = new Regex(@"(?=.*\W)");
-
+        readonly Regex emailRegex = 
+            new Regex(@"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?");
+        
         public RegisterFormValidator()
         {
             RuleFor(registerForm => registerForm.FirstName)
@@ -50,6 +53,13 @@ namespace CookForMe.AppSettings.Validators
                 .Matches(passwordDigit)
                 .WithMessage("Enter exact address");
 
+            RuleFor(registerForm => registerForm.Email)
+                .NotNull()
+                .WithMessage("Enter email")
+                .NotEmpty()
+                .WithMessage("Enter email")
+                .Matches(emailRegex)
+                .WithMessage("Enter valid email");
 
             RuleFor(registerForm => registerForm.UserName)
                 .NotNull()

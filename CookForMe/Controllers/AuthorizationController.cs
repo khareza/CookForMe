@@ -49,7 +49,8 @@ namespace CookForMe.Controllers
                 FirstName = registerData.FirstName,
                 LastName = registerData.LastName,
                 City = registerData.City,
-                Street = registerData.Street
+                Street = registerData.Street,
+                Email = registerData.Email
             };
 
             try

@@ -76,11 +76,11 @@ export class RegisterNewUser extends Component {
 
                     <div className="form-group">
                         <label>Email</label>
-                        <input className="form-control" type="email" name="email" value={this.state.email} onChange={this.handleInputChange}/>
+                        <input className="form-control" type="text" name="email" value={this.state.email} onChange={this.handleInputChange}/>
                         {this.state.errors['Email'] ? <Error messages={this.state.errors['Email']} /> : null}
                     </div>
                     <input type="submit" value="Register" className="btn btn-large btn-block btn-primary" />
-                    <input type="button" value="Cancel" onClick={() => { this.props.history.push('/start/login') }} className="btn btn-large btn-block btn-danger" />
+                    <input type="button" value="Cancel" className="btn btn-large btn-block btn-danger"  onClick={() => { this.props.history.push('/start/login') }} />
                 </form>
             </div>
 
