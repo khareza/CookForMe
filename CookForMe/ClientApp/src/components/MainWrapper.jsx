@@ -14,9 +14,9 @@ export class MainWrapper extends Component {
                     <SideMenu logOut={this.props.logOut} />
                 </div>
                 <div className="content mt-5 ">
-                    <Route path="/profile" component={UserProfile} />
+                    <Route path="/Profile" component={UserProfile} />
                     <Route path="/Orders" component={OrdersListWrapper} />
-                    <Route path="/responses" component={ResponsesWrapper} />
+                    <Route path="/Responses" component={ResponsesWrapper} />
                 </div>
             </div>
         );

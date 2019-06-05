@@ -27,9 +27,9 @@ export class SideMenu extends Component {
                 </div>
                 <nav className="main-nav">
                     <ul className="unstyled list-hover-slide">
-                        <li><NavLink to="/profile">My profile</NavLink></li>
-                        <li><NavLink to="/orders">Orders</NavLink></li>
-                        <li><NavLink to="/responses">Responses</NavLink></li>
+                        <li><NavLink to="/Profile">My profile</NavLink></li>
+                        <li><NavLink to="/Orders">Orders</NavLink></li>
+                        <li><NavLink to="/Responses">Responses</NavLink></li>
                     </ul>
                 </nav>
                 <button className="btn btn-danger logOutBtn" onClick={this.props.logOut}>LogOut</button>

@@ -1,6 +1,8 @@
 ﻿import React, { Component } from 'react';
 import Moment from 'react-moment';
 import ResponseMethods from '../../../Helpers/ResponseMethods';
+import StarRatings from 'react-star-ratings';
+
 export class ResponseDetails extends Component {
 
     constructor(props) {
@@ -12,7 +14,9 @@ export class ResponseDetails extends Component {
             offerId: '',
             response: {
                 order: {},
-                offers:[]}
+                offers: []
+            },
+            rating:0
         };
         this.id = this.props.match.params.response_id;
     }
@@ -33,6 +37,12 @@ export class ResponseDetails extends Component {
             }).catch((err) => {
                 this.props.history.push(`/responses/MyResponses`);
             });
+    }
+
+    changeRating(newRating, name) {
+        this.setState({
+            rating: newRating
+        });
     }
 
 
@@ -92,6 +102,16 @@ export class ResponseDetails extends Component {
                             <p>Street: {this.state.appUser.street}</p>
                             <p>Phone: {this.state.appUser.phoneNumber}</p>
                             <p>Rating: {this.state.appUser.rating}</p>
+                            <StarRatings
+                                rating={this.state.appUser.rating}
+                                starRatedColor={'rgb(255, 215, 0)'}
+                                starHoverColor={'rgb(255, 215, 0)'}
+                                changeRating={this.changeRating}
+                                starSpacing={'5px'}
+                                starDimension={'40px'}
+                                numberOfStars={5}
+                                name='rating'
+                            />
                         </div>
                     </div>
                 </div>
