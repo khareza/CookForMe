@@ -29,9 +29,21 @@ namespace CookForMe.AppSettings.EntityConfigurations
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasForeignKey(ao => ao.CallerId);
 
+            //i rating somebody
             builder
-               .Property(a => a.Rating)
-               .HasColumnType("decimal(5, 2)");
+                .HasMany(a => a.GottenRates)
+                .WithOne(r=>r.UserRating)
+                .OnDelete(DeleteBehavior.Restrict)
+                .HasForeignKey(r => r.UserRatingId);
+
+            //Somebody rating me
+            builder
+                .HasMany(a => a.GivenRates)
+                .WithOne(r => r.UserRated)
+                .OnDelete(DeleteBehavior.Restrict)
+                .HasForeignKey(r => r.UserRatedId);
+
+            
         }
     }
 }

@@ -12,9 +12,10 @@ namespace CookForMe.Models
         public int Age { get; set; }
         public string City { get; set; }
         public string Street { get; set; }
-        public decimal Rating { get; set; }
         public List<Order> MadeOrders { get; set; }
         public List<Response> MadeResponses { get; set; }
         public List<AcceptedResponse> AcceptedOffers { get; set; }
+        public List<Rating> GivenRates { get; set; }
+        public List<Rating> GottenRates { get; set; }
     }
 }

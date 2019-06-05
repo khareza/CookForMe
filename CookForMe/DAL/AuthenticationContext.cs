@@ -17,6 +17,7 @@ namespace CookForMe.DAL
         public DbSet<Offer> Offers { get; set; }
         public DbSet<Response> Responses { get; set; }
         public DbSet<AcceptedResponse> AcceptedResponses { get; set; }
+        public DbSet<Rating> Rating { get; set; }
 
         public AuthenticationContext(DbContextOptions options) : base(options)
         {

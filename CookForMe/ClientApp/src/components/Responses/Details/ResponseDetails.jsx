@@ -2,13 +2,16 @@
 import Moment from 'react-moment';
 import ResponseMethods from '../../../Helpers/ResponseMethods';
 import StarRatings from 'react-star-ratings';
+import UserMethods from '../../../Helpers/UserMethods'
+import AuthMethods from '../../../Helpers/AuthMethods'
 
 export class ResponseDetails extends Component {
 
     constructor(props) {
         super(props);
         this.ResponseRequest = new ResponseMethods();
-
+        this.userRequest = new UserMethods();
+        this.authRequest = new AuthMethods();
         this.state = {
             appUser: {},
             offerId: '',
@@ -16,14 +19,21 @@ export class ResponseDetails extends Component {
                 order: {},
                 offers: []
             },
-            rating:0
+            ratingInfo: { rate: 0, ratesAmount: 0 }
         };
         this.id = this.props.match.params.response_id;
     }
 
     componentDidMount = () => {
         this.getResponse(this.id);
+    }
 
+    getUserRating = () => {
+        this.userRequest.getUserRating(this.state.appUser.id)
+            .then((res) => {
+                console.log(res.data);
+                this.setState({ ratingInfo: res.data });
+            })
     }
 
     getResponse = (id) => {
@@ -34,15 +44,22 @@ export class ResponseDetails extends Component {
                     offerId: res.data.offerId,
                     response: res.data.response
                 });
+                this.getUserRating();
             }).catch((err) => {
                 this.props.history.push(`/responses/MyResponses`);
             });
     }
 
-    changeRating(newRating, name) {
-        this.setState({
-            rating: newRating
-        });
+    changeRating = (newRate, name) => {
+        this.userRequest
+            .rateUser({
+                userRatingId: this.authRequest.getUserId(),
+                userRatedId: this.state.appUser.id,
+                rate: newRate
+            })
+            .then((res) => {
+                this.getUserRating();
+            })
     }
 
 
@@ -100,10 +117,10 @@ export class ResponseDetails extends Component {
                             <p>Last name: {this.state.appUser.lastName}</p>
                             <p>City: {this.state.appUser.city}</p>
                             <p>Street: {this.state.appUser.street}</p>
-                            <p>Phone: {this.state.appUser.phoneNumber}</p>
-                            <p>Rating: {this.state.appUser.rating}</p>
+                            <p>Phone: {this.state.ratingInfo.rate}</p>
+                            <p>Rating({this.state.ratingInfo.ratesAmount}): {this.state.ratingInfo.rate}</p>
                             <StarRatings
-                                rating={this.state.appUser.rating}
+                                rating={this.state.ratingInfo.rate}
                                 starRatedColor={'rgb(255, 215, 0)'}
                                 starHoverColor={'rgb(255, 215, 0)'}
                                 changeRating={this.changeRating}

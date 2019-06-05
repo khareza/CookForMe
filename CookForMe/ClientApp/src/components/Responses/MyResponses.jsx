@@ -37,6 +37,8 @@ class MyReponses extends Component {
         this.props.history.push(`/responses/MyResponses/details/${id}`);
     }
 
+
+
     renderResponseComponents = () => {
         return this.state.responses.map((response) => {
             return (

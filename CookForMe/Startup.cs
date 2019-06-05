@@ -39,6 +39,7 @@ namespace CookForMe
         {
             services.AddTransient<IOrdersService, OrdersService>();
             services.AddTransient<IResponseService, ResponseService>();
+            services.AddTransient<IUserService, UserService>();
             //get access to appsettings.json settings everywhere in applications by using ApplicationSettings class object
             services.Configure<ApplicationSettings>(Configuration.GetSection("ApplicationSettings"));
 
