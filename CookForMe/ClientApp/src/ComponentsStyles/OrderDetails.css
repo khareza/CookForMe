@@ -35,7 +35,8 @@
     font-size: 1.1rem;
 }
     .orderCardHeader img {
-        width:100%
+        max-width: 100%;
+        height: auto;
     }
     .orderCardHeader p {
         margin: 0;
@@ -98,4 +99,8 @@ margin:10px 20px;
 .imgPreview {
 width:50%
 
+}
+
+.fullWidth {
+    width:100%;
 }

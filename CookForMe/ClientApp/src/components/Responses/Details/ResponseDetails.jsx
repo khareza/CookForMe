@@ -25,7 +25,6 @@ export class ResponseDetails extends Component {
     getResponse = (id) => {
         this.ResponseRequest.getAcceptedResponse(id)
             .then((res) => {
-                console.log(res.data);
                 this.setState({
                     appUser: res.data.appUser,
                     offerId: res.data.offerId,

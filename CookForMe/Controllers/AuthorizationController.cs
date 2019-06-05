@@ -31,15 +31,6 @@ namespace CookForMe.Controllers
         [Route("Register")]
         public async Task<IActionResult> Register(RegisterFormData registerData)
         {
-            //RegisterFormValidator validator = new RegisterFormValidator();
-
-            //ValidationResult result = validator.Validate(registerData);
-
-            //if (!result.IsValid)
-            //{
-            //    return BadRequest(result.Errors);
-            //}
-
             if (!ModelState.IsValid)
                 return BadRequest();
 

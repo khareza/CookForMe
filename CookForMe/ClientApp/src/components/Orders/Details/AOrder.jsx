@@ -60,7 +60,7 @@ export class OrderDetails extends Component {
                         <p><span>Ingredients list: </span>{this.props.order.ingredientsAvaiable}</p>
                     </div>
                     <div className="orderButtons">
-                        <a className="button buttonAccept" onClick={this.responseToOrder}><FontAwesomeIcon icon={faCheck}></FontAwesomeIcon></a>
+                        
                     </div>
                 </div>
                 <hr></hr>
@@ -68,6 +68,7 @@ export class OrderDetails extends Component {
                 <div>
                     <div>{this.renderResponses()}</div>
                 </div>
+                <a className="btn btn-large btn-block btn-success text-light" onClick={this.responseToOrder}>Make an offer for this order</a>
             </div>
         );
     }

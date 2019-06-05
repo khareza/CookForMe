@@ -4,7 +4,6 @@ import ResponseMethods from '../../../Helpers/ResponseMethods';
 import OffersWrapper from '../Details/OffersWrapper';
 import { NotificationManager } from 'react-notifications';
 import { Error } from '../../Error';
-import { config } from '@fortawesome/fontawesome-svg-core';
 
 export default class AddNewOrder extends Component {
     constructor(props) {

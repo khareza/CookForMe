@@ -7,8 +7,6 @@ export default class IngredientsWrapper extends Component {
 
     constructor(props) {
         super(props);
-        console.log(props);
-
         this.state = {
             ingredients: this.props.ingredientsList ? this.props.ingredientsList : ['']
         }
@@ -37,7 +35,6 @@ export default class IngredientsWrapper extends Component {
     }
 
     saveIngredients = () => {
-        console.log('saveIngredients');
         let igredentsList = this.state.ingredients.filter((ingr) => {
             return ingr.match(/[a-z]/i);
         })

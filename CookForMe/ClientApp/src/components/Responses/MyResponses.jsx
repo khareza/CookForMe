@@ -19,7 +19,6 @@ class MyReponses extends Component {
     getResponses = () => {
         this.ResponseRequest.getUserResponses()
             .then((res) => {
-                console.log(res.data );
                 this.setState({ responses: res.data });
             });
     }

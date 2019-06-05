@@ -58,15 +58,9 @@ namespace CookForMe.Controllers
         [Route("CreateOrder")]
         public IActionResult CreateOrder(OrderFormData formData)
         {
-
-            OrderFormValidator validator = new OrderFormValidator();
-
-            ValidationResult result = validator.Validate(formData);
-
-
-            if (!result.IsValid)
+            if (!ModelState.IsValid)
             {
-                return BadRequest(result.Errors);
+                return BadRequest();
             }
             //////Dodać mapper
             Order newOrder = new Order();

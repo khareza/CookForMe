@@ -17,10 +17,6 @@ namespace CookForMe.AppSettings.Validators
                 .NotEmpty()
                 .WithMessage("User is invalid"); 
 
-            RuleFor(orderForm => orderForm.OrderId)
-                .GreaterThan(0)
-                .WithMessage("Select order");
-
             RuleFor(orderForm => orderForm.ExpirationDate)
                 .GreaterThan(DateTime.Now)
                 .WithMessage("Enter correct date");

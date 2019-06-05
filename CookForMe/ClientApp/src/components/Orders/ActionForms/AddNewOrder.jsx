@@ -39,6 +39,7 @@ export default class AddNewOrder extends Component {
                 NotificationManager.success('Created new order', 'Success');
                 this.props.history.push('/orders/MyOrders')
             }).catch((err) => {
+                console.error(err.response.data);
                 NotificationManager.error('Data not valid', 'Error!');
                 this.handleInputErrors(err.response.data.errors);
             })
