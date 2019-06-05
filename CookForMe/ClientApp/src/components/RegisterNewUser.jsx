@@ -14,16 +14,19 @@ export class RegisterNewUser extends Component {
             firstName: '',
             lastName: '',
             email: '',
+            phoneNumber: '',
+            city:'',
+            street:'',
             errors: {}
         };
     }
 
     handleSubmit = (event) => {
         event.preventDefault();
-        let { userName, password, firstName, lastName, email } = this.state;
+        let { userName, password, firstName, lastName, email, phoneNumber,city,street } = this.state;
 
         this.Auth.register(
-            { userName, password, firstName, lastName, email }
+            { userName, password, firstName, lastName, email, phoneNumber, city, street } 
         ).then(() => {
             NotificationManager.success('Register Successful', 'Correct');
             this.props.history.push('/start/login');
@@ -51,7 +54,7 @@ export class RegisterNewUser extends Component {
             <div className="startForm">
                 <form onSubmit={this.handleSubmit} autoComplete="off">
                     <div className="form-group">
-                        <label >User Name</label>
+                        <label >User name</label>
                         <input className="form-control" type="text" name="userName" value={this.state.userName} onChange={this.handleInputChange} />
                         {this.state.errors['UserName'] ? <Error messages={this.state.errors['UserName']} /> : null}
                     </div>
@@ -63,15 +66,33 @@ export class RegisterNewUser extends Component {
                     </div>
 
                     <div className="form-group">
-                        <label>FirstName</label>
+                        <label>First name</label>
                         <input className="form-control" type="text" name="firstName" value={this.state.firstName} onChange={this.handleInputChange} />
                         {this.state.errors['FirstName'] ? <Error messages={this.state.errors['FirstName']} /> : null}
                     </div>
 
                     <div className="form-group">
-                        <label>LastName</label>
+                        <label>Last name</label>
                         <input className="form-control" type="text" name="lastName" value={this.state.lastName} onChange={this.handleInputChange} />
                         {this.state.errors['LastName'] ? <Error messages={this.state.errors['LastName']} /> : null}
+                    </div>
+
+                    <div className="form-group">
+                        <label>City</label>
+                        <input className="form-control" type="text" name="city" value={this.state.city} onChange={this.handleInputChange} />
+                        {this.state.errors['City'] ? <Error messages={this.state.errors['City']} /> : null}
+                    </div>
+
+                    <div className="form-group">
+                        <label>Street</label>
+                        <input className="form-control" type="text" name="street" value={this.state.street} onChange={this.handleInputChange} />
+                        {this.state.errors['Street'] ? <Error messages={this.state.errors['Street']} /> : null}
+                    </div>
+
+                    <div className="form-group">
+                        <label>Phone</label>
+                        <input className="form-control" type="text" name="phoneNumber" value={this.state.phoneNumber} onChange={this.handleInputChange} />
+                        {this.state.errors['PhoneNumber'] ? <Error messages={this.state.errors['PhoneNumber']} /> : null}
                     </div>
 
                     <div className="form-group">

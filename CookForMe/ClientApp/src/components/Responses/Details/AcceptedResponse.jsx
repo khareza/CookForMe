@@ -22,7 +22,6 @@ export class AcceptedResponse extends Component {
     getUserRating = () => {
         this.userRequest.getUserRating(this.props.response.appUser.id)
             .then((res) => {
-                console.log(res.data);
                 this.setState({ ratingInfo: res.data });
             })
     }

@@ -18,6 +18,7 @@ namespace CookForMe.AppSettings.Validators
         readonly Regex passwordLowerCase = new Regex(@"(?=.*[a-z])");
         readonly Regex passwordDigit = new Regex(@"(?=.*\d)");
         readonly Regex passwordSpecial = new Regex(@"(?=.*\W)");
+        readonly Regex phoneNumber = new Regex(@"\(?\d{3}\)?-? *\d{3}-? *-?\d{3}");
         readonly Regex emailRegex = 
             new Regex(@"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?");
         
@@ -50,8 +51,16 @@ namespace CookForMe.AppSettings.Validators
                 .WithMessage("Enter street")
                 .NotEmpty()
                 .WithMessage("Enter street")
-                .Matches(passwordDigit)
+                .Matches(phoneNumber)
                 .WithMessage("Enter exact address");
+
+            RuleFor(registerForm => registerForm.PhoneNumber)
+                .NotNull()
+                .WithMessage("Enter number")
+                .NotEmpty()
+                .WithMessage("Enter number")
+                .Matches(passwordDigit)
+                .WithMessage("Enter valid phone number");
 
             RuleFor(registerForm => registerForm.Email)
                 .NotNull()

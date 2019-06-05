@@ -31,7 +31,6 @@ export class ResponseDetails extends Component {
     getUserRating = () => {
         this.userRequest.getUserRating(this.state.appUser.id)
             .then((res) => {
-                console.log(res.data);
                 this.setState({ ratingInfo: res.data });
             })
     }
