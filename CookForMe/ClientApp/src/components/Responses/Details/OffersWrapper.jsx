@@ -57,9 +57,9 @@ export default class OffersWrapper extends Component {
 
     render() {
         return (
-            <div>
+            <div className="offerWrapper">
                 <a className="button buttonAccept" onClick={this.addNewOffer}><FontAwesomeIcon icon={faPlus}></FontAwesomeIcon></a>
-                <span>Offers amount: {this.state.offers.length}</span>
+                <p>Offers amount: {this.state.offers.length}</p>
                 {this.renderOffers()}
             </div>
         );

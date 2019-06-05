@@ -1,7 +1,5 @@
 ﻿import React, { Component } from 'react';
 import Moment from 'react-moment';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCheck } from '@fortawesome/free-solid-svg-icons'
 import ResponseMethods from '../../../Helpers/ResponseMethods';
 
 export class OrderDetails extends Component {
@@ -48,9 +46,9 @@ export class OrderDetails extends Component {
             <div className="orderCard">
                 <div className="orderCardHeader">
                     {this.props.order.ingredientsPhotoUrl
-                        ? <img src={this.props.order.ingredientsPhotoUrl} alt="empty"></img>
+                        ? <img className="imgPreview" src={this.props.order.ingredientsPhotoUrl} alt="empty"></img>
                         : null}
-                    <p>Deadline: <Moment format="dddd YYYY-MM-DD HH:mm">{this.props.order.deadline}</Moment></p>
+                    <p>Expiration date: <Moment format="dddd YYYY-MM-DD HH:mm">{this.props.order.deadline}</Moment></p>
                     <p>Time left: <Moment fromNow="dddd YYYY-MM-DD HH:mm">{this.props.order.deadline}</Moment></p>
                     <p>Number of offers: {this.state.responses.length}</p>
                 </div>
@@ -68,7 +66,7 @@ export class OrderDetails extends Component {
                 <div>
                     <div>{this.renderResponses()}</div>
                 </div>
-                <a className="btn btn-large btn-block btn-success text-light" onClick={this.responseToOrder}>Make an offer for this order</a>
+                <a className="btn btn-large btn-block btn-success text-light" onClick={this.responseToOrder}>Make an offer</a>
             </div>
         );
     }

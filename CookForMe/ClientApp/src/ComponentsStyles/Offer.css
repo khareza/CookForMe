@@ -1,0 +1,12 @@
+﻿.offerDetails {
+    display:flex;
+    justify-content:center;
+    padding:10px 0;
+    margin:0;
+    margin:auto 0;
+    width:100%;
+}
+
+.offerWrapper {
+    text-align:center;
+}

@@ -67,7 +67,12 @@ export default class AddNewOrder extends Component {
                     imagePreviewUrl: reader.result
                 });
         }
-        reader.readAsDataURL(file);
+        if (event.target.files[0]) {
+            reader.readAsDataURL(file);
+        }
+        else {
+            this.setState({ imagePreviewUrl:''})
+        }
     }
 
     handleDateChange = (date) => {

@@ -13,7 +13,7 @@ export default class Offer extends Component {
 
     render() {
         return (
-            <div>
+            <div className="offerDetails">
                 <input placeholder="Name" type="text" name="name" value={this.props.offer.name} onChange={this.handleInputChange} />
                 <input placeholder="Price" name="price" value={this.props.offer.price} onChange={this.handleInputChange} />
                 <input placeholder="Avg Cook Time" name="avgCookTime" value={this.props.offer.avgCookTime} onChange={this.handleInputChange} />

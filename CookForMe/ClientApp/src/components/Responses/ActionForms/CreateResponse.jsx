@@ -60,12 +60,9 @@ export default class AddNewOrder extends Component {
                     </div>
                     <div className="form-row">
                         <div className="form-gorup col-md-8 offset-md-2">
-                            <div className="form-group">
-                                <label>Order ID: {this.state.orderId}</label>
-                            </div>
 
                             <div className="headerLogin">
-                                <h3>Your offers</h3>
+                                <h3>Your offer</h3>
                             </div>
 
                             <div className="form-group">
@@ -74,7 +71,7 @@ export default class AddNewOrder extends Component {
                             </div>
 
                             <input type="submit" value="Response to order" className="btn btn-large btn-block btn-primary" disabled={this.state.isSubmitDisabled} />
-                            <input type="button" value="Cancel response" onClick={() => { this.props.history.push('/Responses/MyResponses') }} className="btn btn-large btn-block btn-danger" />
+                            <input type="button" value="Cancel response" onClick={() => { this.props.history.push('/Orders/AllOrders/') }} className="btn btn-large btn-block btn-danger" />
                         </div>
                     </div>
                 </form>

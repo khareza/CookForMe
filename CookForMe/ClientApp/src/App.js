@@ -14,6 +14,7 @@ import './ComponentsStyles/OrderDetails.css';
 import './ComponentsStyles/UserProfile.css';
 import './ComponentsStyles/Error.css';
 import './ComponentsStyles/AcceptedResponse.css';
+import './ComponentsStyles/Offer.css';
 
 
 class App extends Component {

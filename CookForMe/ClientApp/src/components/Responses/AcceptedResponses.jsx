@@ -19,14 +19,12 @@ class AcceptedResponses extends Component {
     getResponses = () => {
         this.ResponseRequest.getAcceptedResponses()
             .then((res) => {
-                console.log(res.data);
                 this.setState({acceptedResponses : res.data});
             });
     }
 
     renderResponseComponents = () => {
         return this.state.acceptedResponses.map((response, index) => {
-            console.log(response);
             return (
                 <AcceptedResponse key={index}
                     response={response} />
