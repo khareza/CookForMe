@@ -19,6 +19,7 @@ class EditOrderForm extends Component {
             ingredientsPhoto: '',
             description: '',
             isSubmitDisabled: false,
+            imagePreviewUrl: '',
             errors: {}
         };
         this.id = this.props.match.params.order_id;
@@ -41,21 +42,26 @@ class EditOrderForm extends Component {
                     isSubmitDisabled: false
                 });
             }).catch((err) => {
-
                 this.props.history.push(`/orders/MyOrders`);
             });
     }
 
     handleSubmit = (event) => {
         event.preventDefault();
-        let { expirationDate, ingredientsPhotoUrl, ingredientsAvaiableList, description } = this.state;
+        let { expirationDate, ingredientsPhoto, ingredientsAvaiableList, description } = this.state;
 
-        this.OrderRequest.editOrder(
-            { orderId: this.id, photoUrl: ingredientsPhotoUrl, expirationDate, ingredientsAvaiableList, description }
-        ).then((res) => {
+        const fd = new FormData();
+        fd.append('photo', ingredientsPhoto);
+
+        this.OrderRequest.uploadOrderPhoto(fd)
+            .then((res) => {
+                return this.OrderRequest.editOrder(
+                    { orderId: this.id, photoUrl: res.data, expirationDate, ingredientsAvaiableList, description }
+            )}).then((res) => {
             NotificationManager.success('Edited order successful', 'Correct');
             this.props.history.push('/orders/MyOrders')
         }).catch((err) => {
+            console.log(err.response.data);
             this.handleInputErrors(err.response.data.errors);
             NotificationManager.error('Data not valid', 'Error!');
         });
@@ -74,7 +80,21 @@ class EditOrderForm extends Component {
     }
 
     handleFileChange = (event) => {
-        this.setState({ ingredientsPhotoUrl: event.target.files[0].name });
+        let reader = new FileReader();
+        let file = event.target.files[0];
+        reader.onloadend = () => {
+            this.setState(
+                {
+                    ingredientsPhoto: file,
+                    imagePreviewUrl: reader.result
+                });
+        }
+        if (event.target.files[0]) {
+            reader.readAsDataURL(file);
+        }
+        else {
+            this.setState({ imagePreviewUrl: '' })
+        }
     }
 
     handleDateChange = (date) => {
@@ -97,8 +117,8 @@ class EditOrderForm extends Component {
                             <div className="form-group">
                                 <label>Ingredients Avaiable</label>
                                 <div>
-                                    {this.state.ingredientsPhotoUrl
-                                        ? <img className="imgPreview" src={this.state.ingredientsPhotoUrl} alt="empty"></img>
+                                    {this.state.imagePreviewUrl
+                                        ? <img className="imgPreview" src={this.state.imagePreviewUrl} alt="empty"></img>
                                         : null}
                                 </div>
                             </div>

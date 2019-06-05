@@ -103,13 +103,9 @@ namespace CookForMe.Controllers
         [Route("EditOrder")]
         public IActionResult EditOrder(OrderFormData formData)
         {
-            OrderFormValidator validator = new OrderFormValidator();
-
-            ValidationResult result = validator.Validate(formData);
-
-            if (!result.IsValid)
+            if (!ModelState.IsValid)
             {
-                return BadRequest(result.Errors);
+                return BadRequest();
             }
 
             var response = _orderContext.Edit(formData);
