@@ -10,9 +10,15 @@
     background-size: cover;
 }
 
+.registerFlexColumns {
+display:flex;
+justify-content:space-between;
+
+}
+
 .loginWrapper {
     display: flex;
-    flex-direction:column;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     width: 30%;
@@ -67,9 +73,14 @@
         color: #1b5e20;
         cursor: pointer;
     }
-.startForm {
+.startForm-70 {
     margin: 0;
     width: 70%;
+}
+
+.startForm-100 {
+    margin: 0;
+    width: 100%;
 }
 .formWrapper {
     display:flex;

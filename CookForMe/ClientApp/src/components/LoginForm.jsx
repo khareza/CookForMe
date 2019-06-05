@@ -59,7 +59,7 @@ export class Login extends Component {
     render() {
 
         return (
-            <div className="startForm">
+            <div className="startForm-70">
                 <form onSubmit={this.handleSubmit} autoComplete="off">
                     <div className="form-group">
                         <label >User name</label>
