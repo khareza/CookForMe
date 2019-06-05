@@ -19,6 +19,7 @@ class MyReponses extends Component {
     getResponses = () => {
         this.ResponseRequest.getUserResponses()
             .then((res) => {
+                console.log(res.data );
                 this.setState({ responses: res.data });
             });
     }
@@ -33,12 +34,17 @@ class MyReponses extends Component {
         this.props.history.push(`/responses/MyResponses/edit/${id}`);
     }
 
+    checkResponseDetails = (id) => {
+        this.props.history.push(`/responses/MyResponses/details/${id}`);
+    }
+
     renderResponseComponents = () => {
         return this.state.responses.map((response) => {
             return (
                 <ResponseDetails key={response.id}
                     deleteResponse={this.deleteResponse}
                     editResponse={this.editResponse}
+                    checkResponseDetails={this.checkResponseDetails}
                     response={response} />
             )
         })

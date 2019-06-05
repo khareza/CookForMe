@@ -41,6 +41,64 @@ namespace CookForMe.DAL
             }
         }
 
+
+        public IEnumerable<AcceptedResponseDTO> GetAcceptedResponses(string userId)
+        {
+            var acceptedResponses = _context.AcceptedResponses
+                .Include(r => r.ChosenOrder)
+                .Include(r => r.ChosenResponse)
+                .Include(r => r.ChosenResponse.Offers)
+                .Where(r => r.CallerId == userId);
+
+            if (acceptedResponses != null)
+            {
+                foreach (var res in acceptedResponses)
+                {
+                    var responseFounder = _context.AppUsers.FirstOrDefault(a => a.Id == res.ChosenResponse.ResponserId);
+
+                    var acceptedResponseDTO = new AcceptedResponseDTO();
+                    acceptedResponseDTO.Response = _mapper.Map<ResponseDTO>(res.ChosenResponse);
+                    acceptedResponseDTO.AppUser = _mapper.Map<AppUserDTO>(responseFounder);
+                    acceptedResponseDTO.OfferId = res.ChosenOfferId;
+
+                    acceptedResponseDTO.Response.Offers = new List<OfferDTO>();
+                    foreach (var offer in res.ChosenResponse.Offers)
+                    {
+                        acceptedResponseDTO.Response.Offers.Add(_mapper.Map<OfferDTO>(offer));
+                    }
+                    yield return acceptedResponseDTO;
+                }
+            }
+        }
+
+        public AcceptedResponseDTO GetAcceptedResponse(int responseId)
+        {
+            var acceptedResponse = _context.AcceptedResponses
+                .Include(r => r.ChosenOrder)
+                .Include(r => r.ChosenResponse)
+                .Include(r => r.ChosenResponse.Offers)
+                .FirstOrDefault(r => r.ChosenResponse.Id == responseId);
+
+            if (acceptedResponse != null)
+            {
+                var responseCaller = _context.AppUsers.FirstOrDefault(a => a.Id == acceptedResponse.CallerId);
+
+                var acceptedResponseDTO = new AcceptedResponseDTO();
+                acceptedResponseDTO.Response = _mapper.Map<ResponseDTO>(acceptedResponse.ChosenResponse);
+                acceptedResponseDTO.AppUser = _mapper.Map<AppUserDTO>(responseCaller);
+                acceptedResponseDTO.OfferId = acceptedResponse.ChosenOfferId;
+
+                acceptedResponseDTO.Response.Offers = new List<OfferDTO>();
+                foreach (var offer in acceptedResponse.ChosenResponse.Offers)
+                {
+                    acceptedResponseDTO.Response.Offers.Add(_mapper.Map<OfferDTO>(offer));
+                }
+                return acceptedResponseDTO;
+            }
+            return null;
+        }
+
+
         public IEnumerable<ResponseDTO> GetUserResponses(string id)
         {
             var responses = _context.Responses.Include(x => x.Offers).Include(x => x.Order).Where(x => x.Responser.Id == id);
@@ -127,7 +185,7 @@ namespace CookForMe.DAL
             acceptedOffer.ChosenOfferId = formData.OfferId;
             acceptedOffer.ChosenOrderId = formData.OrderId;
 
-            var order = _context.Orders.Include(o=>o.Responses).FirstOrDefault(o => o.Id == formData.OrderId);
+            var order = _context.Orders.Include(o => o.Responses).FirstOrDefault(o => o.Id == formData.OrderId);
             order.OrderStatus = OrderStatus.InProgress;
             foreach (var response in order.Responses)
             {

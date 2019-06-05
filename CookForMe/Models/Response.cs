@@ -17,7 +17,7 @@ namespace CookForMe.Models
         public AppUser Responser { get; set; }
         public int OrderId { get; set; }
         public Order Order { get; set; }
-        public List<Offer> Offers { get; set; }
+        public virtual List<Offer> Offers { get; set; }
         public ResponseStatus ResponseStatus { get; set; }
         public AcceptedResponse AcceptedResponse { get; set; }
     }

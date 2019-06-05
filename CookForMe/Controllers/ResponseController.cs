@@ -65,6 +65,21 @@ namespace CookForMe.Controllers
         }
 
         [HttpGet]
+        [Route("GetAcceptedResponses/{id}")]
+        public List<AcceptedResponseDTO> GetAcceptedResponses(string id)
+        {
+            return _responseContext.GetAcceptedResponses(id).ToList();
+        }
+
+        [HttpGet]
+        [Route("GetAcceptedResponse/{responseId}")]
+        public AcceptedResponseDTO GetAcceptedResponse(int responseId)
+        {
+            return _responseContext.GetAcceptedResponse(responseId);
+        }
+
+
+        [HttpGet]
         [Route("GetUserResponses/{id}")]
         public ActionResult<List<ResponseDTO>> GetUserResponses(string id)
         {

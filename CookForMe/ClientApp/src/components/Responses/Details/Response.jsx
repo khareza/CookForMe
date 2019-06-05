@@ -1,6 +1,6 @@
 ﻿import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTrashAlt, faEdit } from '@fortawesome/free-solid-svg-icons'
+import { faTrashAlt, faEdit,faSearch } from '@fortawesome/free-solid-svg-icons'
 import Moment from 'react-moment';
 
 export class ResponseDetails extends Component {
@@ -13,22 +13,26 @@ export class ResponseDetails extends Component {
         this.props.editResponse(this.props.response.id);
     }
 
+    checkResponseDetails = () => {
+        this.props.checkResponseDetails(this.props.response.id);
+    }
+
     render() {
 
         return (
             <div className="orderCard">
                 <div className="orderCardHeader">
                     <p>{this.props.response.name}</p>
-                    <p>Deadline: <Moment format="dddd YYYY-MM-DD HH:mm">{this.props.response.orderDeadline}</Moment></p>
-                    <p>Time left: <Moment fromNow="dddd YYYY-MM-DD HH:mm">{this.props.response.orderDeadline}</Moment></p>
+                    <p>Order expiration date: <Moment format="dddd YYYY-MM-DD HH:mm">{this.props.response.order.expirationDate}</Moment></p>
+                    <p>Time left: <Moment fromNow="dddd YYYY-MM-DD HH:mm">{this.props.response.order.expirationDate}</Moment></p>
                 </div>
                 <div className="orderData">
                     <div>
-                        <p><span>Description: </span>{this.props.response.orderDescription}</p>
+                        <p><span>Description: </span>{this.props.response.order.description}</p>
                         <p><span>Ingredients list: </span></p>
                         <div>
                             <ul>
-                                {this.props.response.orderIngredientsAvaiableList.map((ingredient, index) => (
+                                {this.props.response.order.ingredientsAvaiableList.map((ingredient, index) => (
                                     <li key={index}>{ingredient}</li>
                                 ))}
                             </ul>
@@ -46,8 +50,21 @@ export class ResponseDetails extends Component {
                         </div>
                     </div>
                     <div className="orderButtons">
-                        <button className="button buttonEdit" onClick={this.editResponse} disabled={this.props.response.responseStatus !== "Active"}><FontAwesomeIcon icon={faEdit}></FontAwesomeIcon></button>
-                        <button className="button buttonDelete" onClick={this.deleteResponse}><FontAwesomeIcon icon={faTrashAlt}></FontAwesomeIcon></button>
+                        {this.props.response.responseStatus === "Active"
+                            ?
+                            (<div>
+                                <button className="button buttonEdit"
+                                    onClick={this.editResponse}><FontAwesomeIcon icon={faEdit}></FontAwesomeIcon>
+                                </button>
+                                <button className="button buttonDelete"
+                                    onClick={this.deleteResponse}><FontAwesomeIcon icon={faTrashAlt}></FontAwesomeIcon>
+                                </button>
+                            </div>)
+                            : <button className="button buttonAccept"
+                                onClick={this.checkResponseDetails}><FontAwesomeIcon icon={faSearch}></FontAwesomeIcon>
+                            </button>
+                        }
+
                     </div>
                 </div>
             </div>

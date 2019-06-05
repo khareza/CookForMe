@@ -21,6 +21,15 @@ export default class ResponseMethods {
         return axios.get(`${this.responseApiUrl}/GetUserResponses/${id}`);
     }
 
+    getAcceptedResponses = () => {
+        let id = this.auth.getUserId();
+        return axios.get(`${this.responseApiUrl}/GetAcceptedResponses/${id}`);
+    }
+
+    getAcceptedResponse = (responseId) => {
+        return axios.get(`${this.responseApiUrl}/GetAcceptedResponse/${responseId}`);
+    }
+
     getResponse = (id) => {
         return axios.get(`${this.responseApiUrl}/GetResponse/${id}`);
     }

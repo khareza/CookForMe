@@ -1,0 +1,104 @@
+﻿.responseCard {
+    width: 70%;
+    border: 1px solid #8bc34a;
+    border-radius: 10px;
+    margin: 3% auto;
+    color: #37474f;
+    font-weight: 500;
+    font-family: Palatino;
+    padding: 20px;
+}
+
+.orderColumn {
+    width: 100%;
+}
+
+.responseCardFlex {
+    display: flex;
+    justify-content: space-between;
+}
+
+.selectedOffer {
+    color: green;
+}
+
+.rejectedOffer {
+    color: red;
+    text-decoration:line-through;
+}
+
+.offersColumn {
+    width: 100%;
+    padding-left: 10px;
+    text-align:center;
+    margin:0 auto;
+}
+
+    .offersColumn h4 {
+        text-align: center;
+    }
+
+.offersColumn  table{
+    width: 100%;
+
+}
+
+.personalDataColumn {
+    width: 100%;
+    padding-left: 10px;
+}
+
+    .personalDataColumn h4 {
+        text-align: center;
+    }
+
+    .personalDataColumn p {
+        margin: 0;
+    }
+
+.description {
+    text-align: justify;
+}
+
+span {
+    font-weight: bold;
+}
+
+.responseButtons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.responseData {
+    display: flex;
+    justify-content: space-between;
+    background-color: #FFFFFF;
+    border-radius: 0 0 10px 10px;
+}
+
+.responseCardHeader {
+    border-bottom: 1px solid #D9D3CD;
+    border-radius: 10px 10px 0 0;
+    text-align: center;
+    font-size: 1.1rem;
+}
+
+    .responseCardHeader img {
+        width: 100%
+    }
+
+    .responseCardHeader p {
+        margin: 0;
+    }
+
+hr {
+    margin: 10px 20px;
+}
+
+.response {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px 0 20px;
+}

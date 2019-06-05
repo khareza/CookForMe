@@ -13,5 +13,7 @@ namespace CookForMe.ServiceInterfaces
         IEnumerable<ShortResponseDTO> GetResponsesOfSpecificOrder(int orderid);
         IEnumerable<ResponseDTO> GetUserResponses(string id);
         void AcceptResponse(AcceptedResponseFormData formData);
+        IEnumerable<AcceptedResponseDTO> GetAcceptedResponses(string userId);
+        AcceptedResponseDTO GetAcceptedResponse(int responseId);
     }
 }
